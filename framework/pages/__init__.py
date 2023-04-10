@@ -1,1 +1,1 @@
-from .elements_page import TextBoxPage
+from .elements_page import TextBoxPage, CheckBoxPage

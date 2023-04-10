@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class TextBoxPageLocators:
+class TextBoxPageLocators():
     # form fields
 
     FULL_NAME = (By.CSS_SELECTOR, '#userName')
@@ -15,3 +15,8 @@ class TextBoxPageLocators:
     CREATED_EMAIL = (By.CSS_SELECTOR, '#email')
     CREATED_CURRENT_ADDRESS = (By.CSS_SELECTOR, 'p#currentAddress')
     CREATED_PERMANENT_ADDRESS = (By.CSS_SELECTOR, 'p#permanentAddress')
+
+class CheckBoxPageLocators():
+    EXPAND_ALL_BUTTON = (By.CSS_SELECTOR,'button.rct-option-expand-all')
+    ITEM_LIST = (By.CSS_SELECTOR, '.rct-title')
+    CHECKED_ITEMS = (By.CSS_SELECTOR, '.rct-icon-check')
