@@ -41,5 +41,14 @@ class CheckBoxPage(BasePage):
             item = item_list[randint(0, len(item_list) - 1)]
             self.go_to_element(item)
             item.click()
-            print(item)
             count -= 1
+
+    def get_checked_checkboxes(self):
+        checked_list = self.elements_are_present(self.locators.CHECKED_ITEMS)
+        data = [checkbox.find_element('xpath', self.locators.TITLE_CHECKBOX).text for checkbox in checked_list]
+        return str(data).replace(' ', '').replace('.doc', '').lower()
+
+    def get_output_result(self):
+        result_list = self.elements_are_present(self.locators.OUTPUT_RESULT_LIST)
+        data = [item.text for item in result_list]
+        return str(data).replace(' ', '').lower()
