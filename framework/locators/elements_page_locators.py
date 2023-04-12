@@ -23,3 +23,10 @@ class CheckBoxPageLocators():
     CHECKED_ITEMS = (By.CSS_SELECTOR, '.rct-icon-check')
     TITLE_CHECKBOX = './/ancestor::span[@class=\'rct-text\']'
     OUTPUT_RESULT_LIST = (By.CSS_SELECTOR, '.text-success')
+
+
+class RadioButtonPageLocators():
+    RADIO_BUTTON_YES = (By.CSS_SELECTOR, 'label[for=yesRadio]')
+    RADIO_BUTTON_IMPRESSIVE = (By.CSS_SELECTOR, 'label[for=impressiveRadio]')
+    RADIO_BUTTON_NO = (By.CSS_SELECTOR, 'label[for=noRadio]')
+    OUTPUT_RESULT = (By.CSS_SELECTOR, '.text-success')
