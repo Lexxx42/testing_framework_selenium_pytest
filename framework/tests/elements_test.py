@@ -46,6 +46,6 @@ class TestElements():
         def test_web_table_add_person(self, driver):
             web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
             web_table_page.open()
-            import time
-            web_table_page.add_new_person(3)
-            time.sleep(3)
+            new_person = web_table_page.add_new_person(1)
+            table = web_table_page.check_added_person()
+            assert new_person in table
