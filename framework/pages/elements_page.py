@@ -93,3 +93,11 @@ class WebTablePage(BasePage):
         people_list = self.elements_are_present(self.locators.FULL_PEOPLE_LIST)
         data = [item.text.splitlines() for item in people_list]
         return data
+
+    def search_some_person(self, key_word):
+        self.element_is_visible(self.locators.SEARCH_FIELD).send_keys(key_word)
+
+    def check_search_person(self):
+        delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
+        row = delete_button.find_element('xpath', self.locators.ROW_PARRENT)
+        return row.text.splitlines()
