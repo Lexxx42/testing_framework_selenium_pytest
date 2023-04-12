@@ -1,4 +1,4 @@
-from ..pages import TextBoxPage, CheckBoxPage
+from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage
 
 
 class TestElements():
@@ -31,3 +31,13 @@ class TestElements():
             assert input_checkboxes == output_result, \
                 f'Checked checkboxes {input_checkboxes} ' \
                 f'are not matching output result checkboxes {output_result}'
+
+    class TestRadioButton():
+        def test_radio_button(self, driver):
+            radio_button_page = RadioButtonPage(driver, 'https://demoqa.com/radio-button')
+            radio_button_page.open()
+            actions = ['yes', 'impressive', 'no']
+            for action in actions:
+                radio_button_page.click_on_the_radio_button(action)
+                output = radio_button_page.get_output_result()
+                assert action.title() == output, f'Action {action} don\'t match the rusult {output}'
