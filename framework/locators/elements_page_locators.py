@@ -30,3 +30,26 @@ class RadioButtonPageLocators():
     RADIO_BUTTON_IMPRESSIVE = (By.CSS_SELECTOR, 'label[for=impressiveRadio]')
     RADIO_BUTTON_NO = (By.CSS_SELECTOR, 'label[for=noRadio]')
     OUTPUT_RESULT = (By.CSS_SELECTOR, '.text-success')
+
+
+class WebTablePageLocators():
+    # add person form
+    ADD_BUTTON = (By.CSS_SELECTOR, '#addNewRecordButton')
+    FIRST_NAME_FIELD = (By.CSS_SELECTOR, '#firstName')
+    LAST_NAME_FIELD = (By.CSS_SELECTOR, '#lastName')
+    EMAIL_FIELD = (By.CSS_SELECTOR, '#userEmail')
+    AGE_FIELD = (By.CSS_SELECTOR, '#age')
+    SALARY_FIELD = (By.CSS_SELECTOR, '#salary')
+    DEPARTMENT_FIELD = (By.CSS_SELECTOR, '#department')
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, '#submit')
+
+    # table
+    FULL_PEOPLE_LIST = (By.CSS_SELECTOR, '.rt-tr-group')
+    SEARCH_FIELD = (By.CSS_SELECTOR, '#searchBox')
+    DELETE_BUTTON = (By.CSS_SELECTOR, '[title=\'Delete\']')
+    ROW_PARRENT = './/ancestor::div[@class=\'rt-tr-group\']'
+    NO_ROWS_FOUND = (By.CSS_SELECTOR, '.rt-noData')
+    SELECT_NUMBER_OF_ROWS = (By.CSS_SELECTOR, '[aria-label=\'rows per page\']')
+
+    # update
+    UPDATE_BUTTON = (By.CSS_SELECTOR, '[title=\'Edit\']')
