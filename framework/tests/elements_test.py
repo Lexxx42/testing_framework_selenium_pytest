@@ -20,11 +20,14 @@ class TestElements():
                 f'Entered permanent address was {permanent_address} ' \
                 f'which doesn\'t match output permanent address {output_permanent_address}'
 
-
     class TestCheckBox():
         def test_check_box(self, driver):
             check_box_page = CheckBoxPage(driver, 'https://demoqa.com/checkbox')
             check_box_page.open()
             check_box_page.open_fill_list()
             check_box_page.click_random_checkbox()
-
+            input_checkboxes = check_box_page.get_checked_checkboxes()
+            output_result = check_box_page.get_output_result()
+            assert input_checkboxes == output_result, \
+                f'Checked checkboxes {input_checkboxes} ' \
+                f'are not matching output result checkboxes {output_result}'
