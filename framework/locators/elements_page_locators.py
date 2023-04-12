@@ -33,6 +33,7 @@ class RadioButtonPageLocators():
 
 
 class WebTablePageLocators():
+    # add person form
     ADD_BUTTON = (By.CSS_SELECTOR, '#addNewRecordButton')
     FIRST_NAME_FIELD = (By.CSS_SELECTOR, '#firstName')
     LAST_NAME_FIELD = (By.CSS_SELECTOR, '#lastName')
@@ -41,3 +42,6 @@ class WebTablePageLocators():
     SALARY_FIELD = (By.CSS_SELECTOR, '#salary')
     DEPARTMENT_FIELD = (By.CSS_SELECTOR, '#department')
     SUBMIT_BUTTON = (By.CSS_SELECTOR, '#submit')
+
+    # table
+    FULL_PEOPLE_LIST = (By.CSS_SELECTOR, '.rt-tr-group')
