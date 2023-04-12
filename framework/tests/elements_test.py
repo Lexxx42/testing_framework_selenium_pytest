@@ -1,4 +1,4 @@
-from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage
+from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
 
 
 class TestElements():
@@ -41,3 +41,11 @@ class TestElements():
                 radio_button_page.click_on_the_radio_button(action)
                 output = radio_button_page.get_output_result()
                 assert action.title() == output, f'Action {action} don\'t match the rusult {output}'
+
+    class TestWebTable():
+        def test_web_table_add_person(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            import time
+            web_table_page.add_new_person(3)
+            time.sleep(3)
