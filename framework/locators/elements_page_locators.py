@@ -16,7 +16,10 @@ class TextBoxPageLocators():
     CREATED_CURRENT_ADDRESS = (By.CSS_SELECTOR, 'p#currentAddress')
     CREATED_PERMANENT_ADDRESS = (By.CSS_SELECTOR, 'p#permanentAddress')
 
+
 class CheckBoxPageLocators():
-    EXPAND_ALL_BUTTON = (By.CSS_SELECTOR,'button.rct-option-expand-all')
+    EXPAND_ALL_BUTTON = (By.CSS_SELECTOR, 'button.rct-option-expand-all')
     ITEM_LIST = (By.CSS_SELECTOR, '.rct-title')
     CHECKED_ITEMS = (By.CSS_SELECTOR, '.rct-icon-check')
+    TITLE_CHECKBOX = './/ancestor::span[@class=\'rct-text\']'
+    OUTPUT_RESULT_LIST = (By.CSS_SELECTOR, '.text-success')
