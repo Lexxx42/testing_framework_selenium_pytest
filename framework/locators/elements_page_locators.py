@@ -30,3 +30,14 @@ class RadioButtonPageLocators():
     RADIO_BUTTON_IMPRESSIVE = (By.CSS_SELECTOR, 'label[for=impressiveRadio]')
     RADIO_BUTTON_NO = (By.CSS_SELECTOR, 'label[for=noRadio]')
     OUTPUT_RESULT = (By.CSS_SELECTOR, '.text-success')
+
+
+class WebTablePageLocators():
+    ADD_BUTTON = (By.CSS_SELECTOR, '#addNewRecordButton')
+    FIRST_NAME_FIELD = (By.CSS_SELECTOR, '#firstName')
+    LAST_NAME_FIELD = (By.CSS_SELECTOR, '#lastName')
+    EMAIL_FIELD = (By.CSS_SELECTOR, '#userEmail')
+    AGE_FIELD = (By.CSS_SELECTOR, '#age')
+    SALARY_FIELD = (By.CSS_SELECTOR, '#salary')
+    DEPARTMENT_FIELD = (By.CSS_SELECTOR, '#department')
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, '#submit')
