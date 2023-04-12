@@ -1,1 +1,1 @@
-from .elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators
+from .elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators
