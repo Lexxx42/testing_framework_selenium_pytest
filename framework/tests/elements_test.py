@@ -44,11 +44,10 @@ class TestElements():
                 assert action.title() == output, f'Action {action} don\'t match the rusult {output}'
 
     class TestWebTable():
-        global web_page_link
         web_page_link = 'https://demoqa.com/webtables'
 
         def test_web_table_add_person(self, driver):
-            web_table_page = WebTablePage(driver, web_page_link)
+            web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
             new_person = web_table_page.add_new_person(1)
             table = web_table_page.check_added_person()
@@ -56,7 +55,7 @@ class TestElements():
                 f'New person {new_person} should be in the table {table} but it isn\'t'
 
         def test_web_table_search_person(self, driver):
-            web_table_page = WebTablePage(driver, web_page_link)
+            web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
             key_word = web_table_page.add_new_person()[randint(0, 5)]
             web_table_page.search_some_person(key_word)
@@ -65,7 +64,7 @@ class TestElements():
                 f'Person was not found by key word {key_word} in table {table_result}'
 
         def test_web_table_update_person_info(self, driver):
-            web_table_page = WebTablePage(driver, web_page_link)
+            web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
             fields_to_edit = ['first_name', 'last_name', 'age', 'salary', 'department', 'email']
             field_to_edit = choice(fields_to_edit)
@@ -77,7 +76,7 @@ class TestElements():
                 f'Edited person info {edited_field} in {fields_to_edit} not present in edited data {row}'
 
         def test_web_table_delete_person(self, driver):
-            web_table_page = WebTablePage(driver, web_page_link)
+            web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
             email = web_table_page.add_new_person()[3]
             web_table_page.search_some_person(email)
@@ -87,7 +86,7 @@ class TestElements():
                 f'Text of search result of deleted person must be \'No rows found\' but {text} present'
 
         def test_table_change_number_of_rows(self, driver):
-            web_table_page = WebTablePage(driver, web_page_link)
+            web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
             count_of_rows = web_table_page.select_numer_of_rows()
             assert count_of_rows == [5, 10, 20, 25, 50, 100], \
