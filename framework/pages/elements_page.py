@@ -1,6 +1,7 @@
 from random import randint
 from .base_page import BasePage
-from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators
+from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
+    ButtonsPageLocators
 from ..genarator import generated_person
 from selenium.webdriver.common.by import By
 
@@ -132,3 +133,16 @@ class WebTablePage(BasePage):
 
     def check_count_of_rows(self):
         return len(self.elements_are_present(self.locators.FULL_PEOPLE_LIST))
+
+
+class ButtonsPage(BasePage):
+    locators = ButtonsPageLocators()
+
+    def check_dynamic_click_message(self):
+        return self.element_is_present(self.locators.CLICK_MESSAGE).text
+
+    def check_double_click_message(self):
+        return self.element_is_present(self.locators.DOUBLE_CLICK_MESSAGE).text
+
+    def check_right_click_message(self):
+        return self.element_is_present(self.locators.RIGHT_CLICK_MESSAGE).text
