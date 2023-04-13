@@ -1,1 +1,1 @@
-from .elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
+from .elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
