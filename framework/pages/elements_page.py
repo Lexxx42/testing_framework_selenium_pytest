@@ -2,7 +2,7 @@ from random import randint
 from .base_page import BasePage
 from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
     ButtonsPageLocators
-from ..genarator import generated_person
+from ..generator import generated_person
 from selenium.webdriver.common.by import By
 
 
