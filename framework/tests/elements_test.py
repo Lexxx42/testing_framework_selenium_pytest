@@ -1,5 +1,5 @@
 from random import randint, choice
-from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
+from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
 
 
 class TestElements():
@@ -91,3 +91,30 @@ class TestElements():
             count_of_rows = web_table_page.select_numer_of_rows()
             assert count_of_rows == [5, 10, 20, 25, 50, 100], \
                 f'Available rows count is [5, 10, 20, 25, 50, 100] expected but got {count_of_rows}'
+
+    class TestButtonsPage():
+        buttons_page_link = 'https://demoqa.com/buttons'
+
+        def test_dynamic_click_on_the_button_click_me(self, driver):
+            buttons_page = ButtonsPage(driver, self.buttons_page_link)
+            buttons_page.open()
+            buttons_page.perform_dynamic_click()
+            click_message = buttons_page.check_dynamic_click_message()
+            assert click_message == 'You have done a dynamic click', \
+                f'Expected dynamic click message to be \'You have done a dynamic click\' but got {click_message}'
+
+        def test_double_click_on_the_button_double_click_me(self, driver):
+            buttons_page = ButtonsPage(driver, self.buttons_page_link)
+            buttons_page.open()
+            buttons_page.perform_double_click()
+            click_message = buttons_page.check_double_click_message()
+            assert click_message == 'You have done a double click', \
+                f'Expected double click message to be \'You have done a double click\' but got {click_message}'
+
+        def test_right_click_on_the_button_right_click_me(self, driver):
+            buttons_page = ButtonsPage(driver, self.buttons_page_link)
+            buttons_page.open()
+            buttons_page.perform_right_click()
+            click_message = buttons_page.check_right_click_message()
+            assert click_message == 'You have done a right click', \
+                f'Expected right click message to be \'You have done a right click\' but got {click_message}'
