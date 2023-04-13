@@ -53,3 +53,15 @@ class WebTablePageLocators():
 
     # update
     UPDATE_BUTTON = (By.CSS_SELECTOR, '[title=\'Edit\']')
+
+
+class ButtonsPageLocators():
+    # buttons
+    DOUBLE_CLICK_ME_BUTTON = (By.CSS_SELECTOR, '#doubleClickBtn')
+    RIGHT_CLICK_ME_BUTTON = (By.CSS_SELECTOR, '#rightClickBtn')
+    CLICK_ME_BUTTON = (By.XPATH, '//div[3]/button')
+
+    # messages
+    DOUBLE_CLICK_MESSAGE = (By.CSS_SELECTOR, '#doubleClickMessage')
+    RIGHT_CLICK_MESSAGE = (By.CSS_SELECTOR, '#rightClickMessage')
+    CLICK_MESSAGE = (By.CSS_SELECTOR, '#dynamicClickMessage')
