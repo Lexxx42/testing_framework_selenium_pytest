@@ -65,3 +65,18 @@ class ButtonsPageLocators():
     DOUBLE_CLICK_MESSAGE = (By.CSS_SELECTOR, '#doubleClickMessage')
     RIGHT_CLICK_MESSAGE = (By.CSS_SELECTOR, '#rightClickMessage')
     CLICK_MESSAGE = (By.CSS_SELECTOR, '#dynamicClickMessage')
+
+
+class LinksPageLocators():
+    # new tab links
+    SIMPLE_LINK = (By.CSS_SELECTOR, '#simpleLink')
+    DYNAMIC_LINK = (By.CSS_SELECTOR, '#dynamicLink')
+
+    # api calls
+    BAD_REQUEST = (By.CSS_SELECTOR, '#bad-request')
+    CREATED_REQUEST = (By.CSS_SELECTOR, '#created')
+    NO_CONTENT_REQUEST = (By.CSS_SELECTOR, '#no-content')
+    MOVED_REQUEST = (By.CSS_SELECTOR, '#moved')
+    UNAUTHORIZED_REQUEST = (By.CSS_SELECTOR, '#unauthorized')
+    FORBIDDEN_REQUEST = (By.CSS_SELECTOR, '#forbidden')
+    NOT_FOUND_REQUEST = (By.CSS_SELECTOR, '#invalid-url')

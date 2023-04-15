@@ -1,7 +1,8 @@
+import requests
 from random import randint
 from .base_page import BasePage
 from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
-    ButtonsPageLocators
+    ButtonsPageLocators, LinksPageLocators
 from ..generator import generated_person
 from selenium.webdriver.common.by import By
 
@@ -146,3 +147,87 @@ class ButtonsPage(BasePage):
 
     def check_right_click_message(self):
         return self.element_is_present(self.locators.RIGHT_CLICK_MESSAGE).text
+
+
+class LinksPage(BasePage):
+    locators = LinksPageLocators()
+    NO_ERRORS = 'No errors'
+
+
+    def check_new_tab_simple_link(self):
+        simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
+        link_href = simple_link.get_attribute('href')
+        try:
+            requests.get(link_href)
+            simple_link.click()
+            url = self.switch_to_new_tab()
+            return link_href, url
+        except requests.exceptions.RequestException as error:
+            return link_href, error
+
+    def check_broken_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.BAD_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error
+
+    def check_new_tab_dynamic_link(self):
+        simple_link = self.element_is_visible(self.locators.DYNAMIC_LINK)
+        link_href = simple_link.get_attribute('href')
+        try:
+            requests.get(link_href)
+            simple_link.click()
+            url = self.switch_to_new_tab()
+            return link_href, url
+        except requests.exceptions.RequestException as error:
+            return link_href, error
+
+    def check_created_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.CREATED_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error
+
+    def check_no_content_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.NO_CONTENT_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error
+
+    def check_moved_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.MOVED_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error
+
+    def check_unauthorized_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.UNAUTHORIZED_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error
+
+    def check_forbidden_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.FORBIDDEN_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error
+
+    def check_not_found_link(self, url):
+        try:
+            request = requests.get(url)
+            self.element_is_present(self.locators.NOT_FOUND_REQUEST).click()
+            return request.status_code, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, error

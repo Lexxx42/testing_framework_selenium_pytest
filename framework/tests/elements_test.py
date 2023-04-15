@@ -1,5 +1,5 @@
 from random import randint, choice
-from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
+from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
 
 
 class TestElements():
@@ -118,3 +118,85 @@ class TestElements():
             click_message = buttons_page.check_right_click_message()
             assert click_message == 'You have done a right click', \
                 f'Expected right click message to be \'You have done a right click\' but got {click_message}'
+
+    class TestLinksPage():
+        links_page_link = 'https://demoqa.com/links'
+        links_page_broken_link = 'https://demoqa.com/bad-request'
+        links_page_created_link = 'https://demoqa.com/created'
+        links_page_no_content_link = 'https://demoqa.com/no-content'
+        links_page_moved_link = 'https://demoqa.com/moved'
+        links_page_unauthorized_link = 'https://demoqa.com/unauthorized'
+        links_page_forbidden_link = 'https://demoqa.com/forbidden'
+        links_page_not_found_link = 'https://demoqa.com/invalid-url'
+
+        def test_link_home(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            href_link, current_url = links_page.check_new_tab_simple_link()
+            assert href_link == current_url, \
+                f'Broken link or link incorrect after click on home simple link {self.links_page_link}' \
+                f'\nError: {current_url}'
+
+        def test_broken_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_broken_link(self.links_page_broken_link)
+            assert response_code == 400, \
+                f'Status code from {self.links_page_broken_link} should be 400 but got {response_code}' \
+                f'\nError: {error_message}'
+
+        def test_dynamic_link_home(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            href_link, current_url = links_page.check_new_tab_dynamic_link()
+            assert href_link == current_url, \
+                f'Broken link or link incorrect after click on home simple link {self.links_page_link}' \
+                f'\nError: {current_url}'
+
+        def test_created_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_created_link(self.links_page_created_link)
+            assert response_code == 201, \
+                f'Status code from {self.links_page_created_link} should be 201 but got {response_code}' \
+                f'\nError: {error_message}'
+
+        def test_no_content_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_no_content_link(self.links_page_no_content_link)
+            assert response_code == 204, \
+                f'Status code from {self.links_page_no_content_link} should be 204 but got {response_code}' \
+                f'\nError: {error_message}'
+
+        def test_moved_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_moved_link(self.links_page_moved_link)
+            assert response_code == 301, \
+                f'Status code from {self.links_page_moved_link} should be 301 but got {response_code}' \
+                f'\nError: {error_message}'
+
+        def test_unauthorized_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_unauthorized_link(self.links_page_unauthorized_link)
+            assert response_code == 401, \
+                f'Status code from {self.links_page_unauthorized_link} should be 401 but got {response_code}' \
+                f'\nError: {error_message}'
+
+        def test_forbidden_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_forbidden_link(self.links_page_forbidden_link)
+            assert response_code == 403, \
+                f'Status code from {self.links_page_forbidden_link} should be 403 but got {response_code}' \
+                f'\nError: {error_message}'
+
+        def test_not_found_link(self, driver):
+            links_page = LinksPage(driver, self.links_page_link)
+            links_page.open()
+            response_code, error_message = links_page.check_not_found_link(self.links_page_not_found_link)
+            assert response_code == 404, \
+                f'Status code from {self.links_page_not_found_link} should be 404 but got {response_code}' \
+                f'\nError: {error_message}'
