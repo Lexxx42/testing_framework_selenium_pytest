@@ -2,7 +2,7 @@ import requests
 from random import randint
 from .base_page import BasePage
 from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
-    ButtonsPageLocators, LinksPageLocators
+    ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators
 from ..generator import generated_person
 from selenium.webdriver.common.by import By
 
@@ -153,7 +153,6 @@ class LinksPage(BasePage):
     locators = LinksPageLocators()
     NO_ERRORS = 'No errors'
 
-
     def check_new_tab_simple_link(self):
         simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
         link_href = simple_link.get_attribute('href')
@@ -231,3 +230,50 @@ class LinksPage(BasePage):
             return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+
+
+class BrokenLinksPage(BasePage):
+    locators = BrokenLinksPageLocators()
+    NO_ERRORS = 'No errors'
+
+    def check_valid_image_for_200_response(self):
+        image = self.element_is_visible(self.locators.VALID_IMAGE)
+        try:
+            image_link = image.get_attribute('src')
+            request = requests.get(image_link)
+            content_type = request.headers.get('content-type')
+            return request.status_code, content_type, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, content_type, error
+
+    def check_broken_image_for_200_response(self):
+        image = self.element_is_visible(self.locators.BROKEN_IMAGE)
+        image_link = image.get_attribute('src')
+        try:
+            request = requests.get(image_link)
+            content_type = request.headers.get('content-type')
+            return request.status_code, content_type, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return request.status_code, content_type, error
+
+    def check_valid_link(self):
+        valid_link = self.element_is_visible(self.locators.VALID_LINK)
+        link_href = valid_link.get_attribute('href')
+        try:
+            page = requests.get(link_href)
+            valid_link.click()
+            url = page.url
+            return link_href.split('/')[2], url.split('/')[2]
+        except requests.exceptions.RequestException as error:
+            return link_href.split('/')[2], error
+
+    def check_broken_link(self):
+        broken_link = self.element_is_visible(self.locators.BROKEN_LINK)
+        link_href = broken_link.get_attribute('href')
+        try:
+            page = requests.get(link_href)
+            broken_link.click()
+            url = page.url
+            return page.status_code, url, self.NO_ERRORS
+        except requests.exceptions.RequestException as error:
+            return page.status_code, url, error

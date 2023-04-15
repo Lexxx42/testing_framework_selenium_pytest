@@ -1,5 +1,6 @@
 from random import randint, choice
-from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
+from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
+    BrokenLinksPage
 
 
 class TestElements():
@@ -199,4 +200,41 @@ class TestElements():
             response_code, error_message = links_page.check_not_found_link(self.links_page_not_found_link)
             assert response_code == 404, \
                 f'Status code from {self.links_page_not_found_link} should be 404 but got {response_code}' \
+                f'\nError: {error_message}'
+
+    class TestBrokenLinksPage():
+        broken_links_page_link = 'https://demoqa.com/broken'
+
+        def test_valid_image_on_page(self, driver):
+            broken_links_page = BrokenLinksPage(driver, self.broken_links_page_link)
+            broken_links_page.open()
+            response_code, content_type, error_message = broken_links_page.check_valid_image_for_200_response()
+            assert response_code == 200, \
+                f'Status code from valid image should be 200 but got {response_code}' \
+                f'\nError: {error_message}'
+            assert content_type == 'image/jpeg', \
+                f'Invalid content {content_type}, image/jpeg expected'
+
+        def test_broken_image_on_page(self, driver):
+            broken_links_page = BrokenLinksPage(driver, self.broken_links_page_link)
+            broken_links_page.open()
+            response_code, content_type, error_message = broken_links_page.check_broken_image_for_200_response()
+            assert content_type != 'image/jpeg', \
+                f'Invalid content {content_type}, expected no to be image/jpeg'
+
+        def test_valid_link(self, driver):
+            broken_links_page = BrokenLinksPage(driver, self.broken_links_page_link)
+            broken_links_page.open()
+
+            href_link, current_url = broken_links_page.check_valid_link()
+            assert href_link == current_url, \
+                f'Broken link or link incorrect after click on home simple link: {self.broken_links_page_link}' \
+                f'\nError: {current_url}'
+
+        def test_broken_link(self, driver):
+            broken_links_page = BrokenLinksPage(driver, self.broken_links_page_link)
+            broken_links_page.open()
+            response_code, current_url, error_message = broken_links_page.check_broken_link()
+            assert response_code == 500, \
+                f'Status code from {current_url} should be 500 but got {response_code}' \
                 f'\nError: {error_message}'
