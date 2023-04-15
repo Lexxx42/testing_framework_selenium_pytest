@@ -80,3 +80,10 @@ class LinksPageLocators():
     UNAUTHORIZED_REQUEST = (By.CSS_SELECTOR, '#unauthorized')
     FORBIDDEN_REQUEST = (By.CSS_SELECTOR, '#forbidden')
     NOT_FOUND_REQUEST = (By.CSS_SELECTOR, '#invalid-url')
+
+
+class BrokenLinksPageLocators():
+    VALID_IMAGE = (By.CSS_SELECTOR, '.col-md-6>div:nth-child(2) img:nth-child(2)')
+    BROKEN_IMAGE = (By.XPATH, '//div[2]/div[2]/img[2]')
+    VALID_LINK = (By.XPATH, '//div[2]/div[2]/a[1]')
+    BROKEN_LINK = (By.XPATH, '//div[2]/div[2]/a[2]')
