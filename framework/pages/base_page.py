@@ -44,3 +44,7 @@ class BasePage():
 
     def perform_dynamic_click(self):
         self.element_is_visible(self.locators.CLICK_ME_BUTTON).click()
+
+    def switch_to_new_tab(self):
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        return self.driver.current_url
