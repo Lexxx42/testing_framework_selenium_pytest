@@ -1,9 +1,11 @@
+import base64
 import requests
+from os import remove, path
 from random import randint
 from .base_page import BasePage
 from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
-    ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators
-from ..generator import generated_person
+    ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators, UploadAndDownloadPageLocators
+from ..generator import generated_person, generated_file
 from selenium.webdriver.common.by import By
 
 
@@ -277,3 +279,32 @@ class BrokenLinksPage(BasePage):
             return page.status_code, url, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return page.status_code, url, error
+
+
+class UploadAndDownloadPage(BasePage):
+    locators = UploadAndDownloadPageLocators()
+
+    def upload_file(self):
+        file_name, path = generated_file()
+        try:
+            self.element_is_visible(self.locators.UPLOAD_FILE_BUTTON).send_keys(path)
+            upload_file_text = self.element_is_present(self.locators.UPLOADED_RESULT).text
+            remove(path)
+            return file_name, upload_file_text.split('\\')[-1]
+        except FileNotFoundError as e:
+            return None, e
+
+    def download_file(self):
+        try:
+            link = self.element_is_visible(self.locators.DOWNLOAD_FILE_BUTTON).get_attribute('href')
+            link_bytes = base64.b64decode(link)
+            file_name = f'filetest{randint(0, 999)}.jpg'
+            file_path = path.abspath(file_name)
+            with open(file_name, 'wb+') as f:
+                offset = link_bytes.find(b'\xff\xd8')
+                f.write(link_bytes[offset:])
+            check_file = path.exists(file_path)
+            remove(file_path)
+            return check_file
+        except FileNotFoundError as e:
+            return e
