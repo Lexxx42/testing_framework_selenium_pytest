@@ -1,1 +1,1 @@
-from .generator import generated_person
+from .generator import generated_person, generated_file

@@ -87,3 +87,9 @@ class BrokenLinksPageLocators():
     BROKEN_IMAGE = (By.XPATH, '//div[2]/div[2]/img[2]')
     VALID_LINK = (By.XPATH, '//div[2]/div[2]/a[1]')
     BROKEN_LINK = (By.XPATH, '//div[2]/div[2]/a[2]')
+
+
+class UploadAndDownloadPageLocators():
+    UPLOAD_FILE_BUTTON = (By.CSS_SELECTOR, '#uploadFile')
+    UPLOADED_RESULT = (By.CSS_SELECTOR, '#uploadedFilePath')
+    DOWNLOAD_FILE_BUTTON = (By.CSS_SELECTOR, '#downloadButton')

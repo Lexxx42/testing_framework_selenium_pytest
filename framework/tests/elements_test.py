@@ -1,6 +1,6 @@
 from random import randint, choice
 from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
-    BrokenLinksPage
+    BrokenLinksPage, UploadAndDownloadPage
 
 
 class TestElements():
@@ -238,3 +238,20 @@ class TestElements():
             assert response_code == 500, \
                 f'Status code from {current_url} should be 500 but got {response_code}' \
                 f'\nError: {error_message}'
+
+    class TestUploadAndDownloadPage():
+        upload_and_download_page_link = 'https://demoqa.com/upload-download'
+
+        def test_upload_file(self, driver):
+            upload_and_download_page = UploadAndDownloadPage(driver, self.upload_and_download_page_link)
+            upload_and_download_page.open()
+            file_name, uploaded_file_name = upload_and_download_page.upload_file()
+            assert file_name == uploaded_file_name, \
+                f'Expected {file_name} to be equal to {upload_and_download_page} after upload'
+
+        def test_download_file(self, driver):
+            upload_and_download_page = UploadAndDownloadPage(driver, self.upload_and_download_page_link)
+            upload_and_download_page.open()
+            is_file_downloaded = upload_and_download_page.download_file()
+            assert is_file_downloaded is True, \
+                f'Expected file to be downloaded (download is Ture) but got {is_file_downloaded} instead'
