@@ -1,6 +1,6 @@
 from random import randint, choice
 from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
-    BrokenLinksPage, UploadAndDownloadPage
+    BrokenLinksPage, UploadAndDownloadPage, DynamicPropertiesPage
 
 
 class TestElements():
@@ -255,3 +255,29 @@ class TestElements():
             is_file_downloaded = upload_and_download_page.download_file()
             assert is_file_downloaded is True, \
                 f'Expected file to be downloaded (download is Ture) but got {is_file_downloaded} instead'
+
+    class TestDynamicPropertiesPage():
+        dynamic_properties_page_link = 'https://demoqa.com/dynamic-properties'
+
+        def test_clickable_button(self, driver):
+            dynamic_properties_page = DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
+            dynamic_properties_page.open()
+            enable = dynamic_properties_page.check_enabled_button()
+            assert enable is True, \
+                'Button should be clickable, but it isn\'t on dynamic_properties_page'
+
+
+        def test_change_of_collor(self, driver):
+            dynamic_properties_page = DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
+            dynamic_properties_page.open()
+            color_before, color_after = dynamic_properties_page.check_change_of_color()
+            assert color_before != color_after, \
+                f'Color {color_before} should change, but it isn\'t. Got {color_after} after'
+
+        def test_button_appearance(self, driver):
+            dynamic_properties_page = DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
+            dynamic_properties_page.open()
+            appear = dynamic_properties_page.check_button_appearance()
+            assert appear is True, \
+                'Button should appear, but it isn\'t on dynamic_properties_page'
+

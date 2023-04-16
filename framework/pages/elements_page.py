@@ -1,12 +1,15 @@
 import base64
+import time
 import requests
 from os import remove, path
 from random import randint
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
 from .base_page import BasePage
 from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
-    ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators, UploadAndDownloadPageLocators
+    ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators, UploadAndDownloadPageLocators, \
+    DynamicPropertiesPageLocators
 from ..generator import generated_person, generated_file
-from selenium.webdriver.common.by import By
 
 
 class TextBoxPage(BasePage):
@@ -162,17 +165,17 @@ class LinksPage(BasePage):
             requests.get(link_href)
             simple_link.click()
             url = self.switch_to_new_tab()
-            return link_href, url
         except requests.exceptions.RequestException as error:
             return link_href, error
+        return link_href, url
 
     def check_broken_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.BAD_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
     def check_new_tab_dynamic_link(self):
         simple_link = self.element_is_visible(self.locators.DYNAMIC_LINK)
@@ -181,57 +184,57 @@ class LinksPage(BasePage):
             requests.get(link_href)
             simple_link.click()
             url = self.switch_to_new_tab()
-            return link_href, url
         except requests.exceptions.RequestException as error:
             return link_href, error
+        return link_href, url
 
     def check_created_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.CREATED_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
     def check_no_content_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.NO_CONTENT_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
     def check_moved_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.MOVED_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
     def check_unauthorized_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.UNAUTHORIZED_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
     def check_forbidden_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.FORBIDDEN_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
     def check_not_found_link(self, url):
         try:
             request = requests.get(url)
             self.element_is_present(self.locators.NOT_FOUND_REQUEST).click()
-            return request.status_code, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, error
+        return request.status_code, self.NO_ERRORS
 
 
 class BrokenLinksPage(BasePage):
@@ -244,9 +247,9 @@ class BrokenLinksPage(BasePage):
             image_link = image.get_attribute('src')
             request = requests.get(image_link)
             content_type = request.headers.get('content-type')
-            return request.status_code, content_type, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, content_type, error
+        return request.status_code, content_type, self.NO_ERRORS
 
     def check_broken_image_for_200_response(self):
         image = self.element_is_visible(self.locators.BROKEN_IMAGE)
@@ -254,9 +257,9 @@ class BrokenLinksPage(BasePage):
         try:
             request = requests.get(image_link)
             content_type = request.headers.get('content-type')
-            return request.status_code, content_type, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return request.status_code, content_type, error
+        return request.status_code, content_type, self.NO_ERRORS
 
     def check_valid_link(self):
         valid_link = self.element_is_visible(self.locators.VALID_LINK)
@@ -265,9 +268,9 @@ class BrokenLinksPage(BasePage):
             page = requests.get(link_href)
             valid_link.click()
             url = page.url
-            return link_href.split('/')[2], url.split('/')[2]
         except requests.exceptions.RequestException as error:
             return link_href.split('/')[2], error
+        return link_href.split('/')[2], url.split('/')[2]
 
     def check_broken_link(self):
         broken_link = self.element_is_visible(self.locators.BROKEN_LINK)
@@ -276,9 +279,9 @@ class BrokenLinksPage(BasePage):
             page = requests.get(link_href)
             broken_link.click()
             url = page.url
-            return page.status_code, url, self.NO_ERRORS
         except requests.exceptions.RequestException as error:
             return page.status_code, url, error
+        return page.status_code, url, self.NO_ERRORS
 
 
 class UploadAndDownloadPage(BasePage):
@@ -290,9 +293,9 @@ class UploadAndDownloadPage(BasePage):
             self.element_is_visible(self.locators.UPLOAD_FILE_BUTTON).send_keys(path)
             upload_file_text = self.element_is_present(self.locators.UPLOADED_RESULT).text
             remove(path)
-            return file_name, upload_file_text.split('\\')[-1]
         except FileNotFoundError as e:
             return None, e
+        return file_name, upload_file_text.split('\\')[-1]
 
     def download_file(self):
         try:
@@ -305,6 +308,31 @@ class UploadAndDownloadPage(BasePage):
                 f.write(link_bytes[offset:])
             check_file = path.exists(file_path)
             remove(file_path)
-            return check_file
         except FileNotFoundError as e:
             return e
+        return check_file
+
+
+class DynamicPropertiesPage(BasePage):
+    locators = DynamicPropertiesPageLocators()
+
+    def check_enabled_button(self):
+        try:
+            self.element_is_clickable(self.locators.ENABLE_AFTER_FIVE_SEC_BUTTON)
+        except TimeoutException:
+            return False
+        return True
+
+    def check_change_of_color(self):
+        color_button = self.element_is_visible(self.locators.COLOR_CHANGE_BUTTON)
+        color_before = color_button.value_of_css_property('color')
+        time.sleep(5)
+        color_after = color_button.value_of_css_property('color')
+        return color_before, color_after
+
+    def check_button_appearance(self):
+        try:
+            self.element_is_visible(self.locators.VISIBLE_AFTER_FIVE_SEC_BUTTON, 1)
+        except TimeoutException:
+            return False
+        return True
