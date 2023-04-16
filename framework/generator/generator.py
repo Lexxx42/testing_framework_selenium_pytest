@@ -1,6 +1,7 @@
+from os import path
 from random import randint
-from ..data import Person
 from faker import Faker
+from ..data import Person
 
 faker_ru = Faker('ru_RU')
 Faker.seed()
@@ -18,3 +19,10 @@ def generated_person():
         current_address=faker_ru.address(),
         permanent_address=faker_ru.address(),
     )
+
+
+def generated_file():
+    file_path = f'filetest{randint(0, 999)}.txt'
+    with open(file_path, 'w+') as file:
+        file.write(f'Hello, world!{randint(0, 999)}')
+    return file.name, path.abspath(file_path)
