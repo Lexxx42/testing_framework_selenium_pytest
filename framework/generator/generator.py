@@ -1,5 +1,5 @@
 from os import path
-from random import randint
+from random import randint, choice
 from faker import Faker
 from ..data import Person
 
@@ -18,6 +18,7 @@ def generated_person():
         email=faker_ru.email(),
         current_address=faker_ru.address(),
         permanent_address=faker_ru.address(),
+        mobile=faker_ru.msisdn(),
     )
 
 
@@ -26,3 +27,11 @@ def generated_file():
     with open(file_path, 'w+') as file:
         file.write(f'Hello, world!{randint(0, 999)}')
     return file.name, path.abspath(file_path)
+
+
+def generated_subject():
+    available_subjects = ['Hindi', 'English', 'Maths', 'Physics',
+                          'Chemistry', 'Biology', 'Computer Science',
+                          'Commerce', 'Accounting', 'Economics', 'Arts',
+                          'Social Studies', 'History', 'Civics']
+    return choice(available_subjects)
