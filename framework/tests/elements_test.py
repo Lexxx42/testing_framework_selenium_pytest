@@ -3,8 +3,8 @@ from ..pages import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, Bu
     BrokenLinksPage, UploadAndDownloadPage, DynamicPropertiesPage
 
 
-class TestElements():
-    class TestTextBox():
+class TestElements:
+    class TestTextBox:
         def test_text_box(self, driver):
             text_box_page = TextBoxPage(driver, 'https://demoqa.com/text-box')
             text_box_page.open()
@@ -22,7 +22,7 @@ class TestElements():
                 f'Entered permanent address was {permanent_address} ' \
                 f'which doesn\'t match output permanent address {output_permanent_address}'
 
-    class TestCheckBox():
+    class TestCheckBox:
         def test_check_box(self, driver):
             check_box_page = CheckBoxPage(driver, 'https://demoqa.com/checkbox')
             check_box_page.open()
@@ -34,7 +34,7 @@ class TestElements():
                 f'Checked checkboxes {input_checkboxes} ' \
                 f'are not matching output result checkboxes {output_result}'
 
-    class TestRadioButton():
+    class TestRadioButton:
         def test_radio_button(self, driver):
             radio_button_page = RadioButtonPage(driver, 'https://demoqa.com/radio-button')
             radio_button_page.open()
@@ -44,7 +44,7 @@ class TestElements():
                 output = radio_button_page.get_output_result()
                 assert action.title() == output, f'Action {action} don\'t match the rusult {output}'
 
-    class TestWebTable():
+    class TestWebTable:
         web_page_link = 'https://demoqa.com/webtables'
 
         def test_web_table_add_person(self, driver):
@@ -93,7 +93,7 @@ class TestElements():
             assert count_of_rows == [5, 10, 20, 25, 50, 100], \
                 f'Available rows count is [5, 10, 20, 25, 50, 100] expected but got {count_of_rows}'
 
-    class TestButtonsPage():
+    class TestButtonsPage:
         buttons_page_link = 'https://demoqa.com/buttons'
 
         def test_dynamic_click_on_the_button_click_me(self, driver):
@@ -120,7 +120,7 @@ class TestElements():
             assert click_message == 'You have done a right click', \
                 f'Expected right click message to be \'You have done a right click\' but got {click_message}'
 
-    class TestLinksPage():
+    class TestLinksPage:
         links_page_link = 'https://demoqa.com/links'
         links_page_broken_link = 'https://demoqa.com/bad-request'
         links_page_created_link = 'https://demoqa.com/created'
@@ -202,7 +202,7 @@ class TestElements():
                 f'Status code from {self.links_page_not_found_link} should be 404 but got {response_code}' \
                 f'\nError: {error_message}'
 
-    class TestBrokenLinksPage():
+    class TestBrokenLinksPage:
         broken_links_page_link = 'https://demoqa.com/broken'
 
         def test_valid_image_on_page(self, driver):
@@ -239,7 +239,7 @@ class TestElements():
                 f'Status code from {current_url} should be 500 but got {response_code}' \
                 f'\nError: {error_message}'
 
-    class TestUploadAndDownloadPage():
+    class TestUploadAndDownloadPage:
         upload_and_download_page_link = 'https://demoqa.com/upload-download'
 
         def test_upload_file(self, driver):
@@ -256,7 +256,7 @@ class TestElements():
             assert is_file_downloaded is True, \
                 f'Expected file to be downloaded (download is Ture) but got {is_file_downloaded} instead'
 
-    class TestDynamicPropertiesPage():
+    class TestDynamicPropertiesPage:
         dynamic_properties_page_link = 'https://demoqa.com/dynamic-properties'
 
         def test_clickable_button(self, driver):
@@ -265,7 +265,6 @@ class TestElements():
             enable = dynamic_properties_page.check_enabled_button()
             assert enable is True, \
                 'Button should be clickable, but it isn\'t on dynamic_properties_page'
-
 
         def test_change_of_collor(self, driver):
             dynamic_properties_page = DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
@@ -280,4 +279,3 @@ class TestElements():
             appear = dynamic_properties_page.check_button_appearance()
             assert appear is True, \
                 'Button should appear, but it isn\'t on dynamic_properties_page'
-

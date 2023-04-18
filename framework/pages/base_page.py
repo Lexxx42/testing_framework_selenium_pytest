@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
 
 
-class BasePage():
+class BasePage:
     def __init__(self, driver, url):
         self.driver = driver
         self.url = url
