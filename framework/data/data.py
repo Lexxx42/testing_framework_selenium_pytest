@@ -12,3 +12,4 @@ class Person():
     email: str = ""
     current_address: str = ""
     permanent_address: str = ""
+    mobile: str = ""
