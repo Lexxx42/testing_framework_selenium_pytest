@@ -2,3 +2,4 @@ from .elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, R
     WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators, \
     UploadAndDownloadPageLocators, DynamicPropertiesPageLocators
 from .form_page_locators import PracticeFormLocators
+from .alerts_frame_windows_locators import BrowserWindowsPageLocators
