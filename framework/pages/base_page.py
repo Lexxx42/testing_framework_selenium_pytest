@@ -60,3 +60,14 @@ class BasePage:
     def remove_footer(self):
         self.driver.execute_script('document.getElementsByTagName(\'footer\')[0].remove();')
         self.driver.execute_script('document.getElementById(\'close-fixedban\').remove();')
+
+    def switch_to_alert(self, timeout=6, is_accepted=True):
+        alert = wait(self.driver, timeout).until(EC.alert_is_present())
+        try:
+            alert_text = alert.text
+        finally:
+            if is_accepted:
+                alert.accept()
+            else:
+                alert.dismiss()
+        return alert_text
