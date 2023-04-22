@@ -12,6 +12,7 @@ class BasePage:
         self.driver.get(self.url)
 
     def element_is_visible(self, locator, timeout=5):
+        self.go_to_element(self.element_is_present(locator))
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     def elements_are_visible(self, locator, timeout=5):
@@ -30,7 +31,11 @@ class BasePage:
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
     def go_to_element(self, element):
-        self.driver.execute_script('arguments[0].scrollIntoView();', element)
+        try:
+            self.driver.execute_script('arguments[0].scrollIntoView();', element)
+        except (NoSuchElementException):
+            return False
+        return True
 
     def perform_double_click(self):
         action_chains = ActionChains(self.driver)
@@ -48,3 +53,10 @@ class BasePage:
     def switch_to_new_tab(self):
         self.driver.switch_to.window(self.driver.window_handles[1])
         return self.driver.current_url
+
+    def zoom_page(self, zoom: float):
+        self.driver.execute_script(f'document.body.style.zoom = \'{zoom}\'')
+
+    def remove_footer(self):
+        self.driver.execute_script('document.getElementsByTagName(\'footer\')[0].remove();')
+        self.driver.execute_script('document.getElementById(\'close-fixedban\').remove();')
