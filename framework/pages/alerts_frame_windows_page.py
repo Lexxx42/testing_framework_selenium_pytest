@@ -1,9 +1,10 @@
+from random import choice
 from .base_page import BasePage
-from ..locators import BrowserWindowsPageLocators
+from ..locators import BrowserWindowsPageLocators, AlertsPageLocators
 
 
 class BrowserWindowsPage(BasePage):
-    locators = BrowserWindowsPageLocators
+    locators = BrowserWindowsPageLocators()
 
     def check_opened(self, what_to_open):
         available_cases = {
@@ -14,3 +15,24 @@ class BrowserWindowsPage(BasePage):
         self.switch_to_new_tab()
         text_title = self.element_is_present(self.locators.SAMPLE_TEXT).text
         return text_title
+
+
+class AlertsPage(BasePage):
+    locators = AlertsPageLocators()
+
+    def check_see_alert(self, which_alert='alert', option='Ok'):
+        available_alerts = {
+            'alert': self.locators.ALERT_BUTTON,
+            'alert_after_five_sec': self.locators.ALERT_AFTER_FIVE_SEC_BUTTON,
+            'confirm': self.locators.CONFIRM_BUTTON
+        }
+        self.element_is_clickable(available_alerts[which_alert]).click()
+        if which_alert == 'confirm' and option=='Cancel':
+            alert_text = self.switch_to_alert(is_accepted=False)
+        else:
+            alert_text = self.switch_to_alert(is_accepted=True)
+        return alert_text
+
+    def check_confirm_result(self):
+        confirm_result = self.element_is_visible(self.locators.CONFIRM_RESULT).text
+        return confirm_result
