@@ -35,3 +35,15 @@ def generated_subject():
                           'Commerce', 'Accounting', 'Economics', 'Arts',
                           'Social Studies', 'History', 'Civics']
     return choice(available_subjects)
+
+
+def generated_state_and_city():
+    available_states_cities = {
+        'NCR': ['Delhi', 'Gurgaon', 'Noida'],
+        'Uttar Pradesh': ['Agra', 'Lucknow', 'Merrut'],
+        'Haryana': ['Karnal', 'Panipat'],
+        'Rajasthan': ['Jaipur', 'Jaiselmer']
+    }
+    random_state = choice(list(available_states_cities.keys()))
+    random_city = choice(available_states_cities[random_state])
+    return random_state, random_city
