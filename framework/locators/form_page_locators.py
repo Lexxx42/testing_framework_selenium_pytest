@@ -29,4 +29,4 @@ class PracticeFormLocators:
     SUBMIT_BUTTON = (By.CSS_SELECTOR, '#submit')
 
     # table results
-    RESULT_TABLE = (By.CSS_SELECTOR, '')
+    RESULT_TABLE = (By.XPATH, '//div[@class=\'table-responsive\']//td[2]')
