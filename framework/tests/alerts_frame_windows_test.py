@@ -1,5 +1,5 @@
 from random import randint
-from ..pages import BrowserWindowsPage, AlertsPage, FramesPage
+from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage
 from ..generator import generated_person
 
 
@@ -94,3 +94,17 @@ class TestAlertsFrameWindows:
                 f'Frame width should be 100px. Got {width}'
             assert height == '100px', \
                 f'Frame width should be 100px. Got {height}'
+
+    class TestNestedFrames:
+        nested_frames_page_link = 'https://demoqa.com/nestedframes'
+
+        def test_nested_frames(self, driver):
+            nested_frames_page = NestedFramesPage(driver, self.nested_frames_page_link)
+            nested_frames_page.open()
+            outer_frame_text, inner_frame_text = nested_frames_page.check_nested_frames()
+            assert outer_frame_text == 'Parent frame', \
+                f'Parent frame should have a text \'Parent frame\'.' \
+                f' Got {outer_frame_text}'
+            assert inner_frame_text == 'Child Iframe', \
+                f'Child frame should have a text \'Child Iframe\'.' \
+                f' Got {inner_frame_text}'
