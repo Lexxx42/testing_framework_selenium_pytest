@@ -1,5 +1,6 @@
 from random import randint
 from ..pages import BrowserWindowsPage, AlertsPage
+from ..generator import generated_person
 
 
 class TestAlertsFrameWindows:
@@ -51,3 +52,16 @@ class TestAlertsFrameWindows:
             assert confirm_result == f'You selected {selected_option}', \
                 f'Confirm text should be \'You selected (Ok or Cancel)\'. ' \
                 f'Got: You selected {selected_option}'
+
+        def test_prompt_alert(self, driver):
+            alert_page = AlertsPage(driver, self.alerts_page_link)
+            alert_page.open()
+            data_input = next(generated_person()).first_name
+            alert_text = alert_page.check_see_alert('prompt', data=data_input)
+            assert alert_text == 'Please enter your name', \
+                f'Alert text should be \'Please enter your name\'.' \
+                f' Got {alert_text}'
+            prompt_result = alert_page.check_prompt_result()
+            assert prompt_result.split()[-1] == data_input, \
+                f'Confirm text should be {data_input}. ' \
+                f'Got: {prompt_result.split()[-1]}'
