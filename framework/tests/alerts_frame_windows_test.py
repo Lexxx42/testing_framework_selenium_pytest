@@ -1,9 +1,11 @@
 from random import randint
-from ..pages import BrowserWindowsPage, AlertsPage
+from ..pages import BrowserWindowsPage, AlertsPage, FramesPage
 from ..generator import generated_person
 
 
 class TestAlertsFrameWindows:
+    EXPECTED_TEXT = 'This is a sample page'
+
     class TestBrowserWindows:
         browser_windows_link = 'https://demoqa.com/browser-windows'
 
@@ -11,14 +13,14 @@ class TestAlertsFrameWindows:
             browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_link)
             browser_windows_page.open()
             new_tab_text = browser_windows_page.check_opened('tab')
-            assert new_tab_text == 'This is a sample page', \
+            assert new_tab_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'New tab text should be \'This is a sample page\' but got {new_tab_text}'
 
         def test_new_window(self, driver):
             browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_link)
             browser_windows_page.open()
             new_window_text = browser_windows_page.check_opened('window')
-            assert new_window_text == 'This is a sample page', \
+            assert new_window_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'New window text should be \'This is a sample page\' but got {new_window_text}'
 
     class TestAlerts:
@@ -65,3 +67,30 @@ class TestAlertsFrameWindows:
             assert prompt_result.split()[-1] == data_input, \
                 f'Confirm text should be {data_input}. ' \
                 f'Got: {prompt_result.split()[-1]}'
+
+    class TestFrames:
+        frames_page_link = 'https://demoqa.com/frames'
+
+        def test_first_frame(self, driver):
+            frames_page = FramesPage(driver, self.frames_page_link)
+            frames_page.open()
+            text, width, height = frames_page.check_frame('frame1')
+            assert text == TestAlertsFrameWindows.EXPECTED_TEXT, \
+                f'Frame text should be \'This is a sample page\'.' \
+                f' Got {text}'
+            assert width == '500px', \
+                f'Frame width should be 500px. Got {width}'
+            assert height == '350px', \
+                f'Frame width should be 350px. Got {height}'
+
+        def test_second_frame(self, driver):
+            frames_page = FramesPage(driver, self.frames_page_link)
+            frames_page.open()
+            text, width, height = frames_page.check_frame('frame2')
+            assert text == TestAlertsFrameWindows.EXPECTED_TEXT, \
+                f'Frame text should be \'This is a sample page\'.' \
+                f' Got {text}'
+            assert width == '100px', \
+                f'Frame width should be 100px. Got {width}'
+            assert height == '100px', \
+                f'Frame width should be 100px. Got {height}'

@@ -1,6 +1,6 @@
 from random import choice
 from .base_page import BasePage
-from ..locators import BrowserWindowsPageLocators, AlertsPageLocators
+from ..locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators
 
 
 class BrowserWindowsPage(BasePage):
@@ -43,3 +43,18 @@ class AlertsPage(BasePage):
     def check_prompt_result(self):
         prompt_result = self.element_is_visible(self.locators.PROMPT_RESULT).text
         return prompt_result
+
+
+class FramesPage(BasePage):
+    locators = FramesPageLocators()
+
+    def check_frame(self, frame_number):
+        if frame_number == 'frame1':
+            frame = self.element_is_visible(self.locators.FIRST_FRAME)
+        elif frame_number == 'frame2':
+            frame = self.element_is_visible(self.locators.SECOND_FRAME)
+        width = frame.get_attribute('width')
+        height = frame.get_attribute('height')
+        self.switch_to_frame(frame)
+        text = self.element_is_present(self.locators.FRAME_TEXT).text
+        return text, width, height

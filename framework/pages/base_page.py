@@ -73,3 +73,6 @@ class BasePage:
             else:
                 alert.dismiss()
         return alert_text
+
+    def switch_to_frame(self, frame_locator, timeout=5):
+        wait(self.driver, timeout).until(EC.frame_to_be_available_and_switch_to_it(frame_locator))
