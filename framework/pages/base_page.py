@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 
 
 class BasePage:
@@ -76,3 +77,10 @@ class BasePage:
 
     def switch_to_frame(self, frame_locator, timeout=5):
         wait(self.driver, timeout).until(EC.frame_to_be_available_and_switch_to_it(frame_locator))
+
+    def is_element_visible(self, element):
+        try:
+            self.driver.find_element(*element)
+        except (NoSuchElementException):
+            return False
+        return True
