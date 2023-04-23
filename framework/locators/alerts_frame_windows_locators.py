@@ -17,3 +17,4 @@ class AlertsPageLocators:
     CONFIRM_RESULT = (By.CSS_SELECTOR, '#confirmResult')
 
     PROMPT_BUTTON = (By.CSS_SELECTOR, '#promtButton')
+    PROMPT_RESULT = (By.CSS_SELECTOR, '#promptResult')
