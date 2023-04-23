@@ -1,7 +1,7 @@
 from random import choice
 from .base_page import BasePage
 from ..locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators, \
-    NestedFramesPageLocators
+    NestedFramesPageLocators, ModalDialogsPageLocators
 
 
 class BrowserWindowsPage(BasePage):
@@ -72,3 +72,34 @@ class NestedFramesPage(BasePage):
         self.switch_to_frame(child_frame)
         child_text = self.element_is_present(self.locators.INNER_FRAME_TEXT).text
         return parent_text, child_text
+
+
+class ModalDialogsPage(BasePage):
+    locators = ModalDialogsPageLocators()
+
+    def open_modal(self, which_modal='small'):
+        if which_modal == 'small':
+            self.element_is_clickable(self.locators.SMALL_MODAL_BUTTON).click()
+        elif which_modal == 'large':
+            self.element_is_clickable(self.locators.LARGE_MODAL_BUTTON).click()
+
+    def check_modal_visibility(self):
+        return self.is_element_visible(self.locators.MODAL_WINDOW)
+
+    def close_modal_by_x_button(self):
+        self.element_is_clickable(self.locators.MODAL_CLOSE_X_BUTTON).click()
+
+    def close_modal_by_close_button(self, which_modal='small'):
+        if which_modal == 'small':
+            self.element_is_clickable(self.locators.SMALL_MODAL_CLOSE_BUTTON).click()
+        elif which_modal == 'large':
+            self.element_is_clickable(self.locators.LARGE_MODAL_CLOSE_BUTTON).click()
+
+    def get_modal_text(self, which_modal='small'):
+        if which_modal == 'small':
+            return self.element_is_visible(self.locators.SMALL_MODAL_TEXT).text
+        elif which_modal == 'large':
+            return self.element_is_visible(self.locators.LARGE_MODAL_TEXT).text
+
+    def get_modal_title(self):
+        return self.element_is_visible(self.locators.MODAL_TITLE).text
