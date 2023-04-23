@@ -24,3 +24,10 @@ class FramesPageLocators:
     FIRST_FRAME = (By.CSS_SELECTOR, '#frame1')
     SECOND_FRAME = (By.CSS_SELECTOR, '#frame2')
     FRAME_TEXT = (By.CSS_SELECTOR, '#sampleHeading')
+
+
+class NestedFramesPageLocators:
+    OUTER_FRAME = (By.CSS_SELECTOR, '#frame1')
+    OUTER_FRAME_TEXT = (By.CSS_SELECTOR, 'body')
+    INNER_FRAME = (By.CSS_SELECTOR, '[srcdoc=\'<p>Child Iframe</p>\']')
+    INNER_FRAME_TEXT = (By.CSS_SELECTOR, 'p')
