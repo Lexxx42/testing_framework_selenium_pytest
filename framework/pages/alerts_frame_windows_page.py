@@ -1,6 +1,7 @@
 from random import choice
 from .base_page import BasePage
-from ..locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators
+from ..locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators, \
+    NestedFramesPageLocators
 
 
 class BrowserWindowsPage(BasePage):
@@ -58,3 +59,16 @@ class FramesPage(BasePage):
         self.switch_to_frame(frame)
         text = self.element_is_present(self.locators.FRAME_TEXT).text
         return text, width, height
+
+
+class NestedFramesPage(BasePage):
+    locators = NestedFramesPageLocators()
+
+    def check_nested_frames(self):
+        parent_frame = self.element_is_visible(self.locators.OUTER_FRAME)
+        self.switch_to_frame(parent_frame)
+        parent_text = self.element_is_present(self.locators.OUTER_FRAME_TEXT).text
+        child_frame = self.element_is_visible(self.locators.INNER_FRAME)
+        self.switch_to_frame(child_frame)
+        child_text = self.element_is_present(self.locators.INNER_FRAME_TEXT).text
+        return parent_text, child_text
