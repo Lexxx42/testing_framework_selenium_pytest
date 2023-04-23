@@ -1,5 +1,5 @@
 from random import randint
-from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage
+from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage, ModalDialogsPage
 from ..generator import generated_person
 
 
@@ -108,3 +108,117 @@ class TestAlertsFrameWindows:
             assert inner_frame_text == 'Child Iframe', \
                 f'Child frame should have a text \'Child Iframe\'.' \
                 f' Got {inner_frame_text}'
+
+    class TestModalDialogs:
+        modal_dialogs_page_link = 'https://demoqa.com/modal-dialogs'
+
+        def test_small_modal_open(self, driver):
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal()
+            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            assert is_modal_visible is True, \
+                'Modal dialog should be visible. But it isn\'t.'
+
+        def test_small_modal_close_by_x_button(self, driver):
+            import time
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal()
+            modal_dialog_page.close_modal_by_x_button()
+            time.sleep(0.5)
+            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            assert is_modal_visible is False, \
+                'Modal dialog shouldn\'t be visible. ' \
+                'But it is. Closed by x button.'
+
+        def test_small_modal_close_by_close_button(self, driver):
+            import time
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal()
+            modal_dialog_page.close_modal_by_close_button('small')
+            time.sleep(0.5)
+            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            assert is_modal_visible is False, \
+                'Modal dialog shouldn\'t be visible after closing. ' \
+                'But it is. Closed by close button.'
+
+        def test_small_modal_text(self, driver):
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal()
+            modal_text = modal_dialog_page.get_modal_text('small')
+            assert modal_text == 'This is a small modal. It has very less content', \
+                'Text in modal dialog don\'t match expected text. ' \
+                'Expected: \'This is a small modal. It has very less content\'.' \
+                f'Got {modal_text}'
+
+        def test_small_modal_title(self, driver):
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal()
+            modal_title = modal_dialog_page.get_modal_title()
+            assert modal_title == 'Small Modal', \
+                f'Modal title expected: \'Small Modal\'. Got: {modal_title}'
+
+        def test_large_modal_open(self, driver):
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal('large')
+            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            assert is_modal_visible is True, \
+                'Modal dialog should be visible. But it isn\'t.'
+
+        def test_large_modal_close_by_x_button(self, driver):
+            import time
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal('large')
+            modal_dialog_page.close_modal_by_x_button()
+            time.sleep(0.5)
+            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            assert is_modal_visible is False, \
+                'Modal dialog shouldn\'t be visible. ' \
+                'But it is. Closed by x button.'
+
+        def test_large_modal_close_by_close_button(self, driver):
+            import time
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal('large')
+            modal_dialog_page.close_modal_by_close_button('large')
+            time.sleep(0.5)
+            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            assert is_modal_visible is False, \
+                'Modal dialog shouldn\'t be visible after closing. ' \
+                'But it is. Closed by close button.'
+
+        def test_large_modal_text(self, driver):
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal('large')
+            modal_text = modal_dialog_page.get_modal_text('large')
+            assert modal_text == 'Lorem Ipsum is simply dummy text ' \
+                                 'of the printing and typesetting industry.' \
+                                 ' Lorem Ipsum has been the industry\'s standard' \
+                                 ' dummy text ever since the 1500s, when an unknown' \
+                                 ' printer took a galley of type and scrambled' \
+                                 ' it to make a type specimen book. ' \
+                                 'It has survived not only five centuries, ' \
+                                 'but also the leap into electronic typesetting, ' \
+                                 'remaining essentially unchanged. ' \
+                                 'It was popularised in the 1960s with the release of ' \
+                                 'Letraset sheets containing Lorem Ipsum passages, ' \
+                                 'and more recently with desktop publishing software ' \
+                                 'like Aldus PageMaker including versions of Lorem Ipsum.', \
+                'Text in modal dialog don\'t match expected text. ' \
+                f'Got {modal_text}'
+
+        def test_small_large_title(self, driver):
+            modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
+            modal_dialog_page.open()
+            modal_dialog_page.open_modal('large')
+            modal_title = modal_dialog_page.get_modal_title()
+            assert modal_title == 'Large Modal', \
+                f'Modal title expected: \'Large Modal\'. Got: {modal_title}'
