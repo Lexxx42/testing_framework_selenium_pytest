@@ -66,12 +66,17 @@ class FramesPage(BasePage):
 
     def check_frame(self, frame_number):
         """Check width, height and a text of opened frame."""
+        frame = None
         if frame_number == 'frame1':
             frame = self.element_is_visible(self.locators.FIRST_FRAME)
         elif frame_number == 'frame2':
             frame = self.element_is_visible(self.locators.SECOND_FRAME)
-        width = frame.get_attribute('width')
-        height = frame.get_attribute('height')
+        try:
+            width = frame.get_attribute('width')
+            height = frame.get_attribute('height')
+        except AttributeError:
+            width = -1
+            height = -1
         self.switch_to_frame(frame)
         text = self.element_is_present(self.locators.FRAME_TEXT).text
         return text, width, height
