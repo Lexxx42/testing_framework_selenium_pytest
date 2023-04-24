@@ -19,8 +19,10 @@ import requests
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
-from ..locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, WebTablePageLocators, \
-    ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators, UploadAndDownloadPageLocators, \
+from ..locators import TextBoxPageLocators, CheckBoxPageLocators, \
+    RadioButtonPageLocators, WebTablePageLocators, \
+    ButtonsPageLocators, LinksPageLocators, \
+    BrokenLinksPageLocators, UploadAndDownloadPageLocators, \
     DynamicPropertiesPageLocators
 from ..generator import generated_person, generated_file
 
@@ -45,10 +47,14 @@ class TextBoxPage(BasePage):
 
     def check_filled_form(self):
         """Check output data of sent form."""
-        full_name = self.element_is_present(self.locators.CREATED_FULL_NAME).text.split(':')[-1]
-        email = self.element_is_present(self.locators.CREATED_EMAIL).text.split(':')[-1]
-        current_address = self.element_is_present(self.locators.CREATED_CURRENT_ADDRESS).text.split(':')[-1]
-        permanent_address = self.element_is_present(self.locators.CREATED_PERMANENT_ADDRESS).text.split(':')[-1]
+        full_name = self.element_is_present(
+            self.locators.CREATED_FULL_NAME).text.split(':')[-1]
+        email = self.element_is_present(
+            self.locators.CREATED_EMAIL).text.split(':')[-1]
+        current_address = self.element_is_present(
+            self.locators.CREATED_CURRENT_ADDRESS).text.split(':')[-1]
+        permanent_address = self.element_is_present(
+            self.locators.CREATED_PERMANENT_ADDRESS).text.split(':')[-1]
         return full_name, email, current_address, permanent_address
 
 
@@ -73,7 +79,8 @@ class CheckBoxPage(BasePage):
     def get_checked_checkboxes(self):
         """Returns activated checkboxes text."""
         checked_list = self.elements_are_present(self.locators.CHECKED_ITEMS)
-        data = [checkbox.find_element('xpath', self.locators.TITLE_CHECKBOX).text for checkbox in checked_list]
+        data = [checkbox.find_element(
+            'xpath', self.locators.TITLE_CHECKBOX).text for checkbox in checked_list]
         return str(data).replace(' ', '').replace('.doc', '').lower()
 
     def get_output_result(self):
@@ -89,8 +96,11 @@ class RadioButtonPage(BasePage):
 
     def click_on_the_radio_button(self, choice):
         """Click on radio button."""
-        choices = {'yes': self.locators.RADIO_BUTTON_YES, 'impressive': self.locators.RADIO_BUTTON_IMPRESSIVE,
-                   'no': self.locators.RADIO_BUTTON_NO}
+        choices = {
+            'yes': self.locators.RADIO_BUTTON_YES,
+            'impressive': self.locators.RADIO_BUTTON_IMPRESSIVE,
+            'no': self.locators.RADIO_BUTTON_NO
+        }
         self.element_is_visible(choices[choice]).click()
 
     def get_output_result(self):
@@ -163,7 +173,8 @@ class WebTablePage(BasePage):
         number_of_rows = [5, 10, 20, 25, 50, 100]
         data = []
         for number in number_of_rows:
-            change_number_of_rows_button = self.element_is_visible(self.locators.SELECT_NUMBER_OF_ROWS)
+            change_number_of_rows_button = \
+                self.element_is_visible(self.locators.SELECT_NUMBER_OF_ROWS)
             self.go_to_element(change_number_of_rows_button)
             change_number_of_rows_button.click()
             self.element_is_visible((By.CSS_SELECTOR, f'option[value=\'{number}\']')).click()
