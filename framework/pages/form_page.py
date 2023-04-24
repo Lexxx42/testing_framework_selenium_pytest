@@ -11,10 +11,10 @@ class PracticeFormPage(BasePage):
     locators = PracticeFormLocators
 
     def fill_form_fields(self):
+        file_name, path = generated_file()
         try:
             self.remove_footer()
             person = next(generated_person())
-            file_name, path = generated_file()
             self.element_is_visible(self.locators.FIRST_NAME_INPUT).send_keys(person.first_name)
             self.element_is_visible(self.locators.LAST_NAME_INPUT).send_keys(person.last_name)
             self.element_is_visible(self.locators.EMAIL_INPUT).send_keys(person.email)
