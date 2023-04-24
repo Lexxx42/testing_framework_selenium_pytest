@@ -144,6 +144,15 @@ class WebTablePage(BasePage):
 class ButtonsPage(BasePage):
     locators = ButtonsPageLocators()
 
+    def perform_double_click(self, locator=None):
+        super().perform_double_click(self.locators.DOUBLE_CLICK_ME_BUTTON)
+
+    def perform_right_click(self, locator=None):
+        super().perform_right_click(self.locators.RIGHT_CLICK_ME_BUTTON)
+
+    def perform_dynamic_click(self, locator=None):
+        super().perform_dynamic_click(self.locators.CLICK_ME_BUTTON)
+
     def check_dynamic_click_message(self):
         return self.element_is_present(self.locators.CLICK_MESSAGE).text
 
