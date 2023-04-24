@@ -11,6 +11,7 @@ class TestForm:
     Contains tabs:
     Practice Form.
     """
+
     class TestPracticeForm:
         """Class represents Practice Form tab."""
         practice_form_link = 'https://demoqa.com/automation-practice-form'
