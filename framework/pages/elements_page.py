@@ -1,8 +1,8 @@
 import base64
 import time
-import requests
 from os import remove, path
 from random import randint
+import requests
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
