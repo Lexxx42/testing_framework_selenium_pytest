@@ -1,3 +1,8 @@
+"""Module contains tests for Forms tab on the site.
+
+Contains page objects for:
+Practice Form.
+"""
 from os import remove
 from random import randint, choice
 from selenium.webdriver.common.keys import Keys
@@ -8,9 +13,11 @@ from ..generator import generated_person, generated_file, generated_subject, gen
 
 
 class PracticeFormPage(BasePage):
+    """Practice Form page object."""
     locators = PracticeFormLocators
 
     def fill_form_fields(self):
+        """Fills all form fields."""
         file_name, path = generated_file()
         try:
             self.remove_footer()
@@ -50,6 +57,7 @@ class PracticeFormPage(BasePage):
         return person, (day_of_birth, month_of_birth, year_of_birth), subject
 
     def form_result(self):
+        """Returns results list of filled form."""
         result_list = self.elements_are_visible(self.locators.RESULT_TABLE)
         data = []
         for item in result_list:
