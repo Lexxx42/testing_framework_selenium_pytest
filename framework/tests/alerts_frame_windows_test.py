@@ -116,31 +116,27 @@ class TestAlertsFrameWindows:
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            is_modal_visible = modal_dialog_page.check_modal_visible()
             assert is_modal_visible is True, \
                 'Modal dialog should be visible. But it isn\'t.'
 
         def test_small_modal_close_by_x_button(self, driver):
-            import time
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_dialog_page.close_modal_by_x_button()
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible. ' \
                 'But it is. Closed by x button.'
 
         def test_small_modal_close_by_close_button(self, driver):
-            import time
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_dialog_page.close_modal_by_close_button('small')
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible after closing. ' \
                 'But it is. Closed by close button.'
 
@@ -166,31 +162,27 @@ class TestAlertsFrameWindows:
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            is_modal_visible = modal_dialog_page.check_modal_visible()
             assert is_modal_visible is True, \
                 'Modal dialog should be visible. But it isn\'t.'
 
         def test_large_modal_close_by_x_button(self, driver):
-            import time
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_dialog_page.close_modal_by_x_button()
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible. ' \
                 'But it is. Closed by x button.'
 
         def test_large_modal_close_by_close_button(self, driver):
-            import time
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_dialog_page.close_modal_by_close_button('large')
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible after closing. ' \
                 'But it is. Closed by close button.'
 
