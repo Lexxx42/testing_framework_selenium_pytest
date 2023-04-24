@@ -1,4 +1,3 @@
-from random import choice
 from .base_page import BasePage
 from ..locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators, \
     NestedFramesPageLocators, ModalDialogsPageLocators
