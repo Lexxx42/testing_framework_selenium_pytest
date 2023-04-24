@@ -323,23 +323,27 @@ class BrokenLinksPage(BasePage):
     def check_valid_image_for_200_response(self):
         """Check valid image status code and content type."""
         image = self.element_is_visible(self.locators.VALID_IMAGE)
+        content_type = None
+        request = -1
         try:
             image_link = image.get_attribute('src')
             request = requests.get(image_link, timeout=5)
             content_type = request.headers.get('content-type')
         except requests.exceptions.RequestException as error:
-            return request.status_code, content_type, error
+            return request, content_type, error
         return request.status_code, content_type, self.NO_ERRORS
 
     def check_broken_image_for_200_response(self):
         """Check broken image status code and content type."""
         image = self.element_is_visible(self.locators.BROKEN_IMAGE)
         image_link = image.get_attribute('src')
+        request = -1
+        content_type = None
         try:
             request = requests.get(image_link, timeout=5)
             content_type = request.headers.get('content-type')
         except requests.exceptions.RequestException as error:
-            return request.status_code, content_type, error
+            return request, content_type, error
         return request.status_code, content_type, self.NO_ERRORS
 
     def check_valid_link(self):
@@ -358,12 +362,14 @@ class BrokenLinksPage(BasePage):
         """Check broken link status code and url."""
         broken_link = self.element_is_visible(self.locators.BROKEN_LINK)
         link_href = broken_link.get_attribute('href')
+        page = -1
+        url = -1
         try:
             page = requests.get(link_href, timeout=5)
             broken_link.click()
             url = page.url
         except requests.exceptions.RequestException as error:
-            return page.status_code, url, error
+            return page, url, error
         return page.status_code, url, self.NO_ERRORS
 
 
@@ -373,13 +379,13 @@ class UploadAndDownloadPage(BasePage):
 
     def upload_file(self):
         """Uploads file. Returns filename and upload text result."""
-        file_name, path = generated_file()
+        file_name, file_path = generated_file()
         try:
-            self.element_is_visible(self.locators.UPLOAD_FILE_BUTTON).send_keys(path)
+            self.element_is_visible(self.locators.UPLOAD_FILE_BUTTON).send_keys(file_path)
             upload_file_text = self.element_is_present(self.locators.UPLOADED_RESULT).text
-            remove(path)
-        except FileNotFoundError as e:
-            return None, e
+            remove(file_path)
+        except FileNotFoundError as error:
+            return None, error
         return file_name, upload_file_text.split('\\')[-1]
 
     def download_file(self):
@@ -389,13 +395,13 @@ class UploadAndDownloadPage(BasePage):
             link_bytes = base64.b64decode(link)
             file_name = f'filetest{randint(0, 999)}.jpg'
             file_path = path.abspath(file_name)
-            with open(file_name, 'wb+') as f:
+            with open(file_name, 'wb+') as file:
                 offset = link_bytes.find(b'\xff\xd8')
-                f.write(link_bytes[offset:])
+                file.write(link_bytes[offset:])
             check_file = path.exists(file_path)
             remove(file_path)
-        except FileNotFoundError as e:
-            return e
+        except FileNotFoundError as error:
+            return error
         return check_file
 
 
