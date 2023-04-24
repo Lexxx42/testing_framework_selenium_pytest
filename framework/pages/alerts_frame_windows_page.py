@@ -83,8 +83,11 @@ class ModalDialogsPage(BasePage):
         elif which_modal == 'large':
             self.element_is_clickable(self.locators.LARGE_MODAL_BUTTON).click()
 
-    def check_modal_visibility(self):
+    def check_modal_visible(self):
         return self.is_element_visible(self.locators.MODAL_WINDOW)
+
+    def check_modal_disappeared(self):
+        return self.is_element_disappeared(self.locators.MODAL_WINDOW)
 
     def close_modal_by_x_button(self):
         self.element_is_clickable(self.locators.MODAL_CLOSE_X_BUTTON).click()
