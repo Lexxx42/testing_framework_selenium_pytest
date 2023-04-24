@@ -126,7 +126,7 @@ class ModalDialogsPage(BasePage):
         """Returns text from modal."""
         if which_modal == 'small':
             return self.element_is_visible(self.locators.SMALL_MODAL_TEXT).text
-        elif which_modal == 'large':
+        if which_modal == 'large':
             return self.element_is_visible(self.locators.LARGE_MODAL_TEXT).text
 
     def get_modal_title(self):
