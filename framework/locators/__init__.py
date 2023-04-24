@@ -1,4 +1,6 @@
-from .elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
+"""Module for relative imports in framework from locators."""
+from .elements_page_locators import TextBoxPageLocators, \
+    CheckBoxPageLocators, RadioButtonPageLocators, \
     WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, BrokenLinksPageLocators, \
     UploadAndDownloadPageLocators, DynamicPropertiesPageLocators
 from .form_page_locators import PracticeFormLocators
