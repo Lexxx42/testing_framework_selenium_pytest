@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 
 class BasePage:
@@ -34,7 +34,7 @@ class BasePage:
     def go_to_element(self, element):
         try:
             self.driver.execute_script('arguments[0].scrollIntoView();', element)
-        except (NoSuchElementException):
+        except NoSuchElementException:
             return False
         return True
 
@@ -78,9 +78,17 @@ class BasePage:
     def switch_to_frame(self, frame_locator, timeout=5):
         wait(self.driver, timeout).until(EC.frame_to_be_available_and_switch_to_it(frame_locator))
 
-    def is_element_visible(self, element):
+    def is_element_disappeared(self, locator, timeout=1):
         try:
-            self.driver.find_element(*element)
-        except (NoSuchElementException):
+            wait(self.driver, timeout).until_not(EC.presence_of_element_located(locator))
+        except TimeoutException:
+            return False
+        return True
+
+    def is_element_visible(self, locator, timeout=5):
+        try:
+            self.go_to_element(self.element_is_present(locator))
+            wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+        except (NoSuchElementException, TimeoutException):
             return False
         return True
