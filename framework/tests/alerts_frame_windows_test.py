@@ -1,15 +1,34 @@
+"""Module contains tests for Alerts, Frame & Windows tab on the site.
+
+Contains tabs:
+Browser Windows,
+Alerts,
+Frames,
+Nested Frames,
+Modal Dialogs.
+"""
 from random import randint
 from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage, ModalDialogsPage
 from ..generator import generated_person
 
 
 class TestAlertsFrameWindows:
+    """Class represents Alerts, Frame & Windows tab.
+    Contains tabs:
+    Browser Windows,
+    Alerts,
+    Frames,
+    Nested Frames,
+    Modal Dialogs.
+    """
     EXPECTED_TEXT = 'This is a sample page'
 
     class TestBrowserWindows:
+        """Class represents Browser Windows tab."""
         browser_windows_link = 'https://demoqa.com/browser-windows'
 
         def test_new_tab(self, driver):
+            """Test opening a new tab and getting the text from it."""
             browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_link)
             browser_windows_page.open()
             new_tab_text = browser_windows_page.check_opened('tab')
@@ -17,6 +36,7 @@ class TestAlertsFrameWindows:
                 f'New tab text should be \'This is a sample page\' but got {new_tab_text}'
 
         def test_new_window(self, driver):
+            """Test opening a new window and getting the text from it."""
             browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_link)
             browser_windows_page.open()
             new_window_text = browser_windows_page.check_opened('window')
@@ -24,9 +44,11 @@ class TestAlertsFrameWindows:
                 f'New window text should be \'This is a sample page\' but got {new_window_text}'
 
     class TestAlerts:
+        """Class represents Alerts tab."""
         alerts_page_link = 'https://demoqa.com/alerts'
 
         def test_see_alert(self, driver):
+            """Test user can see alert and the text of it."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             alert_text = alert_page.check_see_alert('alert')
@@ -34,6 +56,7 @@ class TestAlertsFrameWindows:
                 f'Alert text should be \'You clicked a button\'. Got {alert_text}'
 
         def test_see_alert_after_five_sev(self, driver):
+            """Test alert is opened after 5 seconds after a click."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             alert_text = alert_page.check_see_alert('alert_after_five_sec')
@@ -42,6 +65,7 @@ class TestAlertsFrameWindows:
                 f' Got {alert_text}'
 
         def test_confirm_alert(self, driver):
+            """Test user can interact with a confirm alert."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             options = ['Ok', 'Cancel']
@@ -56,6 +80,7 @@ class TestAlertsFrameWindows:
                 f'Got: You selected {selected_option}'
 
         def test_prompt_alert(self, driver):
+            """Test user can interact with a prompt alert."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             data_input = next(generated_person()).first_name
@@ -69,9 +94,11 @@ class TestAlertsFrameWindows:
                 f'Got: {prompt_result.split()[-1]}'
 
     class TestFrames:
+        """Class represents Frames tab."""
         frames_page_link = 'https://demoqa.com/frames'
 
         def test_first_frame(self, driver):
+            """Test user can see text in a frame. Frame has correct resolution."""
             frames_page = FramesPage(driver, self.frames_page_link)
             frames_page.open()
             text, width, height = frames_page.check_frame('frame1')
@@ -84,6 +111,7 @@ class TestAlertsFrameWindows:
                 f'Frame width should be 350px. Got {height}'
 
         def test_second_frame(self, driver):
+            """Test user can see text in a frame. Frame has correct resolution."""
             frames_page = FramesPage(driver, self.frames_page_link)
             frames_page.open()
             text, width, height = frames_page.check_frame('frame2')
@@ -96,9 +124,11 @@ class TestAlertsFrameWindows:
                 f'Frame width should be 100px. Got {height}'
 
     class TestNestedFrames:
+        """Class represents Nested Frames tab."""
         nested_frames_page_link = 'https://demoqa.com/nestedframes'
 
         def test_nested_frames(self, driver):
+            """Test user can see text in a parent and child frames."""
             nested_frames_page = NestedFramesPage(driver, self.nested_frames_page_link)
             nested_frames_page.open()
             outer_frame_text, inner_frame_text = nested_frames_page.check_nested_frames()
@@ -110,41 +140,42 @@ class TestAlertsFrameWindows:
                 f' Got {inner_frame_text}'
 
     class TestModalDialogs:
+        """Class represents Modal Dialogs tab."""
         modal_dialogs_page_link = 'https://demoqa.com/modal-dialogs'
 
         def test_small_modal_open(self, driver):
+            """Test user can open small modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            is_modal_visible = modal_dialog_page.check_modal_visible()
             assert is_modal_visible is True, \
                 'Modal dialog should be visible. But it isn\'t.'
 
         def test_small_modal_close_by_x_button(self, driver):
-            import time
+            """Test user can close small modal by X button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_dialog_page.close_modal_by_x_button()
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible. ' \
                 'But it is. Closed by x button.'
 
         def test_small_modal_close_by_close_button(self, driver):
-            import time
+            """Test user can close small modal by Close button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_dialog_page.close_modal_by_close_button('small')
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible after closing. ' \
                 'But it is. Closed by close button.'
 
         def test_small_modal_text(self, driver):
+            """Test user can read text in a small modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
@@ -155,6 +186,7 @@ class TestAlertsFrameWindows:
                 f'Got {modal_text}'
 
         def test_small_modal_title(self, driver):
+            """Test user can read title of a small modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
@@ -163,38 +195,38 @@ class TestAlertsFrameWindows:
                 f'Modal title expected: \'Small Modal\'. Got: {modal_title}'
 
         def test_large_modal_open(self, driver):
+            """Test user can open large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
+            is_modal_visible = modal_dialog_page.check_modal_visible()
             assert is_modal_visible is True, \
                 'Modal dialog should be visible. But it isn\'t.'
 
         def test_large_modal_close_by_x_button(self, driver):
-            import time
+            """Test user can close large modal by X button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_dialog_page.close_modal_by_x_button()
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible. ' \
                 'But it is. Closed by x button.'
 
         def test_large_modal_close_by_close_button(self, driver):
-            import time
+            """Test user can close large modal by Close button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_dialog_page.close_modal_by_close_button('large')
-            time.sleep(0.5)
-            is_modal_visible = modal_dialog_page.check_modal_visibility()
-            assert is_modal_visible is False, \
+            is_modal_disappeared = modal_dialog_page.check_modal_disappeared()
+            assert is_modal_disappeared is True, \
                 'Modal dialog shouldn\'t be visible after closing. ' \
                 'But it is. Closed by close button.'
 
         def test_large_modal_text(self, driver):
+            """Test user can read text in a large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
@@ -216,6 +248,7 @@ class TestAlertsFrameWindows:
                 f'Got {modal_text}'
 
         def test_small_large_title(self, driver):
+            """Test user can read title of a large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')

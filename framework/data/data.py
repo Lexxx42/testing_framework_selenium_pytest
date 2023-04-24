@@ -1,8 +1,10 @@
+"""This module is used for data generation."""
 from dataclasses import dataclass
 
 
 @dataclass
-class Person():
+class Person:
+    """Data class for person generation."""
     full_name: str = ""
     first_name: str = ""
     last_name: str = ""

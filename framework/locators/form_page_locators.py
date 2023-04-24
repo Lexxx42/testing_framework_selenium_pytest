@@ -1,8 +1,14 @@
-from selenium.webdriver.common.by import By
+"""This module contains locators for Forms tab on the site.
+
+Contains locators for following tabs:
+PracticeForm.
+"""
 from random import randint
+from selenium.webdriver.common.by import By
 
 
 class PracticeFormLocators:
+    """Class for Practice Form page locators."""
     # form fields
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, '#firstName')
     LAST_NAME_INPUT = (By.CSS_SELECTOR, '#lastName')

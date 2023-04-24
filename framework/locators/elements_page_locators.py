@@ -1,7 +1,17 @@
+"""This module contains locators for Elements tab on the site.
+
+Contains locators for following tabs:
+Browser Windows,
+Alerts,
+Frames,
+Nested Frames,
+Modal Dialogs.
+"""
 from selenium.webdriver.common.by import By
 
 
 class TextBoxPageLocators:
+    """Class for Text Box page locators."""
     # form fields
 
     FULL_NAME = (By.CSS_SELECTOR, '#userName')
@@ -18,6 +28,7 @@ class TextBoxPageLocators:
 
 
 class CheckBoxPageLocators:
+    """Class for Check Box page locators."""
     EXPAND_ALL_BUTTON = (By.CSS_SELECTOR, 'button.rct-option-expand-all')
     ITEM_LIST = (By.CSS_SELECTOR, '.rct-title')
     CHECKED_ITEMS = (By.CSS_SELECTOR, '.rct-icon-check')
@@ -26,6 +37,7 @@ class CheckBoxPageLocators:
 
 
 class RadioButtonPageLocators:
+    """Class for Radio Button page locators."""
     RADIO_BUTTON_YES = (By.CSS_SELECTOR, 'label[for=yesRadio]')
     RADIO_BUTTON_IMPRESSIVE = (By.CSS_SELECTOR, 'label[for=impressiveRadio]')
     RADIO_BUTTON_NO = (By.CSS_SELECTOR, 'label[for=noRadio]')
@@ -33,6 +45,7 @@ class RadioButtonPageLocators:
 
 
 class WebTablePageLocators:
+    """Class for Web Tables page locators."""
     # add person form
     ADD_BUTTON = (By.CSS_SELECTOR, '#addNewRecordButton')
     FIRST_NAME_FIELD = (By.CSS_SELECTOR, '#firstName')
@@ -47,7 +60,7 @@ class WebTablePageLocators:
     FULL_PEOPLE_LIST = (By.CSS_SELECTOR, '.rt-tr-group')
     SEARCH_FIELD = (By.CSS_SELECTOR, '#searchBox')
     DELETE_BUTTON = (By.CSS_SELECTOR, '[title=\'Delete\']')
-    ROW_PARRENT = './/ancestor::div[@class=\'rt-tr-group\']'
+    ROW_PARENT = './/ancestor::div[@class=\'rt-tr-group\']'
     NO_ROWS_FOUND = (By.CSS_SELECTOR, '.rt-noData')
     SELECT_NUMBER_OF_ROWS = (By.CSS_SELECTOR, '[aria-label=\'rows per page\']')
 
@@ -56,6 +69,7 @@ class WebTablePageLocators:
 
 
 class ButtonsPageLocators:
+    """Class for Buttons page locators."""
     # buttons
     DOUBLE_CLICK_ME_BUTTON = (By.CSS_SELECTOR, '#doubleClickBtn')
     RIGHT_CLICK_ME_BUTTON = (By.CSS_SELECTOR, '#rightClickBtn')
@@ -68,6 +82,7 @@ class ButtonsPageLocators:
 
 
 class LinksPageLocators:
+    """Class for Links page locators."""
     # new tab links
     SIMPLE_LINK = (By.CSS_SELECTOR, '#simpleLink')
     DYNAMIC_LINK = (By.CSS_SELECTOR, '#dynamicLink')
@@ -83,6 +98,7 @@ class LinksPageLocators:
 
 
 class BrokenLinksPageLocators:
+    """Class for Broken Links page locators."""
     VALID_IMAGE = (By.CSS_SELECTOR, '.col-md-6>div:nth-child(2) img:nth-child(2)')
     BROKEN_IMAGE = (By.XPATH, '//div[2]/div[2]/img[2]')
     VALID_LINK = (By.XPATH, '//div[2]/div[2]/a[1]')
@@ -90,12 +106,14 @@ class BrokenLinksPageLocators:
 
 
 class UploadAndDownloadPageLocators:
+    """Class for Upload and Download page locators."""
     UPLOAD_FILE_BUTTON = (By.CSS_SELECTOR, '#uploadFile')
     UPLOADED_RESULT = (By.CSS_SELECTOR, '#uploadedFilePath')
     DOWNLOAD_FILE_BUTTON = (By.CSS_SELECTOR, '#downloadButton')
 
 
 class DynamicPropertiesPageLocators:
+    """Class for Dynamic Properties page locators."""
     ENABLE_AFTER_FIVE_SEC_BUTTON = (By.CSS_SELECTOR, '#enableAfter')
     COLOR_CHANGE_BUTTON = (By.CSS_SELECTOR, '#colorChange')
     VISIBLE_AFTER_FIVE_SEC_BUTTON = (By.CSS_SELECTOR, '#visibleAfter')
