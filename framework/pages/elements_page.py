@@ -225,7 +225,7 @@ class LinksPage(BasePage):
         simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
         link_href = simple_link.get_attribute('href')
         try:
-            requests.get(link_href)
+            requests.get(link_href, timeout=5)
             simple_link.click()
             url = self.switch_to_new_tab()
         except requests.exceptions.RequestException as error:
@@ -235,7 +235,7 @@ class LinksPage(BasePage):
     def check_broken_link(self, url):
         """Check broken link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.BAD_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -246,7 +246,7 @@ class LinksPage(BasePage):
         simple_link = self.element_is_visible(self.locators.DYNAMIC_LINK)
         link_href = simple_link.get_attribute('href')
         try:
-            requests.get(link_href)
+            requests.get(link_href, timeout=5)
             simple_link.click()
             url = self.switch_to_new_tab()
         except requests.exceptions.RequestException as error:
@@ -256,7 +256,7 @@ class LinksPage(BasePage):
     def check_created_link(self, url):
         """Check created link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.CREATED_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -265,7 +265,7 @@ class LinksPage(BasePage):
     def check_no_content_link(self, url):
         """Check no content link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.NO_CONTENT_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -274,7 +274,7 @@ class LinksPage(BasePage):
     def check_moved_link(self, url):
         """Check moved link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.MOVED_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -283,7 +283,7 @@ class LinksPage(BasePage):
     def check_unauthorized_link(self, url):
         """Check unauthorized link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.UNAUTHORIZED_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -292,7 +292,7 @@ class LinksPage(BasePage):
     def check_forbidden_link(self, url):
         """Check forbidden link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.FORBIDDEN_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -301,7 +301,7 @@ class LinksPage(BasePage):
     def check_not_found_link(self, url):
         """Check not found link status code."""
         try:
-            request = requests.get(url)
+            request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.NOT_FOUND_REQUEST).click()
         except requests.exceptions.RequestException as error:
             return request.status_code, error
@@ -318,7 +318,7 @@ class BrokenLinksPage(BasePage):
         image = self.element_is_visible(self.locators.VALID_IMAGE)
         try:
             image_link = image.get_attribute('src')
-            request = requests.get(image_link)
+            request = requests.get(image_link, timeout=5)
             content_type = request.headers.get('content-type')
         except requests.exceptions.RequestException as error:
             return request.status_code, content_type, error
@@ -329,7 +329,7 @@ class BrokenLinksPage(BasePage):
         image = self.element_is_visible(self.locators.BROKEN_IMAGE)
         image_link = image.get_attribute('src')
         try:
-            request = requests.get(image_link)
+            request = requests.get(image_link, timeout=5)
             content_type = request.headers.get('content-type')
         except requests.exceptions.RequestException as error:
             return request.status_code, content_type, error
@@ -340,7 +340,7 @@ class BrokenLinksPage(BasePage):
         valid_link = self.element_is_visible(self.locators.VALID_LINK)
         link_href = valid_link.get_attribute('href')
         try:
-            page = requests.get(link_href)
+            page = requests.get(link_href, timeout=5)
             valid_link.click()
             url = page.url
         except requests.exceptions.RequestException as error:
@@ -352,7 +352,7 @@ class BrokenLinksPage(BasePage):
         broken_link = self.element_is_visible(self.locators.BROKEN_LINK)
         link_href = broken_link.get_attribute('href')
         try:
-            page = requests.get(link_href)
+            page = requests.get(link_href, timeout=5)
             broken_link.click()
             url = page.url
         except requests.exceptions.RequestException as error:
