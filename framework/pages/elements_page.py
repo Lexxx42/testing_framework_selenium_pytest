@@ -234,11 +234,12 @@ class LinksPage(BasePage):
 
     def check_broken_link(self, url):
         """Check broken link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.BAD_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
     def check_new_tab_dynamic_link(self):
@@ -255,56 +256,62 @@ class LinksPage(BasePage):
 
     def check_created_link(self, url):
         """Check created link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.CREATED_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
     def check_no_content_link(self, url):
         """Check no content link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.NO_CONTENT_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
     def check_moved_link(self, url):
         """Check moved link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.MOVED_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
     def check_unauthorized_link(self, url):
         """Check unauthorized link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.UNAUTHORIZED_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
     def check_forbidden_link(self, url):
         """Check forbidden link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.FORBIDDEN_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
     def check_not_found_link(self, url):
         """Check not found link status code."""
+        request = -1
         try:
             request = requests.get(url, timeout=5)
             self.element_is_present(self.locators.NOT_FOUND_REQUEST).click()
         except requests.exceptions.RequestException as error:
-            return request.status_code, error
+            return request, error
         return request.status_code, self.NO_ERRORS
 
 
