@@ -9,7 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from .base_page import BasePage
 from ..locators import PracticeFormLocators
-from ..generator import generated_person, generated_file, generated_subject, generated_state_and_city
+from ..generator import generated_person, \
+    generated_file, generated_subject, generated_state_and_city
 
 
 class PracticeFormPage(BasePage):
@@ -18,7 +19,7 @@ class PracticeFormPage(BasePage):
 
     def fill_form_fields(self):
         """Fills all form fields."""
-        file_name, path = generated_file()
+        _, path = generated_file()
         try:
             self.remove_footer()
             person = next(generated_person())
@@ -32,17 +33,20 @@ class PracticeFormPage(BasePage):
             self.element_is_visible(self.locators.SUBJECTS).send_keys(Keys.ENTER)
             self.element_is_clickable(self.locators.HOBBIES).click()
             self.element_is_clickable(self.locators.DATE_OF_BIRTH_SELECT).click()
-            date_of_birth_month_select = Select(self.element_is_visible(self.locators.DATE_OF_BIRTH_MONTH_DROPDOWN))
+            date_of_birth_month_select = Select(
+                self.element_is_visible(self.locators.DATE_OF_BIRTH_MONTH_DROPDOWN))
             month_of_birth = randint(0, 11)
             date_of_birth_month_select.select_by_value(f'{month_of_birth}')
-            date_of_birth_year_select = Select(self.element_is_visible(self.locators.DATE_OF_BIRTH_YEAR_DROPDOWN))
+            date_of_birth_year_select = Select(
+                self.element_is_visible(self.locators.DATE_OF_BIRTH_YEAR_DROPDOWN))
             year_of_birth = randint(1900, 2100)
             date_of_birth_year_select.select_by_value(f'{year_of_birth}')
             list_of_days = self.elements_are_visible(self.locators.DATE_OF_BIRTH_DAY_LIST)
             date_of_birth_day_element = choice(list_of_days)
             day_of_birth = date_of_birth_day_element.text
             date_of_birth_day_element.click()
-            self.element_is_visible(self.locators.CURRENT_ADDRESS_INPUT).send_keys(person.current_address)
+            self.element_is_visible(
+                self.locators.CURRENT_ADDRESS_INPUT).send_keys(person.current_address)
             self.element_is_present(self.locators.FILE_INPUT).send_keys(path)
             state, city = generated_state_and_city()
             self.element_is_clickable(self.locators.STATE_SELECT).click()
