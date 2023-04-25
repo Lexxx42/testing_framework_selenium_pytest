@@ -6,3 +6,4 @@ from .elements_page_locators import TextBoxPageLocators, \
 from .form_page_locators import PracticeFormLocators
 from .alerts_frame_windows_locators import BrowserWindowsPageLocators, AlertsPageLocators, \
     FramesPageLocators, NestedFramesPageLocators, ModalDialogsPageLocators
+from .widgets_page_locators import AccordianPageLocators
