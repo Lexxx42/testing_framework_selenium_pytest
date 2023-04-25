@@ -39,6 +39,7 @@ class BasePage:
 
     def element_is_clickable(self, locator, timeout=5):
         """Returns element if it's clickable."""
+        self.go_to_element(self.element_is_present(locator))
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
     def go_to_element(self, element):
