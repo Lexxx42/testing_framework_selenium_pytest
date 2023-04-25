@@ -6,3 +6,4 @@ from .form_page import PracticeFormPage
 from .alerts_frame_windows_page import BrowserWindowsPage, \
     AlertsPage, FramesPage, NestedFramesPage, \
     ModalDialogsPage
+from .widgets_page import AccordianPage
