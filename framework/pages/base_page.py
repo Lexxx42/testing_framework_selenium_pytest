@@ -72,7 +72,9 @@ class BasePage:
         return self.driver.current_url
 
     def zoom_page(self, zoom: float):
-        """Zoom page in or out with JS code."""
+        """Zoom page in or out with JS code.
+        :param zoom: zoom factor, 1 is 100% zoom.
+        """
         self.driver.execute_script(f'document.body.style.zoom = \'{zoom}\'')
 
     def remove_footer(self):
@@ -80,8 +82,13 @@ class BasePage:
         self.driver.execute_script('document.getElementsByTagName(\'footer\')[0].remove();')
         self.driver.execute_script('document.getElementById(\'close-fixedban\').remove();')
 
-    def switch_to_alert(self, timeout=6, is_accepted=True, data=None):
-        """Switch focus of driver to alert."""
+    def get_alert_text(self, timeout=6, is_accepted=True, data=None) -> str:
+        """Switch focus of driver to alert.
+        :param timeout: time delay for search the element.
+        :param is_accepted: is the alert accepted of not.
+        :param data: text to pass in the alert textbox.
+        :returns: text of the allert message.
+        """
         alert = wait(self.driver, timeout).until(EC.alert_is_present())
         try:
             if data:

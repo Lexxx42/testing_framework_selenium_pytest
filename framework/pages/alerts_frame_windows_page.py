@@ -42,11 +42,11 @@ class AlertsPage(BasePage):
         }
         self.element_is_clickable(available_alerts[which_alert]).click()
         if which_alert == 'confirm' and option == 'Cancel':
-            alert_text = self.switch_to_alert(is_accepted=False)
+            alert_text = self.get_alert_text(is_accepted=False)
         elif which_alert == 'prompt':
-            alert_text = self.switch_to_alert(is_accepted=True, data=data)
+            alert_text = self.get_alert_text(is_accepted=True, data=data)
         else:
-            alert_text = self.switch_to_alert(is_accepted=True)
+            alert_text = self.get_alert_text(is_accepted=True)
         return alert_text
 
     def check_confirm_result(self):
