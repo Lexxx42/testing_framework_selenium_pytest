@@ -2,7 +2,7 @@
 from os import path
 from random import randint, choice
 from faker import Faker
-from ..data import Person
+from ..data import Person, Color
 
 faker_ru = Faker('ru_RU')
 Faker.seed()
@@ -52,3 +52,15 @@ def generated_state_and_city():
     random_state = choice(list(available_states_cities.keys()))
     random_city = choice(available_states_cities[random_state])
     return random_state, random_city
+
+
+def generated_color():
+    """Generation of color."""
+    yield Color(
+        color_name=
+        [
+            'Red', 'Blue', 'Green', 'Yellow',
+            'Purple', 'Black', 'White',
+            'Voilet', 'Indigo', 'Magenta', 'Aqua'
+        ]
+    )
