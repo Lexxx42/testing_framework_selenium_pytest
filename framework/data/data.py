@@ -15,3 +15,9 @@ class Person:
     current_address: str = ""
     permanent_address: str = ""
     mobile: str = ""
+
+
+@dataclass
+class Color:
+    """Data class for color generation."""
+    color_name: list[str] = list[str]
