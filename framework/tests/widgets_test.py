@@ -58,8 +58,9 @@ class TestWidgetsPage:
             colors_selected = autocomplete_page.fill_multiple_input()
             colors_in_multiple_input = autocomplete_page.check_colors_in_multiple_input()
             assert colors_selected == colors_in_multiple_input, \
-                'Expected that selected colors entered in multiple input. ' \
-                'But they weren\'t.'
+                'Expected that entered colors match what multiple input shows. \n' \
+                f'Entered data: {colors_selected}. \n' \
+                f'Shows: {colors_in_multiple_input}'
 
         def test_remove_color_from_multiple_autocomplete(self, driver):
             """Check if color can be deleted from multiple autocomplete."""
@@ -71,7 +72,7 @@ class TestWidgetsPage:
             colors_after_deletion = autocomplete_page.count_colors_in_multiple_input()
             assert colors_before_deletion == colors_after_deletion + 1, \
                 f'Expected that {colors_before_deletion} will be greater than ' \
-                f'{colors_after_deletion} by 1. After deletion single color from multiple input.'
+                f'{colors_after_deletion} by 1.\n After deletion single color from multiple input.'
 
         def test_remove_all_colors_from_multiple_autocomplete(self, driver):
             """Check if all colors can be deleted from multiple autocomplete."""
@@ -91,3 +92,8 @@ class TestWidgetsPage:
             """Check if single autocomplete input is filled."""
             autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
             autocomplete_page.open()
+            color_selected = autocomplete_page.fill_single_input()
+            color_in_single_input = autocomplete_page.check_single_input()
+            assert color_selected == color_in_single_input, \
+                'Expected that entered color match what single input shows. ' \
+                f'Entered data: {color_selected}. Shows: {color_in_single_input}'
