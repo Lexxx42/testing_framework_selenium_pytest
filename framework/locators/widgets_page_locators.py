@@ -26,3 +26,4 @@ class AutoCompletePageLocators:
     MULTIPLE_INPUT_CLEAR_BUTTON = (By.CSS_SELECTOR, '.auto-complete__clear-indicator')
 
     SINGLE_INPUT = (By.CSS_SELECTOR, '#autoCompleteSingleInput')
+    SINGLE_INPUT_ITEM = (By.CSS_SELECTOR, '.css-1uccc91-singleValue')
