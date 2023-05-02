@@ -4,7 +4,7 @@ Contains tabs:
 Accordian,
 """
 import pytest
-from ..pages import AccordianPage
+from ..pages import AccordianPage, AutoCompletePage
 
 
 class TestWidgetsPage:
@@ -46,3 +46,54 @@ class TestWidgetsPage:
             assert accordian_content is not None, \
                 'Expecter to have content of accordian.' \
                 f'Got nothing. Accordian number: {accordian_order}'
+
+    class TestAutoCompletePage:
+        """Class represents Accordian tab."""
+        autocomplete_link = 'https://demoqa.com/auto-complete'
+
+        def test_fill_multiple_autocomplete(self, driver):
+            """Check if multiple autocomplete input is filled."""
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page.open()
+            colors_selected = autocomplete_page.fill_multiple_input()
+            colors_in_multiple_input = autocomplete_page.check_colors_in_multiple_input()
+            assert colors_selected == colors_in_multiple_input, \
+                'Expected that entered colors match what multiple input shows. \n' \
+                f'Entered data: {colors_selected}. \n' \
+                f'Shows: {colors_in_multiple_input}'
+
+        def test_remove_color_from_multiple_autocomplete(self, driver):
+            """Check if color can be deleted from multiple autocomplete."""
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page.open()
+            autocomplete_page.fill_multiple_input()
+            colors_before_deletion = autocomplete_page.count_colors_in_multiple_input()
+            autocomplete_page.remove_single_color_from_multiple_input()
+            colors_after_deletion = autocomplete_page.count_colors_in_multiple_input()
+            assert colors_before_deletion == colors_after_deletion + 1, \
+                f'Expected that {colors_before_deletion} will be greater than ' \
+                f'{colors_after_deletion} by 1.\n After deletion single color from multiple input.'
+
+        def test_remove_all_colors_from_multiple_autocomplete(self, driver):
+            """Check if all colors can be deleted from multiple autocomplete."""
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page.open()
+            autocomplete_page.fill_multiple_input()
+            colors_before_clearing = autocomplete_page.count_colors_in_multiple_input()
+            autocomplete_page.clear_multiple_input()
+            colors_after_clearing = autocomplete_page.count_colors_in_multiple_input()
+            assert colors_before_clearing > 0, \
+                'Expected that some colors was entered in multiple autocomplete input.'
+            assert colors_after_clearing == 0, \
+                f'Expected colors after clearing = 0. ' \
+                f'Got: {colors_after_clearing}'
+
+        def test_fill_single_autocomplete(self, driver):
+            """Check if single autocomplete input is filled."""
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page.open()
+            color_selected = autocomplete_page.fill_single_input()
+            color_in_single_input = autocomplete_page.check_single_input()
+            assert color_selected == color_in_single_input, \
+                'Expected that entered color match what single input shows. ' \
+                f'Entered data: {color_selected}. Shows: {color_in_single_input}'
