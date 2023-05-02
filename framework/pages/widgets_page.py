@@ -16,8 +16,11 @@ class AccordianPage(BasePage):
     locators = AccordianPageLocators()
 
     def check_accordian(self, accordian_order: str) -> tuple[str, str]:
-        """Recieve accordian order: 'first', 'second', 'third'.
-        \nReturns section title, section content."""
+        """
+        Receive accordian order: 'first', 'second', 'third'.
+        \nReturns section title, section content.
+        :returns: Text of section title and section content.
+        """
         accordian = {
             'first': {
                 'title': self.locators.FIRST_SECTION,
@@ -49,6 +52,7 @@ class AutoCompletePage(BasePage):
     def fill_multiple_input(self) -> list[str]:
         """
         Fill multiple input with random from 2 to 5 available colors.
+        :returns: Colors generated object.
         """
         colors = sample(next(generated_color()).color_name, k=randint(2, 5))
         for color in colors:
@@ -68,18 +72,17 @@ class AutoCompletePage(BasePage):
 
     def count_colors_in_multiple_input(self) -> int:
         """
-        Removes all colors
-        :return: quantity of colors in multiple input
+        Removes all colors.
+        :returns: Quantity of colors in multiple input.
         """
         try:
             return len(self.elements_are_present(self.locators.MULTIPLE_INPUT_ITEMS))
         except TimeoutException:
             return 0
 
-    def clear_multiple_input(self):
+    def clear_multiple_input(self) -> None:
         """
-        Removes all colors from multiple input
-        :return:
+        Removes all colors from multiple input.
         """
         clear_button = self.element_is_clickable(self.locators.MULTIPLE_INPUT_CLEAR_BUTTON)
         clear_button.click()
@@ -87,7 +90,7 @@ class AutoCompletePage(BasePage):
     def check_colors_in_multiple_input(self) -> list[str]:
         """
         Checks colors in multiple input.
-        :return: colors in multiple input
+        :returns: Colors present in multiple input.
         """
         colors = self.elements_are_present(self.locators.MULTIPLE_INPUT_ITEMS)
         colors_in_multiple_input = []
@@ -98,6 +101,7 @@ class AutoCompletePage(BasePage):
     def fill_single_input(self) -> str:
         """
         Fill single input with random color.
+        :returns: Color entered in input.
         """
         color = sample(next(generated_color()).color_name, k=1)
         single_input = self.element_is_clickable(self.locators.SINGLE_INPUT)
@@ -105,10 +109,10 @@ class AutoCompletePage(BasePage):
         single_input.send_keys(Keys.ENTER)
         return color[0]
 
-    def check_single_input(self):
+    def check_single_input(self) -> str:
         """
         Check color in single input.
-        :return: color in single input
+        :return: Color present in single input.
         """
         color_in_single_input = self.element_is_visible(self.locators.SINGLE_INPUT_ITEM)
         return color_in_single_input.text
