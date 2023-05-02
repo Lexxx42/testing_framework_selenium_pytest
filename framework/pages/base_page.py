@@ -87,7 +87,7 @@ class BasePage:
         :param timeout: time delay for search the element.
         :param is_accepted: is the alert accepted of not.
         :param data: text to pass in the alert textbox.
-        :returns: text of the allert message.
+        :returns: text of the alert message.
         """
         alert = wait(self.driver, timeout).until(EC.alert_is_present())
         try:
