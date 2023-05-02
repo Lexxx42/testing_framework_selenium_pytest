@@ -94,3 +94,21 @@ class AutoCompletePage(BasePage):
         for color in colors:
             colors_in_multiple_input.append(color.text)
         return colors_in_multiple_input
+
+    def fill_single_input(self) -> str:
+        """
+        Fill single input with random color.
+        """
+        color = sample(next(generated_color()).color_name, k=1)
+        single_input = self.element_is_clickable(self.locators.SINGLE_INPUT)
+        single_input.send_keys(color)
+        single_input.send_keys(Keys.ENTER)
+        return color[0]
+
+    def check_single_input(self):
+        """
+        Check color in single input.
+        :return: color in single input
+        """
+        color_in_single_input = self.element_is_visible(self.locators.SINGLE_INPUT_ITEM)
+        return color_in_single_input.text
