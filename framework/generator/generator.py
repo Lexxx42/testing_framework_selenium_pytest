@@ -9,7 +9,10 @@ Faker.seed()
 
 
 def generated_person():
-    """Generation person data with Faker library."""
+    """
+    Generation person data with Faker library.
+    :returns: person generator object.
+    """
     yield Person(
         full_name=faker_ru.first_name() + ' ' + faker_ru.last_name() + ' ' + faker_ru.middle_name(),
         first_name=faker_ru.first_name(),
@@ -24,16 +27,22 @@ def generated_person():
     )
 
 
-def generated_file():
-    """File generation."""
+def generated_file() -> tuple[str, str]:
+    """
+    File generation.
+    :returns: file name and absolute path.
+    """
     file_path = f'filetest{randint(0, 999)}.txt'
     with open(file_path, 'w+', encoding='UTF-8') as file:
         file.write(f'Hello, world!{randint(0, 999)}')
     return file.name, path.abspath(file_path)
 
 
-def generated_subject():
-    """Subjects generation."""
+def generated_subject() -> str:
+    """
+    Subjects generation.
+    :returns: random available subject.
+    """
     available_subjects = ['Hindi', 'English', 'Maths', 'Physics',
                           'Chemistry', 'Biology', 'Computer Science',
                           'Commerce', 'Accounting', 'Economics', 'Arts',
@@ -41,8 +50,11 @@ def generated_subject():
     return choice(available_subjects)
 
 
-def generated_state_and_city():
-    """Generation of pair state/city."""
+def generated_state_and_city() -> tuple[str, str]:
+    """
+    Generation of pair state/city.
+    :returns: random available state and city pair.
+    """
     available_states_cities = {
         'NCR': ['Delhi', 'Gurgaon', 'Noida'],
         'Uttar Pradesh': ['Agra', 'Lucknow', 'Merrut'],
@@ -55,10 +67,12 @@ def generated_state_and_city():
 
 
 def generated_color():
-    """Generation of color."""
+    """
+    Generation of color.
+    :returns: color generator object.
+    """
     yield Color(
-        color_name=
-        [
+        color_name=[
             'Red', 'Blue', 'Green', 'Yellow',
             'Purple', 'Black', 'White',
             'Voilet', 'Indigo', 'Magenta', 'Aqua'
