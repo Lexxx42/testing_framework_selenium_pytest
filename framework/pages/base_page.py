@@ -12,38 +12,65 @@ class BasePage:
         self.driver = driver
         self.url = url
 
-    def open(self):
+    def open(self) -> None:
         """Open the page."""
         self.driver.get(self.url)
 
     def element_is_visible(self, locator, timeout=5):
-        """Returns element if it's visible."""
+        """
+        Returns element if it's visible.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        """
         self.go_to_element(self.element_is_present(locator))
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     def elements_are_visible(self, locator, timeout=5):
-        """Returns list of elements if they are visible."""
+        """
+        Returns list of elements if they are visible.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        """
         return wait(self.driver, timeout).until(EC.visibility_of_all_elements_located(locator))
 
     def element_is_present(self, locator, timeout=5):
-        """Returns element if it's present in page DOM."""
+        """
+        Returns element if it's present in page DOM.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        """
         return wait(self.driver, timeout).until(EC.presence_of_element_located(locator))
 
     def elements_are_present(self, locator, timeout=5):
-        """Returns list of elements if they are present in page DOM."""
+        """
+        Returns list of elements if they are present in page DOM.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        """
         return wait(self.driver, timeout).until(EC.presence_of_all_elements_located(locator))
 
     def element_is_not_visible(self, locator, timeout=5):
-        """Returns element if it's invisible."""
+        """
+        Returns element if it's invisible.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        """
         return wait(self.driver, timeout).until(EC.invisibility_of_element_located(locator))
 
     def element_is_clickable(self, locator, timeout=5):
-        """Returns element if it's clickable."""
+        """
+        Returns element if it's clickable.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        """
         self.go_to_element(self.element_is_present(locator))
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
-    def go_to_element(self, element):
-        """Set's the focus of driver to the element with JS code."""
+    def go_to_element(self, element) -> bool:
+        """
+        Set's the focus of driver to the element with JS code.
+        :returns: False if no element to go to.
+        """
         try:
             self.driver.execute_script('arguments[0].scrollIntoView();', element)
         except NoSuchElementException:
@@ -51,31 +78,42 @@ class BasePage:
         return True
 
     def perform_double_click(self, locator):
-        """Perform double-click on an element."""
+        """
+        Perform double-click on an element.
+        :param locator: locator of web element.
+        """
         action_chains = ActionChains(self.driver)
         action_chains.context_click(
             self.element_is_visible(locator)).double_click().perform()
 
     def perform_right_click(self, locator):
-        """Perform right-click on an element."""
+        """
+        Perform right-click on an element.
+        :param locator: locator of web element.
+        """
         action_chains = ActionChains(self.driver)
         action_chains.context_click(
             self.element_is_visible(locator)).context_click().perform()
 
     def perform_dynamic_click(self, locator):
-        """Perform left-click on an element."""
+        """
+        Perform left-click on an element.
+        :param locator: locator of web element.
+        """
         self.element_is_visible(locator).click()
 
     def switch_to_new_tab(self):
-        """Switch focus of driver to the new tab."""
-        self.driver.switch_to.window(self.driver.window_handles[1])
-        return self.driver.current_url
-
-    def zoom_page(self, zoom: float):
-        """Zoom page in or out with JS code.
-        :param zoom: zoom factor, 1 is 100% zoom.
         """
-        self.driver.execute_script(f'document.body.style.zoom = \'{zoom}\'')
+        Switch focus of driver to the new tab.
+        """
+        self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def get_current_url(self) -> str:
+        """
+        Get the current URL.
+        :return: current URL of active window.
+        """
+        return self.driver.current_url
 
     def remove_footer(self):
         """Remove footer with JS code to perform tests."""
@@ -87,7 +125,7 @@ class BasePage:
         :param timeout: time delay for search the element.
         :param is_accepted: is the alert accepted of not.
         :param data: text to pass in the alert textbox.
-        :returns: text of the allert message.
+        :returns: text of the alert message.
         """
         alert = wait(self.driver, timeout).until(EC.alert_is_present())
         try:
@@ -102,19 +140,33 @@ class BasePage:
         return alert_text
 
     def switch_to_frame(self, frame_locator, timeout=5):
-        """Switch focus of driver to frame."""
+        """
+        Switch focus of driver to frame.
+        :param frame_locator: locator for frame to switch to.
+        :param timeout: time delay for search the element.
+        """
         wait(self.driver, timeout).until(EC.frame_to_be_available_and_switch_to_it(frame_locator))
 
-    def is_element_disappeared(self, locator, timeout=1):
-        """Check if element is disappeared."""
+    def is_element_disappeared(self, locator, timeout=1) -> bool:
+        """
+        Check if element is disappeared.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        :returns: True if element is disappeared.
+        """
         try:
             wait(self.driver, timeout).until_not(EC.presence_of_element_located(locator))
         except TimeoutException:
             return False
         return True
 
-    def is_element_visible(self, locator, timeout=5):
-        """Check if element is visible."""
+    def is_element_visible(self, locator, timeout=5) -> bool:
+        """
+        Check if element is visible.
+        :param locator: locator of web element.
+        :param timeout: time delay for search the element.
+        :returns: True if element is visible.
+        """
         try:
             self.go_to_element(self.element_is_present(locator))
             wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))

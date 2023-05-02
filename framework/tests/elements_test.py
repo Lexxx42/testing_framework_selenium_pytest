@@ -79,7 +79,7 @@ class TestElements:
             actions = ['yes', 'impressive', 'no']
             for action in actions:
                 radio_button_page.click_on_the_radio_button(action)
-                output = radio_button_page.get_output_result()
+                output = radio_button_page.get_radiobutton_output_result()
                 assert action.title() == output, f'Action {action} don\'t match the result {output}'
 
     class TestWebTable:
@@ -90,8 +90,8 @@ class TestElements:
             """Test user can add person to the table."""
             web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
-            new_person = web_table_page.add_new_person(1)
-            table = web_table_page.check_added_person()
+            new_person = web_table_page.add_new_person_to_the_table(1)
+            table = web_table_page.check_current_persons_in_table()
             assert new_person in table, \
                 f'New person {new_person} should be in the table {table} but it isn\'t'
 
@@ -99,7 +99,7 @@ class TestElements:
             """Test user can search person in the table."""
             web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
-            key_word = web_table_page.add_new_person()[randint(0, 5)]
+            key_word = web_table_page.add_new_person_to_the_table()[randint(0, 5)]
             web_table_page.search_some_person(key_word)
             table_result = web_table_page.check_search_person()
             assert key_word in table_result, \
@@ -112,7 +112,7 @@ class TestElements:
             fields_to_edit = ['first_name', 'last_name',
                               'age', 'salary', 'department', 'email']
             field_to_edit = choice(fields_to_edit)
-            last_name = web_table_page.add_new_person()[1]
+            last_name = web_table_page.add_new_person_to_the_table()[1]
             web_table_page.search_some_person(last_name)
             edited_field = web_table_page.update_person_info(field_to_edit)
             row = web_table_page.check_search_person()
@@ -124,10 +124,10 @@ class TestElements:
             """Test user can delete person from the table."""
             web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
-            email = web_table_page.add_new_person()[3]
+            email = web_table_page.add_new_person_to_the_table()[3]
             web_table_page.search_some_person(email)
             web_table_page.delete_person()
-            text = web_table_page.check_delete()
+            text = web_table_page.check_search_result_message()
             assert text == 'No rows found', \
                 f'Text of search result of deleted person' \
                 f' must be \'No rows found\' but {text} present'
@@ -290,7 +290,7 @@ class TestElements:
             broken_links_page = BrokenLinksPage(driver, self.broken_links_page_link)
             broken_links_page.open()
             response_code, content_type, error_message = \
-                broken_links_page.check_valid_image_for_200_response()
+                broken_links_page.check_valid_image_for_200_response_and_content_type()
             assert response_code == 200, \
                 f'Status code from valid image should be 200 but got {response_code}' \
                 f'\nError: {error_message}'
@@ -302,7 +302,7 @@ class TestElements:
             broken_links_page = BrokenLinksPage(driver, self.broken_links_page_link)
             broken_links_page.open()
             response_code, content_type, error_message = \
-                broken_links_page.check_broken_image_for_200_response()
+                broken_links_page.check_broken_image_for_200_response_and_content_type()
             assert content_type != 'image/jpeg', \
                 f'Invalid content {content_type}, expected no to be image/jpeg.' \
                 f' Error: {error_message}'
@@ -346,7 +346,7 @@ class TestElements:
             upload_and_download_page = \
                 UploadAndDownloadPage(driver, self.upload_and_download_page_link)
             upload_and_download_page.open()
-            is_file_downloaded = upload_and_download_page.download_file()
+            is_file_downloaded = upload_and_download_page.is_file_downloaded()
             assert is_file_downloaded is True, \
                 f'Expected file to be downloaded (download is Ture) ' \
                 f'but got {is_file_downloaded} instead'
@@ -360,7 +360,7 @@ class TestElements:
             dynamic_properties_page = \
                 DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
             dynamic_properties_page.open()
-            enable = dynamic_properties_page.check_enabled_button()
+            enable = dynamic_properties_page.is_button_enabled()
             assert enable is True, \
                 'Button should be clickable, but it isn\'t on dynamic_properties_page'
 
@@ -378,6 +378,6 @@ class TestElements:
             dynamic_properties_page = \
                 DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
             dynamic_properties_page.open()
-            appear = dynamic_properties_page.check_button_appearance()
+            appear = dynamic_properties_page.is_button_appeared()
             assert appear is True, \
                 'Button should appear, but it isn\'t on dynamic_properties_page'
