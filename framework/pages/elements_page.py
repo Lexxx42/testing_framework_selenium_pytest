@@ -227,7 +227,8 @@ class LinksPage(BasePage):
         try:
             requests.get(link_href, timeout=5)
             simple_link.click()
-            url = self.switch_to_new_tab()
+            self.switch_to_new_tab()
+            url = self.get_current_url()
         except requests.exceptions.RequestException as error:
             return link_href, error
         return link_href, url
@@ -249,7 +250,8 @@ class LinksPage(BasePage):
         try:
             requests.get(link_href, timeout=5)
             simple_link.click()
-            url = self.switch_to_new_tab()
+            self.switch_to_new_tab()
+            url = self.get_current_url()
         except requests.exceptions.RequestException as error:
             return link_href, error
         return link_href, url
