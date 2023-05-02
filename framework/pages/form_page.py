@@ -44,7 +44,7 @@ class PracticeFormPage(BasePage):
             remove(path)
         return person, (day_of_birth, month_of_birth, year_of_birth), subject
 
-    def fill_date_of_birth_in_form(self) -> tuple:
+    def fill_date_of_birth_in_form(self) -> tuple[str, str, str]:
         """
         Fills day, month and year of birth in form.
         :returns: day, month and year of birth.
@@ -62,9 +62,9 @@ class PracticeFormPage(BasePage):
         date_of_birth_day_element = choice(list_of_days)
         day_of_birth = date_of_birth_day_element.text
         date_of_birth_day_element.click()
-        return day_of_birth, month_of_birth, year_of_birth
+        return day_of_birth, str(month_of_birth), str(year_of_birth)
 
-    def fill_state_and_city_in_form(self):
+    def fill_state_and_city_in_form(self) -> None:
         """Fills state and city in form."""
         state, city = generated_state_and_city()
         self.element_is_clickable(self.locators.STATE_SELECT).click()
@@ -74,7 +74,7 @@ class PracticeFormPage(BasePage):
         self.element_is_visible(self.locators.CITY_INPUT).send_keys(city)
         self.element_is_visible(self.locators.CITY_INPUT).send_keys(Keys.ENTER)
 
-    def fill_subject_in_form(self):
+    def fill_subject_in_form(self) -> str:
         """
         Fill subject in the form.
         :returns: Subject generated.
@@ -84,11 +84,14 @@ class PracticeFormPage(BasePage):
         self.element_is_visible(self.locators.SUBJECTS).send_keys(Keys.ENTER)
         return subject
 
-    def form_result(self):
-        """Returns results list of filled form."""
-        result_list = self.elements_are_visible(self.locators.RESULT_TABLE)
-        data = []
-        for item in result_list:
-            self.go_to_element(item)
-            data.append(item.text)
-        return data
+    def check_form_results(self) -> list[str]:
+        """
+        Returns filled form fields.
+        :returns: List of filled form fields.
+        """
+        form_result_fields = self.elements_are_visible(self.locators.RESULT_TABLE)
+        filled_form_fields = []
+        for field in form_result_fields:
+            self.go_to_element(field)
+            filled_form_fields.append(field.text)
+        return filled_form_fields
