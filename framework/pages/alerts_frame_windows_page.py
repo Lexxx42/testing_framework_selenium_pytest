@@ -157,7 +157,7 @@ class ModalDialogsPage(BasePage):
     def get_modal_text(self, which_modal='small') -> str:
         """
         Returns text from modal.
-        :param which_modal: type of modal window ['small', 'large']
+        :param which_modal: type of modal window ['small', 'large'].
         :returns: text from modal.
         """
         if which_modal == 'small':
