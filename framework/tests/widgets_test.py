@@ -29,16 +29,19 @@ class TestWidgetsPage:
             """Check title of accordian."""
             match accordian_order:
                 case 'first':
-                    assert accordian_title == 'What is Lorem Ipsum?', \
-                        f'Expected first accordian title to be \'What is Lorem Ipsum?\'' \
+                    expected_title = 'What is Lorem Ipsum?'
+                    assert accordian_title == expected_title, \
+                        f'Expected first accordian title to be \'{expected_title}\'' \
                         f'Got: {accordian_title}'
                 case 'second':
-                    assert accordian_title == 'Where does it come from?', \
-                        f'Expected first accordian title to be \'Where does it come from?\'' \
+                    expected_title = 'Where does it come from?'
+                    assert accordian_title == expected_title, \
+                        f'Expected first accordian title to be \'{expected_title}\'' \
                         f'Got: {accordian_title}'
                 case 'third':
-                    assert accordian_title == 'Why do we use it?', \
-                        f'Expected first accordian title to be \'Why do we use it?\'' \
+                    expected_title = 'Why do we use it?'
+                    assert accordian_title == expected_title, \
+                        f'Expected first accordian title to be \'{expected_title}\'' \
                         f'Got: {accordian_title}'
 
         def check_content(self, accordian_order: str, accordian_content: str) -> None:
