@@ -236,9 +236,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_no_content_link(self.links_page_no_content_link)
-            assert response_code == 204, \
+            expected_status_code = 204
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_no_content_link}' \
-                f' should be 204 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_moved_link(self, driver):
