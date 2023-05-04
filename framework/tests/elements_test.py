@@ -204,9 +204,10 @@ class TestElements:
             links_page = LinksPage(driver, self.links_page_link)
             links_page.open()
             response_code, error_message = links_page.check_broken_link(self.links_page_broken_link)
-            assert response_code == 400, \
+            expected_status_code = 400
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_broken_link}' \
-                f' should be 400 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_dynamic_link_home(self, driver):
