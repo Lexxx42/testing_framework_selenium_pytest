@@ -180,9 +180,10 @@ class TestAlertsFrameWindows:
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_text = modal_dialog_page.get_modal_text('small')
-            assert modal_text == 'This is a small modal. It has very less content', \
+            expected_modal_text = 'This is a small modal. It has very less content'
+            assert modal_text == expected_modal_text, \
                 'Text in modal dialog don\'t match expected text. ' \
-                'Expected: \'This is a small modal. It has very less content\'.' \
+                f'Expected: \'{expected_modal_text}\'.' \
                 f'Got {modal_text}'
 
         def test_small_modal_title(self, driver):
