@@ -151,9 +151,10 @@ class TestElements:
             buttons_page.open()
             buttons_page.perform_dynamic_click()
             click_message = buttons_page.check_dynamic_click_message()
+            expected_click_message = 'You have done a dynamic click'
             assert click_message == 'You have done a dynamic click', \
                 f'Expected dynamic click message to be' \
-                f' \'You have done a dynamic click\' but got {click_message}'
+                f' \'{expected_click_message}\' but got {click_message}'
 
         def test_double_click_on_the_button_double_click_me(self, driver):
             """Test user can double-click on a button."""
@@ -161,9 +162,10 @@ class TestElements:
             buttons_page.open()
             buttons_page.perform_double_click()
             click_message = buttons_page.check_double_click_message()
+            expected_click_message = 'You have done a double click'
             assert click_message == 'You have done a double click', \
                 f'Expected double click message to be' \
-                f' \'You have done a double click\' but got {click_message}'
+                f' \'{expected_click_message}\' but got {click_message}'
 
         def test_right_click_on_the_button_right_click_me(self, driver):
             """Test user can right-click on a button."""
@@ -171,9 +173,10 @@ class TestElements:
             buttons_page.open()
             buttons_page.perform_right_click()
             click_message = buttons_page.check_right_click_message()
+            expected_click_message = 'You have done a right click'
             assert click_message == 'You have done a right click', \
                 f'Expected right click message to be' \
-                f' \'You have done a right click\' but got {click_message}'
+                f' \'{expected_click_message}\' but got {click_message}'
 
     class TestLinksPage:
         """Class represents Links tab."""
