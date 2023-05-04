@@ -363,8 +363,8 @@ class TestElements:
             dynamic_properties_page = \
                 DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
             dynamic_properties_page.open()
-            enable = dynamic_properties_page.is_button_enabled()
-            assert enable is True, \
+            is_clickable = dynamic_properties_page.is_button_enabled()
+            assert is_clickable is True, \
                 'Button should be clickable, but it isn\'t on dynamic_properties_page'
 
         def test_change_of_color(self, driver):
