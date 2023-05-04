@@ -152,7 +152,7 @@ class TestElements:
             buttons_page.perform_dynamic_click()
             click_message = buttons_page.check_dynamic_click_message()
             expected_click_message = 'You have done a dynamic click'
-            assert click_message == 'You have done a dynamic click', \
+            assert click_message == expected_click_message, \
                 f'Expected dynamic click message to be' \
                 f' \'{expected_click_message}\' but got {click_message}'
 
@@ -163,7 +163,7 @@ class TestElements:
             buttons_page.perform_double_click()
             click_message = buttons_page.check_double_click_message()
             expected_click_message = 'You have done a double click'
-            assert click_message == 'You have done a double click', \
+            assert click_message == expected_click_message, \
                 f'Expected double click message to be' \
                 f' \'{expected_click_message}\' but got {click_message}'
 
@@ -174,7 +174,7 @@ class TestElements:
             buttons_page.perform_right_click()
             click_message = buttons_page.check_right_click_message()
             expected_click_message = 'You have done a right click'
-            assert click_message == 'You have done a right click', \
+            assert click_message == expected_click_message, \
                 f'Expected right click message to be' \
                 f' \'{expected_click_message}\' but got {click_message}'
 
