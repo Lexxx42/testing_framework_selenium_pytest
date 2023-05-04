@@ -85,8 +85,9 @@ class TestAlertsFrameWindows:
             alert_page.open()
             data_input = next(generated_person()).first_name
             alert_text = alert_page.check_see_alert('prompt', data=data_input)
-            assert alert_text == 'Please enter your name', \
-                f'Alert text should be \'Please enter your name\'.' \
+            expected_alert_text = 'Please enter your name'
+            assert alert_text == expected_alert_text, \
+                f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
             prompt_result = alert_page.check_prompt_result()
             assert prompt_result.split()[-1] == data_input, \
@@ -102,13 +103,15 @@ class TestAlertsFrameWindows:
             frames_page = FramesPage(driver, self.frames_page_link)
             frames_page.open()
             text, width, height = frames_page.check_frame('frame1')
+            expected_width = '500px'
+            expected_height = '350px'
             assert text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'Frame text should be \'This is a sample page\'.' \
                 f' Got {text}'
-            assert width == '500px', \
-                f'Frame width should be 500px. Got {width}'
-            assert height == '350px', \
-                f'Frame width should be 350px. Got {height}'
+            assert width == expected_width, \
+                f'Frame width should be {expected_width}. Got {width}'
+            assert height == expected_height, \
+                f'Frame width should be {expected_height}. Got {height}'
 
         def test_second_frame(self, driver):
             """Test user can see text in a frame. Frame has correct resolution."""
