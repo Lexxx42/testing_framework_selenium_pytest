@@ -136,10 +136,11 @@ class TestElements:
             """Test user can change number of rows in the table."""
             web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
-            count_of_rows = web_table_page.select_numer_of_rows()
-            assert count_of_rows == [5, 10, 20, 25, 50, 100], \
-                f'Available rows count is [5, 10, 20, 25, 50, 100]' \
-                f' expected but got {count_of_rows}'
+            number_of_rows = web_table_page.select_numer_of_rows()
+            available_number_of_rows = [5, 10, 20, 25, 50, 100]
+            assert number_of_rows == available_number_of_rows, \
+                f'Available rows count is {available_number_of_rows}' \
+                f' expected but got {number_of_rows}'
 
     class TestButtonsPage:
         """Class represents Buttons tab."""
