@@ -7,7 +7,7 @@ Frames,
 Nested Frames,
 Modal Dialogs.
 """
-from random import randint
+from random import choice
 from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage, ModalDialogsPage
 from ..generator import generated_person
 
@@ -69,15 +69,16 @@ class TestAlertsFrameWindows:
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             options = ['Ok', 'Cancel']
-            selected_option = options[randint(-1, 0)]
+            selected_option = choice(options)
             alert_text = alert_page.check_see_alert('confirm', option=selected_option)
-            expected_alert_confirmation_text = 'Do you confirm action?'
-            assert alert_text == expected_alert_confirmation_text, \
-                f'Alert text should be \'{expected_alert_confirmation_text}\'.' \
-                f' Got {alert_text}'
             confirm_result = alert_page.check_confirm_result()
-            assert confirm_result == f'You selected {selected_option}', \
-                f'Confirm text should be \'You selected (Ok or Cancel)\'. ' \
+            expected_confirm_text = 'Do you confirm action?'
+            expected_confirm_result = f'You selected {selected_option}'
+            assert alert_text == expected_confirm_text, \
+                f'Alert text should be \'{expected_confirm_text}\'.' \
+                f' Got {alert_text}'
+            assert confirm_result == expected_confirm_result, \
+                f'Confirm text should be \'{expected_confirm_result}\'. ' \
                 f'Got: You selected {selected_option}'
 
         def test_prompt_alert(self, driver):
