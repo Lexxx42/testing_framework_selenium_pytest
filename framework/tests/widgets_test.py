@@ -86,7 +86,8 @@ class TestWidgetsPage:
             autocomplete_page.clear_multiple_input()
             colors_after_clearing = autocomplete_page.count_colors_in_multiple_input()
             assert colors_before_clearing > 0, \
-                'Expected that some colors was entered in multiple autocomplete input.'
+                'Expected that some colors was entered in multiple autocomplete input.' \
+                f'Got number of entered = {colors_before_clearing}'
             assert colors_after_clearing == 0, \
                 f'Expected colors after clearing = 0. ' \
                 f'Got: {colors_after_clearing}'
