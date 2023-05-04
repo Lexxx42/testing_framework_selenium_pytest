@@ -55,13 +55,14 @@ class TestAlertsFrameWindows:
             assert alert_text == 'You clicked a button', \
                 f'Alert text should be \'You clicked a button\'. Got {alert_text}'
 
-        def test_see_alert_after_five_sev(self, driver):
+        def test_see_alert_after_five_seconds(self, driver):
             """Test alert is opened after 5 seconds after a click."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             alert_text = alert_page.check_see_alert('alert_after_five_sec')
-            assert alert_text == 'This alert appeared after 5 seconds', \
-                f'Alert text should be \'This alert appeared after 5 seconds\'.' \
+            expected_alert_text = 'This alert appeared after 5 seconds'
+            assert alert_text == expected_alert_text, \
+                f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
 
         def test_confirm_alert(self, driver):
