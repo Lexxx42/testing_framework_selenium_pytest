@@ -248,11 +248,12 @@ class TestAlertsFrameWindows:
                 'Text in modal dialog don\'t match expected text. ' \
                 f'Got {modal_text}'
 
-        def test_small_large_title(self, driver):
+        def test_large_modal_title(self, driver):
             """Test user can read title of a large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_title = modal_dialog_page.get_modal_title()
-            assert modal_title == 'Large Modal', \
-                f'Modal title expected: \'Large Modal\'. Got: {modal_title}'
+            expected_title = 'Large Modal'
+            assert modal_title == expected_title, \
+                f'Modal title expected: \'{expected_title}\'. Got: {modal_title}'
