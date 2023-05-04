@@ -7,7 +7,7 @@ Frames,
 Nested Frames,
 Modal Dialogs.
 """
-from random import randint
+from random import choice
 from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage, ModalDialogsPage
 from ..generator import generated_person
 
@@ -33,7 +33,8 @@ class TestAlertsFrameWindows:
             browser_windows_page.open()
             new_tab_text = browser_windows_page.check_opened('tab')
             assert new_tab_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
-                f'New tab text should be \'This is a sample page\' but got {new_tab_text}'
+                f'New tab text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
+                f' but got {new_tab_text}'
 
         def test_new_window(self, driver):
             """Test opening a new window and getting the text from it."""
@@ -41,7 +42,8 @@ class TestAlertsFrameWindows:
             browser_windows_page.open()
             new_window_text = browser_windows_page.check_opened('window')
             assert new_window_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
-                f'New window text should be \'This is a sample page\' but got {new_window_text}'
+                f'New window text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
+                f' but got {new_window_text}'
 
     class TestAlerts:
         """Class represents Alerts tab."""
@@ -52,16 +54,19 @@ class TestAlertsFrameWindows:
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             alert_text = alert_page.check_see_alert('alert')
-            assert alert_text == 'You clicked a button', \
-                f'Alert text should be \'You clicked a button\'. Got {alert_text}'
+            expected_alert_text = 'You clicked a button'
+            assert alert_text == expected_alert_text, \
+                f'Alert text should be \'{expected_alert_text}\'. ' \
+                f'Got {alert_text}'
 
-        def test_see_alert_after_five_sev(self, driver):
+        def test_see_alert_after_five_seconds(self, driver):
             """Test alert is opened after 5 seconds after a click."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             alert_text = alert_page.check_see_alert('alert_after_five_sec')
-            assert alert_text == 'This alert appeared after 5 seconds', \
-                f'Alert text should be \'This alert appeared after 5 seconds\'.' \
+            expected_alert_text = 'This alert appeared after 5 seconds'
+            assert alert_text == expected_alert_text, \
+                f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
 
         def test_confirm_alert(self, driver):
@@ -69,14 +74,16 @@ class TestAlertsFrameWindows:
             alert_page = AlertsPage(driver, self.alerts_page_link)
             alert_page.open()
             options = ['Ok', 'Cancel']
-            selected_option = options[randint(-1, 0)]
+            selected_option = choice(options)
             alert_text = alert_page.check_see_alert('confirm', option=selected_option)
-            assert alert_text == 'Do you confirm action?', \
-                f'Alert text should be \'Do you confirm action?\'.' \
-                f' Got {alert_text}'
             confirm_result = alert_page.check_confirm_result()
-            assert confirm_result == f'You selected {selected_option}', \
-                f'Confirm text should be \'You selected (Ok or Cancel)\'. ' \
+            expected_confirm_text = 'Do you confirm action?'
+            expected_confirm_result = f'You selected {selected_option}'
+            assert alert_text == expected_confirm_text, \
+                f'Alert text should be \'{expected_confirm_text}\'.' \
+                f' Got {alert_text}'
+            assert confirm_result == expected_confirm_result, \
+                f'Confirm text should be \'{expected_confirm_result}\'. ' \
                 f'Got: You selected {selected_option}'
 
         def test_prompt_alert(self, driver):
@@ -85,8 +92,9 @@ class TestAlertsFrameWindows:
             alert_page.open()
             data_input = next(generated_person()).first_name
             alert_text = alert_page.check_see_alert('prompt', data=data_input)
-            assert alert_text == 'Please enter your name', \
-                f'Alert text should be \'Please enter your name\'.' \
+            expected_alert_text = 'Please enter your name'
+            assert alert_text == expected_alert_text, \
+                f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
             prompt_result = alert_page.check_prompt_result()
             assert prompt_result.split()[-1] == data_input, \
@@ -102,26 +110,30 @@ class TestAlertsFrameWindows:
             frames_page = FramesPage(driver, self.frames_page_link)
             frames_page.open()
             text, width, height = frames_page.check_frame('frame1')
+            expected_width = '500px'
+            expected_height = '350px'
             assert text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'Frame text should be \'This is a sample page\'.' \
                 f' Got {text}'
-            assert width == '500px', \
-                f'Frame width should be 500px. Got {width}'
-            assert height == '350px', \
-                f'Frame width should be 350px. Got {height}'
+            assert width == expected_width, \
+                f'Frame width should be {expected_width}. Got {width}'
+            assert height == expected_height, \
+                f'Frame width should be {expected_height}. Got {height}'
 
         def test_second_frame(self, driver):
             """Test user can see text in a frame. Frame has correct resolution."""
             frames_page = FramesPage(driver, self.frames_page_link)
             frames_page.open()
             text, width, height = frames_page.check_frame('frame2')
+            expected_width = '100px'
+            expected_height = '100px'
             assert text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'Frame text should be \'This is a sample page\'.' \
                 f' Got {text}'
-            assert width == '100px', \
-                f'Frame width should be 100px. Got {width}'
-            assert height == '100px', \
-                f'Frame width should be 100px. Got {height}'
+            assert width == expected_width, \
+                f'Frame width should be {expected_width}. Got {width}'
+            assert height == expected_height, \
+                f'Frame width should be {expected_height}. Got {height}'
 
     class TestNestedFrames:
         """Class represents Nested Frames tab."""
@@ -132,11 +144,13 @@ class TestAlertsFrameWindows:
             nested_frames_page = NestedFramesPage(driver, self.nested_frames_page_link)
             nested_frames_page.open()
             outer_frame_text, inner_frame_text = nested_frames_page.check_nested_frames()
-            assert outer_frame_text == 'Parent frame', \
-                f'Parent frame should have a text \'Parent frame\'.' \
+            expected_parent_text = 'Parent frame'
+            expected_child_text = 'Child Iframe'
+            assert outer_frame_text == expected_parent_text, \
+                f'Parent frame should have a text \'{expected_parent_text}\'.' \
                 f' Got {outer_frame_text}'
-            assert inner_frame_text == 'Child Iframe', \
-                f'Child frame should have a text \'Child Iframe\'.' \
+            assert inner_frame_text == expected_child_text, \
+                f'Child frame should have a text \'{expected_child_text}\'.' \
                 f' Got {inner_frame_text}'
 
     class TestModalDialogs:
@@ -180,9 +194,10 @@ class TestAlertsFrameWindows:
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_text = modal_dialog_page.get_modal_text('small')
-            assert modal_text == 'This is a small modal. It has very less content', \
+            expected_modal_text = 'This is a small modal. It has very less content'
+            assert modal_text == expected_modal_text, \
                 'Text in modal dialog don\'t match expected text. ' \
-                'Expected: \'This is a small modal. It has very less content\'.' \
+                f'Expected: \'{expected_modal_text}\'.' \
                 f'Got {modal_text}'
 
         def test_small_modal_title(self, driver):
@@ -191,8 +206,9 @@ class TestAlertsFrameWindows:
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_title = modal_dialog_page.get_modal_title()
-            assert modal_title == 'Small Modal', \
-                f'Modal title expected: \'Small Modal\'. Got: {modal_title}'
+            expected_title = 'Small Modal'
+            assert modal_title == expected_title, \
+                f'Modal title expected: \'{expected_title}\'. Got: {modal_title}'
 
         def test_large_modal_open(self, driver):
             """Test user can open large modal."""
@@ -231,27 +247,29 @@ class TestAlertsFrameWindows:
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_text = modal_dialog_page.get_modal_text('large')
-            assert modal_text == 'Lorem Ipsum is simply dummy text ' \
-                                 'of the printing and typesetting industry.' \
-                                 ' Lorem Ipsum has been the industry\'s standard' \
-                                 ' dummy text ever since the 1500s, when an unknown' \
-                                 ' printer took a galley of type and scrambled' \
-                                 ' it to make a type specimen book. ' \
-                                 'It has survived not only five centuries, ' \
-                                 'but also the leap into electronic typesetting, ' \
-                                 'remaining essentially unchanged. ' \
-                                 'It was popularised in the 1960s with the release of ' \
-                                 'Letraset sheets containing Lorem Ipsum passages, ' \
-                                 'and more recently with desktop publishing software ' \
-                                 'like Aldus PageMaker including versions of Lorem Ipsum.', \
+            expected_modal_text = 'Lorem Ipsum is simply dummy text ' \
+                                  'of the printing and typesetting industry.' \
+                                  ' Lorem Ipsum has been the industry\'s standard' \
+                                  ' dummy text ever since the 1500s, when an unknown' \
+                                  ' printer took a galley of type and scrambled' \
+                                  ' it to make a type specimen book. ' \
+                                  'It has survived not only five centuries, ' \
+                                  'but also the leap into electronic typesetting, ' \
+                                  'remaining essentially unchanged. ' \
+                                  'It was popularised in the 1960s with the release of ' \
+                                  'Letraset sheets containing Lorem Ipsum passages, ' \
+                                  'and more recently with desktop publishing software ' \
+                                  'like Aldus PageMaker including versions of Lorem Ipsum.'
+            assert modal_text == expected_modal_text, \
                 'Text in modal dialog don\'t match expected text. ' \
                 f'Got {modal_text}'
 
-        def test_small_large_title(self, driver):
+        def test_large_modal_title(self, driver):
             """Test user can read title of a large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
             modal_dialog_page.open()
             modal_dialog_page.open_modal('large')
             modal_title = modal_dialog_page.get_modal_title()
-            assert modal_title == 'Large Modal', \
-                f'Modal title expected: \'Large Modal\'. Got: {modal_title}'
+            expected_title = 'Large Modal'
+            assert modal_title == expected_title, \
+                f'Modal title expected: \'{expected_title}\'. Got: {modal_title}'

@@ -128,18 +128,20 @@ class TestElements:
             web_table_page.search_some_person(email)
             web_table_page.delete_person()
             text = web_table_page.check_search_result_message()
-            assert text == 'No rows found', \
+            search_results_message = 'No rows found'
+            assert text == search_results_message, \
                 f'Text of search result of deleted person' \
-                f' must be \'No rows found\' but {text} present'
+                f' must be \'{search_results_message}\' but {text} present'
 
         def test_table_change_number_of_rows(self, driver):
             """Test user can change number of rows in the table."""
             web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
-            count_of_rows = web_table_page.select_numer_of_rows()
-            assert count_of_rows == [5, 10, 20, 25, 50, 100], \
-                f'Available rows count is [5, 10, 20, 25, 50, 100]' \
-                f' expected but got {count_of_rows}'
+            number_of_rows = web_table_page.select_numer_of_rows()
+            available_number_of_rows = [5, 10, 20, 25, 50, 100]
+            assert number_of_rows == available_number_of_rows, \
+                f'Available rows count is {available_number_of_rows}' \
+                f' expected but got {number_of_rows}'
 
     class TestButtonsPage:
         """Class represents Buttons tab."""
@@ -151,9 +153,10 @@ class TestElements:
             buttons_page.open()
             buttons_page.perform_dynamic_click()
             click_message = buttons_page.check_dynamic_click_message()
-            assert click_message == 'You have done a dynamic click', \
+            expected_click_message = 'You have done a dynamic click'
+            assert click_message == expected_click_message, \
                 f'Expected dynamic click message to be' \
-                f' \'You have done a dynamic click\' but got {click_message}'
+                f' \'{expected_click_message}\' but got {click_message}'
 
         def test_double_click_on_the_button_double_click_me(self, driver):
             """Test user can double-click on a button."""
@@ -161,9 +164,10 @@ class TestElements:
             buttons_page.open()
             buttons_page.perform_double_click()
             click_message = buttons_page.check_double_click_message()
-            assert click_message == 'You have done a double click', \
+            expected_click_message = 'You have done a double click'
+            assert click_message == expected_click_message, \
                 f'Expected double click message to be' \
-                f' \'You have done a double click\' but got {click_message}'
+                f' \'{expected_click_message}\' but got {click_message}'
 
         def test_right_click_on_the_button_right_click_me(self, driver):
             """Test user can right-click on a button."""
@@ -171,9 +175,10 @@ class TestElements:
             buttons_page.open()
             buttons_page.perform_right_click()
             click_message = buttons_page.check_right_click_message()
-            assert click_message == 'You have done a right click', \
+            expected_click_message = 'You have done a right click'
+            assert click_message == expected_click_message, \
                 f'Expected right click message to be' \
-                f' \'You have done a right click\' but got {click_message}'
+                f' \'{expected_click_message}\' but got {click_message}'
 
     class TestLinksPage:
         """Class represents Links tab."""
@@ -201,9 +206,10 @@ class TestElements:
             links_page = LinksPage(driver, self.links_page_link)
             links_page.open()
             response_code, error_message = links_page.check_broken_link(self.links_page_broken_link)
-            assert response_code == 400, \
+            expected_status_code = 400
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_broken_link}' \
-                f' should be 400 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_dynamic_link_home(self, driver):
@@ -222,9 +228,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_created_link(self.links_page_created_link)
-            assert response_code == 201, \
+            expected_status_code = 201
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_created_link}' \
-                f' should be 201 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_no_content_link(self, driver):
@@ -233,9 +240,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_no_content_link(self.links_page_no_content_link)
-            assert response_code == 204, \
+            expected_status_code = 204
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_no_content_link}' \
-                f' should be 204 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_moved_link(self, driver):
@@ -243,9 +251,10 @@ class TestElements:
             links_page = LinksPage(driver, self.links_page_link)
             links_page.open()
             response_code, error_message = links_page.check_moved_link(self.links_page_moved_link)
-            assert response_code == 301, \
+            expected_status_code = 301
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_moved_link}' \
-                f' should be 301 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_unauthorized_link(self, driver):
@@ -254,9 +263,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_unauthorized_link(self.links_page_unauthorized_link)
-            assert response_code == 401, \
+            expected_status_code = 401
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_unauthorized_link}' \
-                f' should be 401 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_forbidden_link(self, driver):
@@ -265,9 +275,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_forbidden_link(self.links_page_forbidden_link)
-            assert response_code == 403, \
+            expected_status_code = 403
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_forbidden_link}' \
-                f' should be 403 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_not_found_link(self, driver):
@@ -276,9 +287,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_not_found_link(self.links_page_not_found_link)
-            assert response_code == 404, \
+            expected_status_code = 404
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_not_found_link}' \
-                f' should be 404 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
     class TestBrokenLinksPage:
@@ -348,7 +360,7 @@ class TestElements:
             upload_and_download_page.open()
             is_file_downloaded = upload_and_download_page.is_file_downloaded()
             assert is_file_downloaded is True, \
-                f'Expected file to be downloaded (download is Ture) ' \
+                f'Expected file to be downloaded (download is True) ' \
                 f'but got {is_file_downloaded} instead'
 
     class TestDynamicPropertiesPage:
@@ -360,8 +372,8 @@ class TestElements:
             dynamic_properties_page = \
                 DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
             dynamic_properties_page.open()
-            enable = dynamic_properties_page.is_button_enabled()
-            assert enable is True, \
+            is_clickable = dynamic_properties_page.is_button_enabled()
+            assert is_clickable is True, \
                 'Button should be clickable, but it isn\'t on dynamic_properties_page'
 
         def test_change_of_color(self, driver):
@@ -378,6 +390,6 @@ class TestElements:
             dynamic_properties_page = \
                 DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
             dynamic_properties_page.open()
-            appear = dynamic_properties_page.is_button_appeared()
-            assert appear is True, \
+            is_appeared = dynamic_properties_page.is_button_appeared()
+            assert is_appeared is True, \
                 'Button should appear, but it isn\'t on dynamic_properties_page'
