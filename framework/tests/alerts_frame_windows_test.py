@@ -42,7 +42,8 @@ class TestAlertsFrameWindows:
             browser_windows_page.open()
             new_window_text = browser_windows_page.check_opened('window')
             assert new_window_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
-                f'New window text should be \'This is a sample page\' but got {new_window_text}'
+                f'New window text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
+                f' but got {new_window_text}'
 
     class TestAlerts:
         """Class represents Alerts tab."""
