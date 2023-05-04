@@ -191,8 +191,9 @@ class TestAlertsFrameWindows:
             modal_dialog_page.open()
             modal_dialog_page.open_modal()
             modal_title = modal_dialog_page.get_modal_title()
-            assert modal_title == 'Small Modal', \
-                f'Modal title expected: \'Small Modal\'. Got: {modal_title}'
+            expected_title = 'Small Modal'
+            assert modal_title == expected_title, \
+                f'Modal title expected: \'{expected_title}\'. Got: {modal_title}'
 
         def test_large_modal_open(self, driver):
             """Test user can open large modal."""
