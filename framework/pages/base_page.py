@@ -2,6 +2,7 @@
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
+from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 
@@ -173,3 +174,24 @@ class BasePage:
         except (NoSuchElementException, TimeoutException):
             return False
         return True
+
+    def select_date_by_text(self, element, text) -> None:
+        """
+        Selects a date by visible text.
+        :param element: Element to select.
+        :param text: Text to select.
+        """
+        select = Select(self.element_is_present(element))
+        select.select_by_visible_text(text)
+
+    def select_element_from_elements_by_text(self, elements, text) -> None:
+        """
+        Selects an element by visible text.
+        :param elements: Elements to select from.
+        :param text: Text to select.
+        """
+        elements_to_pick_from = self.elements_are_present(elements)
+        for element in elements_to_pick_from:
+            if element.text == text:
+                element.click()
+                break

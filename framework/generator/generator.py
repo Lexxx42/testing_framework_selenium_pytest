@@ -1,10 +1,12 @@
 """This module is used for generating data for tests."""
 from os import path
+from datetime import time
 from random import randint, choice
 from faker import Faker
-from ..data import Person, Color
+from ..data import Person, Color, Date
 
 faker_ru = Faker('ru_RU')
+faker_en = Faker('EN')
 Faker.seed()
 
 
@@ -78,3 +80,25 @@ def generated_color():
             'Voilet', 'Indigo', 'Magenta', 'Aqua'
         ]
     )
+
+
+def generated_date():
+    """
+    Generation of date.
+    :returns: date generator object.
+    """
+    yield Date(
+        year=faker_en.year(),
+        month=faker_en.month_name(),
+        day=faker_en.day_of_month(),
+        time=generate_time()
+    )
+
+
+def generate_time() -> str:
+    """
+    Generates time string.
+    :returns: available time for time select.
+    """
+    available_minutes = [0, 15, 30, 45]
+    return str(time(hour=randint(0, 23), minute=choice(available_minutes)))[:5]

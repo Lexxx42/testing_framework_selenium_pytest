@@ -21,3 +21,12 @@ class Person:
 class Color:
     """Data class for color generation."""
     color_name: list[str] = list[str]
+
+
+@dataclass
+class Date:
+    """Data class for date generation."""
+    day: str = ""
+    month: str = ""
+    year: str = ""
+    time: str = ""
