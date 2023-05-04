@@ -225,9 +225,10 @@ class TestElements:
             links_page.open()
             response_code, error_message = \
                 links_page.check_created_link(self.links_page_created_link)
-            assert response_code == 201, \
+            expected_status_code = 201
+            assert response_code == expected_status_code, \
                 f'Status code from {self.links_page_created_link}' \
-                f' should be 201 but got {response_code}' \
+                f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
         def test_no_content_link(self, driver):
