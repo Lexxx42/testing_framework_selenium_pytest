@@ -128,9 +128,10 @@ class TestElements:
             web_table_page.search_some_person(email)
             web_table_page.delete_person()
             text = web_table_page.check_search_result_message()
-            assert text == 'No rows found', \
+            search_results_message = 'No rows found'
+            assert text == search_results_message, \
                 f'Text of search result of deleted person' \
-                f' must be \'No rows found\' but {text} present'
+                f' must be \'{search_results_message}\' but {text} present'
 
         def test_table_change_number_of_rows(self, driver):
             """Test user can change number of rows in the table."""
