@@ -132,11 +132,13 @@ class TestAlertsFrameWindows:
             nested_frames_page = NestedFramesPage(driver, self.nested_frames_page_link)
             nested_frames_page.open()
             outer_frame_text, inner_frame_text = nested_frames_page.check_nested_frames()
-            assert outer_frame_text == 'Parent frame', \
-                f'Parent frame should have a text \'Parent frame\'.' \
+            expected_parent_text = 'Parent frame'
+            expected_child_text = 'Child Iframe'
+            assert outer_frame_text == expected_parent_text, \
+                f'Parent frame should have a text \'{expected_parent_text}\'.' \
                 f' Got {outer_frame_text}'
-            assert inner_frame_text == 'Child Iframe', \
-                f'Child frame should have a text \'Child Iframe\'.' \
+            assert inner_frame_text == expected_child_text, \
+                f'Child frame should have a text \'{expected_child_text}\'.' \
                 f' Got {inner_frame_text}'
 
     class TestModalDialogs:
