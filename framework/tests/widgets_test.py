@@ -4,7 +4,7 @@ Contains tabs:
 Accordian,
 """
 import pytest
-from ..pages import AccordianPage, AutoCompletePage
+from ..pages import AccordianPage, AutoCompletePage, DatePickerPage
 
 
 class TestWidgetsPage:
@@ -97,3 +97,25 @@ class TestWidgetsPage:
             assert color_selected == color_in_single_input, \
                 'Expected that entered color match what single input shows. ' \
                 f'Entered data: {color_selected}. Shows: {color_in_single_input}'
+
+    class TestDatePickerPage:
+        """Class represents Date Picker tab."""
+        date_picker_link = 'https://demoqa.com/date-picker'
+
+        def test_select_date(self, driver):
+            """Check date can be selected from date select element."""
+            date_picker_page = DatePickerPage(driver, self.date_picker_link)
+            date_picker_page.open()
+            date_before, date_after = date_picker_page.select_date_only_from_picker()
+            assert date_before != date_after, \
+                'Expected date to be different fom than date before. ' \
+                f'Got: {date_before=}, {date_after=}'
+
+        def test_select_date_and_time(self, driver):
+            """Check date and time can be selected from date and time select element."""
+            date_picker_page = DatePickerPage(driver, self.date_picker_link)
+            date_picker_page.open()
+            date_before, date_after = date_picker_page.select_date_and_time()
+            assert date_before != date_after, \
+                'Expected date to be different fom than date before. ' \
+                f'Got: {date_before=}, {date_after=}'
