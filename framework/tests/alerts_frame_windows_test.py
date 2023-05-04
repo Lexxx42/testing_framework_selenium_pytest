@@ -33,7 +33,8 @@ class TestAlertsFrameWindows:
             browser_windows_page.open()
             new_tab_text = browser_windows_page.check_opened('tab')
             assert new_tab_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
-                f'New tab text should be \'This is a sample page\' but got {new_tab_text}'
+                f'New tab text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
+                f' but got {new_tab_text}'
 
         def test_new_window(self, driver):
             """Test opening a new window and getting the text from it."""
