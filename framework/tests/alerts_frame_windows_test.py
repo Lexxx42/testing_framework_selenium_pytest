@@ -115,13 +115,15 @@ class TestAlertsFrameWindows:
             frames_page = FramesPage(driver, self.frames_page_link)
             frames_page.open()
             text, width, height = frames_page.check_frame('frame2')
+            expected_width = '100px'
+            expected_height = '100px'
             assert text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'Frame text should be \'This is a sample page\'.' \
                 f' Got {text}'
-            assert width == '100px', \
-                f'Frame width should be 100px. Got {width}'
-            assert height == '100px', \
-                f'Frame width should be 100px. Got {height}'
+            assert width == expected_width, \
+                f'Frame width should be {expected_width}. Got {width}'
+            assert height == expected_height, \
+                f'Frame width should be {expected_height}. Got {height}'
 
     class TestNestedFrames:
         """Class represents Nested Frames tab."""
