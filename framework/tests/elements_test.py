@@ -348,7 +348,7 @@ class TestElements:
             upload_and_download_page.open()
             is_file_downloaded = upload_and_download_page.is_file_downloaded()
             assert is_file_downloaded is True, \
-                f'Expected file to be downloaded (download is Ture) ' \
+                f'Expected file to be downloaded (download is True) ' \
                 f'but got {is_file_downloaded} instead'
 
     class TestDynamicPropertiesPage:
