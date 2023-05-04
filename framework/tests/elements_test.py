@@ -381,6 +381,6 @@ class TestElements:
             dynamic_properties_page = \
                 DynamicPropertiesPage(driver, self.dynamic_properties_page_link)
             dynamic_properties_page.open()
-            appear = dynamic_properties_page.is_button_appeared()
-            assert appear is True, \
+            is_appeared = dynamic_properties_page.is_button_appeared()
+            assert is_appeared is True, \
                 'Button should appear, but it isn\'t on dynamic_properties_page'
