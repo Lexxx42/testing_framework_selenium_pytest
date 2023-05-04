@@ -3,12 +3,13 @@
 Contains page objects for:
 Accordian,
 """
-from random import sample, randint
+from random import sample, randint, choice
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from .base_page import BasePage
-from ..locators import AccordianPageLocators, AutoCompletePageLocators
-from ..generator import generated_color
+from ..generator import generated_color, generated_date
+from ..locators import AccordianPageLocators, AutoCompletePageLocators, \
+    DatePickerPageLocators
 
 
 class AccordianPage(BasePage):
@@ -116,3 +117,46 @@ class AutoCompletePage(BasePage):
         """
         color_in_single_input = self.element_is_visible(self.locators.SINGLE_INPUT_ITEM)
         return color_in_single_input.text
+
+
+class DatePickerPage(BasePage):
+    """Date Picker page object."""
+    locators = DatePickerPageLocators()
+
+    def select_date_only_from_picker(self) -> tuple[str, str]:
+        """
+        Select date from picker
+        :returns: date before and after selection from date picker.
+        """
+        date = next(generated_date())
+        input_date = self.element_is_clickable(self.locators.DATE_INPUT)
+        value_date_before_selection = input_date.get_attribute('value')
+        input_date.click()
+        self.select_date_by_text(self.locators.DATE_MONTH_SELECT, date.month)
+        self.select_date_by_text(self.locators.DATE_YEAR_SELECT, date.year)
+        self.select_element_from_elements_by_text(self.locators.DATE_AVAILABLE_DAYS, date.day)
+        value_date_after_selection = input_date.get_attribute('value')
+        return value_date_before_selection, value_date_after_selection
+
+    def select_date_and_time(self) -> tuple[str, str]:
+        """
+        Select date and time from picker
+        :returns: date before and after selection from date and time picker.
+        """
+        date = next(generated_date())
+        input_date = self.element_is_clickable(self.locators.DATE_AND_TIME_INPUT)
+        value_date_before_selection = input_date.get_attribute('value')
+        input_date.click()
+        self.element_is_clickable(self.locators.DATE_AND_TIME_MONTH_VIEW).click()
+        self.select_element_from_elements_by_text(
+            self.locators.DATE_AND_TIME_AVAILABLE_MONTHS, date.month)
+        self.element_is_clickable(self.locators.DATE_AND_TIME_YEAR_VIEW).click()
+        available_years = self.elements_are_visible(
+            self.locators.DATE_AND_TIME_AVAILABLE_YEARS)
+        choice(available_years).click()
+        self.select_element_from_elements_by_text(self.locators.DATE_AVAILABLE_DAYS, date.day)
+        self.select_element_from_elements_by_text(
+            self.locators.DATE_AND_TIME_AVAILABLE_TIMES, date.time)
+        input_date_after = self.element_is_visible(self.locators.DATE_AND_TIME_INPUT)
+        value_date_after_selection = input_date_after.get_attribute('value')
+        return value_date_before_selection, value_date_after_selection
