@@ -5,11 +5,12 @@ Accordian,
 Auto Complete,
 Date Picker,
 Slider,
-ProgressBarPage
+ProgressBarPage,
+Tabs
 """
 import pytest
 from ..pages import AccordianPage, AutoCompletePage, DatePickerPage, \
-    SliderPage, ProgressBarPage
+    SliderPage, ProgressBarPage, TabsPage
 
 
 class TestWidgetsPage:
@@ -157,3 +158,51 @@ class TestWidgetsPage:
             assert progress_bar_before != progress_bar_after, \
                 'Progress bar value should change.' \
                 f'Got: {progress_bar_before=}, {progress_bar_after=}.'
+
+    class TestTabsPage:
+        """Class represents Tabs tab tests."""
+        tabs_page_link = 'https://demoqa.com/tabs'
+
+        def test_what_tab(self, driver):
+            """Tab What has correct name and a content."""
+            tabs_page = TabsPage(driver, self.tabs_page_link)
+            tabs_page.open()
+            actual_tab_name, tab_content_length = tabs_page.check_what_tab()
+            expected_tab_name = 'What'
+            assert actual_tab_name == expected_tab_name, \
+                f'Expected tab name {expected_tab_name}, got {actual_tab_name}.'
+            assert tab_content_length > 0, \
+                f'Expected that tab has content. Got {tab_content_length=}'
+
+        def test_origin_tab(self, driver):
+            """Tab Origin has correct name and a content."""
+            tabs_page = TabsPage(driver, self.tabs_page_link)
+            tabs_page.open()
+            actual_tab_name, tab_content_length = tabs_page.check_origin_tab()
+            expected_tab_name = 'Origin'
+            assert actual_tab_name == expected_tab_name, \
+                f'Expected tab name {expected_tab_name}, got {actual_tab_name}.'
+            assert tab_content_length > 0, \
+                f'Expected that tab has content. Got {tab_content_length=}'
+
+        def test_use_tab(self, driver):
+            """Tab Use has correct name and a content."""
+            tabs_page = TabsPage(driver, self.tabs_page_link)
+            tabs_page.open()
+            actual_tab_name, tab_content_length = tabs_page.check_use_tab()
+            expected_tab_name = 'Use'
+            assert actual_tab_name == expected_tab_name, \
+                f'Expected tab name {expected_tab_name}, got {actual_tab_name}.'
+            assert tab_content_length > 0, \
+                f'Expected that tab has content. Got {tab_content_length=}'
+
+        def test_more_tab(self, driver):
+            """Tab More has correct name and a content."""
+            tabs_page = TabsPage(driver, self.tabs_page_link)
+            tabs_page.open()
+            actual_tab_name, tab_content_length = tabs_page.check_more_tab()
+            expected_tab_name = 'More'
+            assert actual_tab_name == expected_tab_name, \
+                f'Expected tab name {expected_tab_name}, got {actual_tab_name}.'
+            assert tab_content_length > 0, \
+                f'Expected that tab has content. Got {tab_content_length=}'
