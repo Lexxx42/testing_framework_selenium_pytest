@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from .base_page import BasePage
 from ..generator import generated_color, generated_date
 from ..locators import AccordianPageLocators, AutoCompletePageLocators, \
-    DatePickerPageLocators
+    DatePickerPageLocators, SliderPageLocators
 
 
 class AccordianPage(BasePage):
@@ -160,3 +160,22 @@ class DatePickerPage(BasePage):
         input_date_after = self.element_is_visible(self.locators.DATE_AND_TIME_INPUT)
         value_date_after_selection = input_date_after.get_attribute('value')
         return value_date_before_selection, value_date_after_selection
+
+
+class SliderPage(BasePage):
+    """Slider page object."""
+    locators = SliderPageLocators()
+
+    def change_slider_value(self):
+        """
+        Changes slider value.
+        :returns: Value before and after change.
+        """
+        value_before = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
+        slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
+        self.drag_and_drop_by_offset(slider_input, randint(1, 100), 0)
+        value_after = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
+        if value_after == 25:  # Default slider value.
+            self.drag_and_drop_by_offset(slider_input, 26, 0)
+            value_after = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
+        return value_before, value_after
