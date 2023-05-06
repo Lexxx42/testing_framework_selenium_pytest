@@ -2,6 +2,10 @@
 
 Contains locators for following tabs:
 Accordian,
+Auto Complete,
+Date Picker,
+Slider,
+ProgressBarPage
 """
 from selenium.webdriver.common.by import By
 
@@ -48,3 +52,9 @@ class SliderPageLocators:
     """Class for Slider page locators."""
     SLIDER_INPUT = (By.CSS_SELECTOR, '.range-slider')
     SLIDER_VALUE = (By.CSS_SELECTOR, '#sliderValue')
+
+
+class ProgressBarPageLocators:
+    """Class for Progress Bar page locators."""
+    START_STOP_BUTTON = (By.CSS_SELECTOR, '#startStopButton')
+    PROGRESS_BAR_VALUE = (By.CSS_SELECTOR, '.progress-bar')

@@ -2,6 +2,10 @@
 
 Contains page objects for:
 Accordian,
+Auto Complete,
+Date Picker,
+Slider,
+ProgressBarPage
 """
 from random import sample, randint, choice
 from selenium.common.exceptions import TimeoutException
@@ -9,7 +13,7 @@ from selenium.webdriver.common.keys import Keys
 from .base_page import BasePage
 from ..generator import generated_color, generated_date
 from ..locators import AccordianPageLocators, AutoCompletePageLocators, \
-    DatePickerPageLocators, SliderPageLocators
+    DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators
 
 
 class AccordianPage(BasePage):
@@ -178,4 +182,23 @@ class SliderPage(BasePage):
         if value_after == 25:  # Default slider value.
             self.drag_and_drop_by_offset(slider_input, 26, 0)
             value_after = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
+        return value_before, value_after
+
+
+class ProgressBarPage(BasePage):
+    """Progress Bar page object."""
+    locators = ProgressBarPageLocators()
+
+    def change_progress_bar_value(self):
+        """
+        Changes the progress bar value.
+        :returns: Value before and after change.
+        """
+        import time
+        value_before = self.element_is_present(self.locators.PROGRESS_BAR_VALUE).text
+        start_stop_button = self.element_is_clickable(self.locators.START_STOP_BUTTON)
+        start_stop_button.click()
+        time.sleep(randint(2, 4))
+        start_stop_button.click()
+        value_after = self.element_is_present(self.locators.PROGRESS_BAR_VALUE).text
         return value_before, value_after
