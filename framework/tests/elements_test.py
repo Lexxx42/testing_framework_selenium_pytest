@@ -32,7 +32,7 @@ class TestElements:
     """
 
     class TestTextBox:
-        """Class represents Text Box tab."""
+        """Class represents Text Box tab tests."""
 
         def test_text_box(self, driver):
             """Test user can fill the form and sent it."""
@@ -55,7 +55,7 @@ class TestElements:
                 f'which doesn\'t match output permanent address {output_permanent_address}'
 
     class TestCheckBox:
-        """Class represents Check Box tab."""
+        """Class represents Check Box tab tests."""
 
         def test_check_box(self, driver):
             """Test user can select checkboxes."""
@@ -70,7 +70,7 @@ class TestElements:
                 f'are not matching output result checkboxes {output_result}'
 
     class TestRadioButton:
-        """Class represents Radio Button tab."""
+        """Class represents Radio Button tab tests."""
 
         def test_radio_button(self, driver):
             """Test user can select radio buttons."""
@@ -83,7 +83,7 @@ class TestElements:
                 assert action.title() == output, f'Action {action} don\'t match the result {output}'
 
     class TestWebTable:
-        """Class represents Web Tables tab."""
+        """Class represents Web Tables tab tests."""
         web_page_link = 'https://demoqa.com/webtables'
 
         def test_web_table_add_person(self, driver):
@@ -144,7 +144,7 @@ class TestElements:
                 f' expected but got {number_of_rows}'
 
     class TestButtonsPage:
-        """Class represents Buttons tab."""
+        """Class represents Buttons tab tests."""
         buttons_page_link = 'https://demoqa.com/buttons'
 
         def test_dynamic_click_on_the_button_click_me(self, driver):
@@ -181,7 +181,7 @@ class TestElements:
                 f' \'{expected_click_message}\' but got {click_message}'
 
     class TestLinksPage:
-        """Class represents Links tab."""
+        """Class represents Links tab tests."""
         links_page_link = 'https://demoqa.com/links'
         links_page_broken_link = 'https://demoqa.com/bad-request'
         links_page_created_link = 'https://demoqa.com/created'
@@ -294,7 +294,7 @@ class TestElements:
                 f'\nError: {error_message}'
 
     class TestBrokenLinksPage:
-        """Class represents Broken Links - Images tab."""
+        """Class represents Broken Links - Images tab tests."""
         broken_links_page_link = 'https://demoqa.com/broken'
 
         def test_valid_image_on_page(self, driver):
@@ -341,7 +341,7 @@ class TestElements:
                 f'\nError: {error_message}'
 
     class TestUploadAndDownloadPage:
-        """Class represents Upload and Download tab."""
+        """Class represents Upload and Download tab tests."""
         upload_and_download_page_link = 'https://demoqa.com/upload-download'
 
         def test_upload_file(self, driver):
@@ -364,7 +364,7 @@ class TestElements:
                 f'but got {is_file_downloaded} instead'
 
     class TestDynamicPropertiesPage:
-        """Class represents DynamicProperties tab."""
+        """Class represents DynamicProperties tab tests."""
         dynamic_properties_page_link = 'https://demoqa.com/dynamic-properties'
 
         def test_clickable_button(self, driver):
