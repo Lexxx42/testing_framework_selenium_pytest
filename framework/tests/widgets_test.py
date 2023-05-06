@@ -7,7 +7,8 @@ Date Picker,
 Slider
 """
 import pytest
-from ..pages import AccordianPage, AutoCompletePage, DatePickerPage
+from ..pages import AccordianPage, AutoCompletePage, DatePickerPage, \
+    SliderPage
 
 
 class TestWidgetsPage:
@@ -138,3 +139,7 @@ class TestWidgetsPage:
             """Check slider can be moved."""
             slider_page = SliderPage(driver, self.slider_page_link)
             slider_page.open()
+            slider_value_before, slider_value_after = slider_page.change_slider_value()
+            assert slider_value_before != slider_value_after, \
+                'Slider value should change.' \
+                f'Got: {slider_value_before=}, {slider_value_after=}.'
