@@ -5,7 +5,8 @@ Accordian,
 Auto Complete,
 Date Picker,
 Slider,
-ProgressBarPage
+ProgressBarPage,
+Tabs
 """
 from random import sample, randint, choice
 from selenium.common.exceptions import TimeoutException
@@ -13,7 +14,8 @@ from selenium.webdriver.common.keys import Keys
 from .base_page import BasePage
 from ..generator import generated_color, generated_date
 from ..locators import AccordianPageLocators, AutoCompletePageLocators, \
-    DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators
+    DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators, \
+    TabsPageLocators
 
 
 class AccordianPage(BasePage):
@@ -202,3 +204,52 @@ class ProgressBarPage(BasePage):
         start_stop_button.click()
         value_after = self.element_is_present(self.locators.PROGRESS_BAR_VALUE).text
         return value_before, value_after
+
+
+class TabsPage(BasePage):
+    """Progress Bar page object."""
+    locators = TabsPageLocators()
+
+    def check_what_tab(self) -> tuple[str, int]:
+        """
+        Checks content of what tab.
+        :returns: Tab name, content of the tab length.
+        """
+        what_tab_button = self.element_is_clickable(self.locators.TAB_WHAT)
+        what_tab_button.click()
+        tab_name = what_tab_button.text
+        what_tab_content = self.element_is_visible(self.locators.TAB_WHAT_CONTENT).text
+        return tab_name, len(what_tab_content)
+
+    def check_origin_tab(self) -> tuple[str, int]:
+        """
+        Checks content of origin tab.
+        :returns: Tab name, content of the tab length.
+        """
+        origin_tab_button = self.element_is_clickable(self.locators.TAB_ORIGIN)
+        origin_tab_button.click()
+        tab_name = origin_tab_button.text
+        origin_tab_content = self.element_is_visible(self.locators.TAB_ORIGIN_CONTENT).text
+        return tab_name, len(origin_tab_content)
+
+    def check_use_tab(self) -> tuple[str, int]:
+        """
+        Checks content of use tab.
+        :returns: Tab name, content of the tab length.
+        """
+        use_tab_button = self.element_is_clickable(self.locators.TAB_USE)
+        use_tab_button.click()
+        tab_name = use_tab_button.text
+        use_tab_content = self.element_is_visible(self.locators.TAB_USE_CONTENT).text
+        return tab_name, len(use_tab_content)
+
+    def check_more_tab(self) -> tuple[str, int]:
+        """
+        Checks content of more tab.
+        :returns: Tab name, content of the tab length.
+        """
+        more_tab_button = self.element_is_clickable(self.locators.TAB_MORE)
+        more_tab_button.click()
+        tab_name = more_tab_button.text
+        more_tab_content = self.element_is_visible(self.locators.TAB_MORE_CONTENT).text
+        return tab_name, len(more_tab_content)
