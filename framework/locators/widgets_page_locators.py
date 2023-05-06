@@ -5,7 +5,8 @@ Accordian,
 Auto Complete,
 Date Picker,
 Slider,
-ProgressBarPage
+ProgressBarPage,
+Tabs
 """
 from selenium.webdriver.common.by import By
 
@@ -58,3 +59,15 @@ class ProgressBarPageLocators:
     """Class for Progress Bar page locators."""
     START_STOP_BUTTON = (By.CSS_SELECTOR, '#startStopButton')
     PROGRESS_BAR_VALUE = (By.CSS_SELECTOR, '.progress-bar')
+
+
+class TabsPageLocators:
+    """Class for Tabs page locators."""
+    TAB_WHAT = (By.CSS_SELECTOR, '#demo-tab-what')
+    TAB_WHAT_CONTENT = (By.CSS_SELECTOR, '#demo-tabpane-what .mt-3')
+    TAB_ORIGIN = (By.CSS_SELECTOR, '#demo-tab-origin')
+    TAB_ORIGIN_CONTENT = (By.CSS_SELECTOR, '#demo-tabpane-origin .mt-3')
+    TAB_USE = (By.CSS_SELECTOR, '#demo-tab-use')
+    TAB_USE_CONTENT = (By.CSS_SELECTOR, '#demo-tabpane-use .mt-3')
+    TAB_MORE = (By.CSS_SELECTOR, '#demo-tabpane-more')
+    TAB_MORE_CONTENT = (By.CSS_SELECTOR, '#demo-tabpane-more .mt-3')
