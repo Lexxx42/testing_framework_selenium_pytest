@@ -2,6 +2,9 @@
 
 Contains tabs:
 Accordian,
+Auto Complete,
+Date Picker,
+Slider
 """
 import pytest
 from ..pages import AccordianPage, AutoCompletePage, DatePickerPage
@@ -10,16 +13,19 @@ from ..pages import AccordianPage, AutoCompletePage, DatePickerPage
 class TestWidgetsPage:
     """Class represents Widgets tab.
     Accordian,
+    Auto Complete,
+    Date Picker,
+    Slider
     """
 
     class TestAccordianPage:
-        """Class represents Accordian tab."""
-        accordian_link = 'https://demoqa.com/accordian'
+        """Class represents Accordian tab tests."""
+        accordian_page_link = 'https://demoqa.com/accordian'
 
         @pytest.mark.parametrize('order', ['first', 'second', 'third'])
         def test_accordian(self, driver, order: str) -> None:
             """Test user can fill the form and sent it."""
-            accordian_page = AccordianPage(driver, self.accordian_link)
+            accordian_page = AccordianPage(driver, self.accordian_page_link)
             accordian_page.open()
             title, content = accordian_page.check_accordian(order)
             self.check_title(order, title)
@@ -51,12 +57,12 @@ class TestWidgetsPage:
                 f'Got nothing. Accordian number: {accordian_order}'
 
     class TestAutoCompletePage:
-        """Class represents Accordian tab."""
-        autocomplete_link = 'https://demoqa.com/auto-complete'
+        """Class represents Accordian tab tests."""
+        autocomplete_page_link = 'https://demoqa.com/auto-complete'
 
         def test_fill_multiple_autocomplete(self, driver):
             """Check if multiple autocomplete input is filled."""
-            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             colors_selected = autocomplete_page.fill_multiple_input()
             colors_in_multiple_input = autocomplete_page.check_colors_in_multiple_input()
@@ -67,7 +73,7 @@ class TestWidgetsPage:
 
         def test_remove_color_from_multiple_autocomplete(self, driver):
             """Check if color can be deleted from multiple autocomplete."""
-            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             autocomplete_page.fill_multiple_input()
             colors_before_deletion = autocomplete_page.count_colors_in_multiple_input()
@@ -79,7 +85,7 @@ class TestWidgetsPage:
 
         def test_remove_all_colors_from_multiple_autocomplete(self, driver):
             """Check if all colors can be deleted from multiple autocomplete."""
-            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             autocomplete_page.fill_multiple_input()
             colors_before_clearing = autocomplete_page.count_colors_in_multiple_input()
@@ -94,7 +100,7 @@ class TestWidgetsPage:
 
         def test_fill_single_autocomplete(self, driver):
             """Check if single autocomplete input is filled."""
-            autocomplete_page = AutoCompletePage(driver, self.autocomplete_link)
+            autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             color_selected = autocomplete_page.fill_single_input()
             color_in_single_input = autocomplete_page.check_single_input()
@@ -103,7 +109,7 @@ class TestWidgetsPage:
                 f'Entered data: {color_selected}. Shows: {color_in_single_input}'
 
     class TestDatePickerPage:
-        """Class represents Date Picker tab."""
+        """Class represents Date Picker tab tests."""
         date_picker_link = 'https://demoqa.com/date-picker'
 
         def test_select_date(self, driver):
@@ -123,3 +129,12 @@ class TestWidgetsPage:
             assert date_before != date_after, \
                 'Expected date to be different fom than date before. ' \
                 f'Got: {date_before=}, {date_after=}'
+
+    class TestSliderPage:
+        """Class represents Slider tab tests."""
+        slider_page_link = 'https://demoqa.com/slider'
+
+        def test_slider(self, driver):
+            """Check slider can be moved."""
+            slider_page = SliderPage(driver, self.slider_page_link)
+            slider_page.open()
