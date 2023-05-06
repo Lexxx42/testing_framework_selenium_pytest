@@ -42,3 +42,9 @@ class DatePickerPageLocators:
     DATE_AND_TIME_YEAR_VIEW = (By.CSS_SELECTOR, '.react-datepicker__year-read-view')
     DATE_AND_TIME_AVAILABLE_YEARS = (By.CSS_SELECTOR, '.react-datepicker__year-option')
     DATE_AND_TIME_AVAILABLE_TIMES = (By.CSS_SELECTOR, '.react-datepicker__time-list-item')
+
+
+class SliderPageLocators:
+    """Class for Slider page locators."""
+    SLIDER_INPUT = (By.CSS_SELECTOR, '.range-slider')
+    SLIDER_VALUE = (By.CSS_SELECTOR, '#sliderValue')

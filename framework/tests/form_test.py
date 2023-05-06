@@ -13,12 +13,12 @@ class TestForm:
     """
 
     class TestPracticeForm:
-        """Class represents Practice Form tab."""
-        practice_form_link = 'https://demoqa.com/automation-practice-form'
+        """Class represents Practice Form tab tests."""
+        practice_form_page_link = 'https://demoqa.com/automation-practice-form'
 
         def test_form(self, driver):
             """Test user can fill the form and sent it."""
-            form_page = PracticeFormPage(driver, self.practice_form_link)
+            form_page = PracticeFormPage(driver, self.practice_form_page_link)
             form_page.open()
             input_data, date_of_birth, subject = form_page.fill_form_fields()
             output_data = form_page.check_form_results()

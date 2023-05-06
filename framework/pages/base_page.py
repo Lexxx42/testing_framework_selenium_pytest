@@ -195,3 +195,9 @@ class BasePage:
             if element.text == text:
                 element.click()
                 break
+
+    def drag_and_drop_by_offset(self, element, x_coordinate, y_coordinate) -> None:
+        """Holds left mouse button and drags the element to the x, y coordinates."""
+        action = ActionChains(self.driver)
+        action.drag_and_drop_by_offset(element, x_coordinate, y_coordinate)
+        action.perform()

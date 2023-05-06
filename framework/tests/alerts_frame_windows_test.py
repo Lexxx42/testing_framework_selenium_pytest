@@ -24,12 +24,12 @@ class TestAlertsFrameWindows:
     EXPECTED_TEXT = 'This is a sample page'
 
     class TestBrowserWindows:
-        """Class represents Browser Windows tab."""
-        browser_windows_link = 'https://demoqa.com/browser-windows'
+        """Class represents Browser Windows tab tests."""
+        browser_windows_page_link = 'https://demoqa.com/browser-windows'
 
         def test_new_tab(self, driver):
             """Test opening a new tab and getting the text from it."""
-            browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_link)
+            browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_page_link)
             browser_windows_page.open()
             new_tab_text = browser_windows_page.check_opened('tab')
             assert new_tab_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
@@ -38,7 +38,7 @@ class TestAlertsFrameWindows:
 
         def test_new_window(self, driver):
             """Test opening a new window and getting the text from it."""
-            browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_link)
+            browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_page_link)
             browser_windows_page.open()
             new_window_text = browser_windows_page.check_opened('window')
             assert new_window_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
@@ -46,7 +46,7 @@ class TestAlertsFrameWindows:
                 f' but got {new_window_text}'
 
     class TestAlerts:
-        """Class represents Alerts tab."""
+        """Class represents Alerts tab tests."""
         alerts_page_link = 'https://demoqa.com/alerts'
 
         def test_see_alert(self, driver):
@@ -102,7 +102,7 @@ class TestAlertsFrameWindows:
                 f'Got: {prompt_result.split()[-1]}'
 
     class TestFrames:
-        """Class represents Frames tab."""
+        """Class represents Frames tab tests."""
         frames_page_link = 'https://demoqa.com/frames'
 
         def test_first_frame(self, driver):
@@ -136,7 +136,7 @@ class TestAlertsFrameWindows:
                 f'Frame width should be {expected_height}. Got {height}'
 
     class TestNestedFrames:
-        """Class represents Nested Frames tab."""
+        """Class represents Nested Frames tab tests."""
         nested_frames_page_link = 'https://demoqa.com/nestedframes'
 
         def test_nested_frames(self, driver):
@@ -154,7 +154,7 @@ class TestAlertsFrameWindows:
                 f' Got {inner_frame_text}'
 
     class TestModalDialogs:
-        """Class represents Modal Dialogs tab."""
+        """Class represents Modal Dialogs tab tests."""
         modal_dialogs_page_link = 'https://demoqa.com/modal-dialogs'
 
         def test_small_modal_open(self, driver):
