@@ -4,11 +4,12 @@ Contains tabs:
 Accordian,
 Auto Complete,
 Date Picker,
-Slider
+Slider,
+ProgressBarPage
 """
 import pytest
 from ..pages import AccordianPage, AutoCompletePage, DatePickerPage, \
-    SliderPage
+    SliderPage, ProgressBarPage
 
 
 class TestWidgetsPage:
@@ -143,3 +144,16 @@ class TestWidgetsPage:
             assert slider_value_before != slider_value_after, \
                 'Slider value should change.' \
                 f'Got: {slider_value_before=}, {slider_value_after=}.'
+
+    class TestProgressBarPage:
+        """Class represents Progress Bar tab tests."""
+        progress_bar_page_link = 'https://demoqa.com/progress-bar'
+
+        def test_progress_bar(self, driver):
+            """Progress bar changes over time."""
+            progress_bar_page = ProgressBarPage(driver, self.progress_bar_page_link)
+            progress_bar_page.open()
+            progress_bar_before, progress_bar_after = progress_bar_page.change_progress_bar_value()
+            assert progress_bar_before != progress_bar_after, \
+                'Progress bar value should change.' \
+                f'Got: {progress_bar_before=}, {progress_bar_after=}.'
