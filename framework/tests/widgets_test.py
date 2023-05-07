@@ -216,7 +216,7 @@ class TestWidgetsPage:
             """Button has tooltip text."""
             tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
             tool_tips_page.open()
-            tooltip_button_text = tool_tips_page.check_tooltip_button()
+            tooltip_button_text = tool_tips_page.get_tooltip_text_button()
             expected_tooltip_text = 'You hovered over the Button'
             assert tooltip_button_text == expected_tooltip_text, \
                 f'Expected tooltip text: {expected_tooltip_text}.' \
@@ -226,7 +226,7 @@ class TestWidgetsPage:
             """Field has tooltip text."""
             tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
             tool_tips_page.open()
-            tooltip_field_text = tool_tips_page.check_tooltip_field()
+            tooltip_field_text = tool_tips_page.get_tooltip_text_field()
             expected_tooltip_text = 'You hovered over the text field'
             assert tooltip_field_text == expected_tooltip_text, \
                 f'Expected tooltip text: {expected_tooltip_text}.' \
@@ -236,7 +236,7 @@ class TestWidgetsPage:
             """Contrary link has tooltip text."""
             tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
             tool_tips_page.open()
-            tooltip_contrary_link_text = tool_tips_page.check_tooltip_contrary_link()
+            tooltip_contrary_link_text = tool_tips_page.get_tooltip_text_contrary_link()
             expected_tooltip_text = 'You hovered over the Contrary'
             assert tooltip_contrary_link_text == expected_tooltip_text, \
                 f'Expected tooltip text: {expected_tooltip_text}.' \
@@ -246,7 +246,7 @@ class TestWidgetsPage:
             """Section link has tooltip text."""
             tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
             tool_tips_page.open()
-            tooltip_section_link_text = tool_tips_page.check_tooltip_section_link()
+            tooltip_section_link_text = tool_tips_page.get_tooltip_text_section_link()
             expected_tooltip_text = 'You hovered over the 1.10.32'
             assert tooltip_section_link_text == expected_tooltip_text, \
                 f'Expected tooltip text: {expected_tooltip_text}.' \

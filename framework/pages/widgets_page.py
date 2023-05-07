@@ -274,7 +274,7 @@ class ToolTipsPage(BasePage):
         tooltip_text = self.element_is_visible(self.locators.TOOLTIPS_INNERS).text
         return tooltip_text
 
-    def check_tooltip_button(self) -> str:
+    def get_tooltip_text_button(self) -> str:
         """
         Check if the button tooltip is visible.
         :returns: Tooltip text.
@@ -282,7 +282,7 @@ class ToolTipsPage(BasePage):
         tooltip_text_button = self.get_text_from_tool_tip(self.locators.BUTTON, self.locators.TOOLTIP_BUTTON)
         return tooltip_text_button
 
-    def check_tooltip_field(self) -> str:
+    def get_tooltip_text_field(self) -> str:
         """
         Check if the field tooltip is visible.
         :returns: Tooltip text.
@@ -290,7 +290,7 @@ class ToolTipsPage(BasePage):
         tooltip_text_field = self.get_text_from_tool_tip(self.locators.FIELD, self.locators.TOOLTIP_FIELD)
         return tooltip_text_field
 
-    def check_tooltip_contrary_link(self) -> str:
+    def get_tooltip_text_contrary_link(self) -> str:
         """
         Check if the contrary link tooltip is visible.
         :returns: Tooltip text.
@@ -299,7 +299,7 @@ class ToolTipsPage(BasePage):
                                                                  self.locators.TOOLTIP_CONTRARY_LINK)
         return tooltip_text_contrary_link
 
-    def check_tooltip_section_link(self) -> str:
+    def get_tooltip_text_section_link(self) -> str:
         """
         Check if the section link tooltip is visible.
         :returns: Tooltip text.
