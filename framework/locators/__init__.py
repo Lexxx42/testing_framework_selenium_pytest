@@ -8,4 +8,4 @@ from .alerts_frame_windows_locators import BrowserWindowsPageLocators, AlertsPag
     FramesPageLocators, NestedFramesPageLocators, ModalDialogsPageLocators
 from .widgets_page_locators import AccordianPageLocators, AutoCompletePageLocators, \
     DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators, \
-    TabsPageLocators
+    TabsPageLocators, ToolTipsPageLocators

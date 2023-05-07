@@ -201,3 +201,9 @@ class BasePage:
         action = ActionChains(self.driver)
         action.drag_and_drop_by_offset(element, x_coordinate, y_coordinate)
         action.perform()
+
+    def move_cursor_to_center_of_element(self, element) -> None:
+        """Moves cursor to center of element."""
+        action = ActionChains(self.driver)
+        action.move_to_element(element)
+        action.perform()

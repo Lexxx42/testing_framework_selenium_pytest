@@ -7,4 +7,5 @@ from .alerts_frame_windows_page import BrowserWindowsPage, \
     AlertsPage, FramesPage, NestedFramesPage, \
     ModalDialogsPage
 from .widgets_page import AccordianPage, AutoCompletePage, \
-    DatePickerPage, SliderPage, ProgressBarPage, TabsPage
+    DatePickerPage, SliderPage, ProgressBarPage, TabsPage, \
+    ToolTipsPage

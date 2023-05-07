@@ -5,12 +5,13 @@ Accordian,
 Auto Complete,
 Date Picker,
 Slider,
-ProgressBarPage,
-Tabs
+Progress Bar,
+Tabs,
+Tool Tips
 """
 import pytest
 from ..pages import AccordianPage, AutoCompletePage, DatePickerPage, \
-    SliderPage, ProgressBarPage, TabsPage
+    SliderPage, ProgressBarPage, TabsPage, ToolTipsPage
 
 
 class TestWidgetsPage:
@@ -206,3 +207,47 @@ class TestWidgetsPage:
                 f'Expected tab name {expected_tab_name}, got {actual_tab_name}.'
             assert tab_content_length > 0, \
                 f'Expected that tab has content. Got {tab_content_length=}'
+
+    class TestToolTipsPage:
+        """Class represents Tool Tips tab tests."""
+        tool_tips_page_link = 'https://demoqa.com/tool-tips'
+
+        def test_button_tooltip_text(self, driver):
+            """Button has tooltip text."""
+            tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
+            tool_tips_page.open()
+            tooltip_button_text = tool_tips_page.get_tooltip_text_button()
+            expected_tooltip_text = 'You hovered over the Button'
+            assert tooltip_button_text == expected_tooltip_text, \
+                f'Expected tooltip text: {expected_tooltip_text}.' \
+                f'Got {tooltip_button_text}.'
+
+        def test_field_tooltip_text(self, driver):
+            """Field has tooltip text."""
+            tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
+            tool_tips_page.open()
+            tooltip_field_text = tool_tips_page.get_tooltip_text_field()
+            expected_tooltip_text = 'You hovered over the text field'
+            assert tooltip_field_text == expected_tooltip_text, \
+                f'Expected tooltip text: {expected_tooltip_text}.' \
+                f'Got {tooltip_field_text}.'
+
+        def test_contrary_link_tooltip_text(self, driver):
+            """Contrary link has tooltip text."""
+            tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
+            tool_tips_page.open()
+            tooltip_contrary_link_text = tool_tips_page.get_tooltip_text_contrary_link()
+            expected_tooltip_text = 'You hovered over the Contrary'
+            assert tooltip_contrary_link_text == expected_tooltip_text, \
+                f'Expected tooltip text: {expected_tooltip_text}.' \
+                f'Got {tooltip_contrary_link_text}.'
+
+        def test_section_link_tooltip_text(self, driver):
+            """Section link has tooltip text."""
+            tool_tips_page = ToolTipsPage(driver, self.tool_tips_page_link)
+            tool_tips_page.open()
+            tooltip_section_link_text = tool_tips_page.get_tooltip_text_section_link()
+            expected_tooltip_text = 'You hovered over the 1.10.32'
+            assert tooltip_section_link_text == expected_tooltip_text, \
+                f'Expected tooltip text: {expected_tooltip_text}.' \
+                f'Got {tooltip_section_link_text}.'

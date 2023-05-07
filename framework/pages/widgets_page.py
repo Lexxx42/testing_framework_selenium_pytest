@@ -5,8 +5,9 @@ Accordian,
 Auto Complete,
 Date Picker,
 Slider,
-ProgressBarPage,
-Tabs
+Progress Bar,
+Tabs,
+Tool Tips
 """
 from random import sample, randint, choice
 from selenium.common.exceptions import TimeoutException
@@ -15,7 +16,7 @@ from .base_page import BasePage
 from ..generator import generated_color, generated_date
 from ..locators import AccordianPageLocators, AutoCompletePageLocators, \
     DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators, \
-    TabsPageLocators
+    TabsPageLocators, ToolTipsPageLocators
 
 
 class AccordianPage(BasePage):
@@ -253,3 +254,56 @@ class TabsPage(BasePage):
         tab_name = more_tab_button.text
         more_tab_content = self.element_is_visible(self.locators.TAB_MORE_CONTENT).text
         return tab_name, len(more_tab_content)
+
+
+class ToolTipsPage(BasePage):
+    """Progress Bar page object."""
+    locators = ToolTipsPageLocators()
+
+    def get_text_from_tool_tip(self, hovered_element, hover_tip_element) -> str:
+        # TODO: Make change of color of the button like this.
+        """
+        Get the tooltip text from the element.
+        :param hovered_element: The element to get the tooltip text from.
+        :param hover_tip_element: The element with the tooltip.
+        :returns: The tooltip text.
+        """
+        element = self.element_is_visible(hovered_element)
+        self.move_cursor_to_center_of_element(element)
+        self.element_is_visible(hover_tip_element)
+        tooltip_text = self.element_is_visible(self.locators.TOOLTIPS_INNERS).text
+        return tooltip_text
+
+    def get_tooltip_text_button(self) -> str:
+        """
+        Check if the button tooltip is visible.
+        :returns: Tooltip text.
+        """
+        tooltip_text_button = self.get_text_from_tool_tip(self.locators.BUTTON, self.locators.TOOLTIP_BUTTON)
+        return tooltip_text_button
+
+    def get_tooltip_text_field(self) -> str:
+        """
+        Check if the field tooltip is visible.
+        :returns: Tooltip text.
+        """
+        tooltip_text_field = self.get_text_from_tool_tip(self.locators.FIELD, self.locators.TOOLTIP_FIELD)
+        return tooltip_text_field
+
+    def get_tooltip_text_contrary_link(self) -> str:
+        """
+        Check if the contrary link tooltip is visible.
+        :returns: Tooltip text.
+        """
+        tooltip_text_contrary_link = self.get_text_from_tool_tip(self.locators.CONTRARY_LINK,
+                                                                 self.locators.TOOLTIP_CONTRARY_LINK)
+        return tooltip_text_contrary_link
+
+    def get_tooltip_text_section_link(self) -> str:
+        """
+        Check if the section link tooltip is visible.
+        :returns: Tooltip text.
+        """
+        tooltip_text_section_link = self.get_text_from_tool_tip(self.locators.SECTION_LINK,
+                                                                self.locators.TOOLTIP_SECTION_LINK)
+        return tooltip_text_section_link

@@ -5,8 +5,9 @@ Accordian,
 Auto Complete,
 Date Picker,
 Slider,
-ProgressBarPage,
-Tabs
+Progress Bar,
+Tabs,
+Tool Tips
 """
 from selenium.webdriver.common.by import By
 
@@ -71,3 +72,20 @@ class TabsPageLocators:
     TAB_USE_CONTENT = (By.CSS_SELECTOR, '#demo-tabpane-use .mt-3')
     TAB_MORE = (By.CSS_SELECTOR, '#demo-tabpane-more')
     TAB_MORE_CONTENT = (By.CSS_SELECTOR, '#demo-tabpane-more .mt-3')
+
+
+class ToolTipsPageLocators:
+    """Class for Tool Tips page locators."""
+    BUTTON = (By.CSS_SELECTOR, '#toolTipButton')
+    TOOLTIP_BUTTON = (By.CSS_SELECTOR, '[aria-describedby="buttonToolTip"]')
+
+    FIELD = (By.CSS_SELECTOR, '#toolTipTextField')
+    TOOLTIP_FIELD = (By.CSS_SELECTOR, '[aria-describedby="textFieldToolTip"]')
+
+    CONTRARY_LINK = (By.CSS_SELECTOR, '#texToolTopContainer a:nth-child(1)')
+    TOOLTIP_CONTRARY_LINK = (By.CSS_SELECTOR, '[aria-describedby="contraryTexToolTip"]')
+
+    SECTION_LINK = (By.CSS_SELECTOR, '#texToolTopContainer a:nth-child(2)')
+    TOOLTIP_SECTION_LINK = (By.CSS_SELECTOR, '[aria-describedby="sectionToolTip"]')
+
+    TOOLTIPS_INNERS = (By.CSS_SELECTOR, '.tooltip-inner')
