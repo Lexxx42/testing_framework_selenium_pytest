@@ -7,7 +7,8 @@ Date Picker,
 Slider,
 Progress Bar,
 Tabs,
-Tool Tips
+Tool Tips,
+Menu
 """
 from random import sample, randint, choice
 from selenium.common.exceptions import TimeoutException
@@ -16,7 +17,7 @@ from .base_page import BasePage
 from ..generator import generated_color, generated_date
 from ..locators import AccordianPageLocators, AutoCompletePageLocators, \
     DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators, \
-    TabsPageLocators, ToolTipsPageLocators
+    TabsPageLocators, ToolTipsPageLocators, MenuPageLocators
 
 
 class AccordianPage(BasePage):
@@ -307,3 +308,20 @@ class ToolTipsPage(BasePage):
         tooltip_text_section_link = self.get_text_from_tool_tip(self.locators.SECTION_LINK,
                                                                 self.locators.TOOLTIP_SECTION_LINK)
         return tooltip_text_section_link
+
+
+class MenuPage(BasePage):
+    """Menu page object."""
+    locators = MenuPageLocators()
+
+    def get_menu_items_names(self) -> list[str]:
+        """
+        Get the names of the items in the menu.
+        :returns: Names of the items in the menu.
+        """
+        menu_items = self.elements_are_present(self.locators.MENU_ITEMS)
+        items_names = []
+        for item in menu_items:
+            self.move_cursor_to_center_of_element(item)
+            items_names.append(item.text)
+        return items_names
