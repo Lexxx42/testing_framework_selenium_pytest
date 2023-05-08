@@ -7,7 +7,8 @@ Date Picker,
 Slider,
 Progress Bar,
 Tabs,
-Tool Tips
+Tool Tips,
+Menu
 """
 from selenium.webdriver.common.by import By
 
@@ -89,3 +90,8 @@ class ToolTipsPageLocators:
     TOOLTIP_SECTION_LINK = (By.CSS_SELECTOR, '[aria-describedby="sectionToolTip"]')
 
     TOOLTIPS_INNERS = (By.CSS_SELECTOR, '.tooltip-inner')
+
+
+class MenuPageLocators:
+    """Class for Menu page locators."""
+    MENU_ITEMS = (By.CSS_SELECTOR, '#nav a')
