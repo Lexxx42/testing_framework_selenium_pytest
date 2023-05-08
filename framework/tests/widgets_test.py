@@ -7,11 +7,12 @@ Date Picker,
 Slider,
 Progress Bar,
 Tabs,
-Tool Tips
+Tool Tips,
+Menu
 """
 import pytest
 from ..pages import AccordianPage, AutoCompletePage, DatePickerPage, \
-    SliderPage, ProgressBarPage, TabsPage, ToolTipsPage
+    SliderPage, ProgressBarPage, TabsPage, ToolTipsPage, MenuPage
 
 
 class TestWidgetsPage:
@@ -251,3 +252,57 @@ class TestWidgetsPage:
             assert tooltip_section_link_text == expected_tooltip_text, \
                 f'Expected tooltip text: {expected_tooltip_text}.' \
                 f'Got {tooltip_section_link_text}.'
+
+    class TestMenuPage:
+        """Class represents Menu tab tests."""
+        menu_page_link = 'https://demoqa.com/menu'
+
+        def test_menu_has_main_items(self, driver):
+            """Menu has main items."""
+            menu_page = MenuPage(driver, self.menu_page_link)
+            menu_page.open()
+            names_of_items_in_menu = menu_page.get_menu_items_names()
+            expected_main_item1 = 'Main Item 1'
+            expected_main_item2 = 'Main Item 2'
+            expected_main_item3 = 'Main Item 3'
+            assert expected_main_item1 in names_of_items_in_menu, \
+                f'Expected {expected_main_item1} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+            assert expected_main_item2 in names_of_items_in_menu, \
+                f'Expected {expected_main_item2} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+            assert expected_main_item3 in names_of_items_in_menu, \
+                f'Expected {expected_main_item3} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+
+        def test_menu_has_sub_items(self, driver):
+            """Menu has sub items."""
+            menu_page = MenuPage(driver, self.menu_page_link)
+            menu_page.open()
+            names_of_items_in_menu = menu_page.get_menu_items_names()
+            expected_sub_item1 = 'Sub Item'
+            expected_sub_item2 = 'Sub Item'
+            assert expected_sub_item1 in names_of_items_in_menu, \
+                f'Expected {expected_sub_item1} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+            assert expected_sub_item2 in names_of_items_in_menu, \
+                f'Expected {expected_sub_item2} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+
+        def test_menu_has_sub_sub_list(self, driver):
+            """Menu has sub sub items."""
+            menu_page = MenuPage(driver, self.menu_page_link)
+            menu_page.open()
+            names_of_items_in_menu = menu_page.get_menu_items_names()
+            expected_sub_sub_list = 'SUB SUB LIST »'
+            expected_sub_sub_item1 = 'Sub Sub Item 1'
+            expected_sub_sub_item2 = 'Sub Sub Item 2'
+            assert expected_sub_sub_list in names_of_items_in_menu, \
+                f'Expected {expected_sub_sub_list} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+            assert expected_sub_sub_item1 in names_of_items_in_menu, \
+                f'Expected {expected_sub_sub_item1} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
+            assert expected_sub_sub_item2 in names_of_items_in_menu, \
+                f'Expected {expected_sub_sub_item2} in main menu items. ' \
+                f'Got {names_of_items_in_menu} without it.'
