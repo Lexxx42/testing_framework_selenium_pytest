@@ -8,4 +8,4 @@ from .alerts_frame_windows_page import BrowserWindowsPage, \
     ModalDialogsPage
 from .widgets_page import AccordianPage, AutoCompletePage, \
     DatePickerPage, SliderPage, ProgressBarPage, TabsPage, \
-    ToolTipsPage
+    ToolTipsPage, MenuPage
