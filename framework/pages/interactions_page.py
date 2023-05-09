@@ -1,11 +1,12 @@
 """Module contains page objects for Interactions tab on the site.
 
 Contains tabs:
-Sortable
+Sortable,
+Selectable
 """
 from random import sample
 from .base_page import BasePage
-from ..locators import SortablePageLocators
+from ..locators import SortablePageLocators, SelectablePageLocators
 
 
 class SortablePage(BasePage):
@@ -50,3 +51,47 @@ class SortablePage(BasePage):
         item_which = items_selected_to_change_order[0]
         item_where = items_selected_to_change_order[-1]
         self.drag_and_drop_to_element(item_which, item_where)
+
+
+class SelectablePage(BasePage):
+    """Selectable page object."""
+    locators = SelectablePageLocators()
+
+    def click_item_to_be_active(self, elements) -> None:
+        """
+        Click on the random item to be active.
+        :param elements: Elements to select from.
+        """
+        items = self.elements_are_visible(elements)
+        selected_item = sample(items, k=1)[0]
+        selected_item.click()
+
+    def activate_list_item(self) -> None:
+        """Activates list item."""
+        self.activate_item(self.locators.TAB_LIST, self.locators.ITEMS_LIST)
+
+    def activate_grid_item(self) -> None:
+        """Activates grid item."""
+        self.activate_item(self.locators.TAB_GRID, self.locators.ITEMS_GRID)
+
+    def activate_item(self, tab_to_activate, elements_to_activate_from) -> None:
+        """
+        Activates item from elements.
+        :param tab_to_activate: The tab to activate.
+        :param elements_to_activate_from: Elements to activate from.
+        """
+        self.element_is_clickable(tab_to_activate).click()
+        self.click_item_to_be_active(elements_to_activate_from)
+
+    def get_active_item_text(self, elements_to_search_for_active) -> str:
+        """:returns: The active item from elements."""
+        active_item = self.element_is_visible(elements_to_search_for_active)
+        return active_item.text
+
+    def get_active_list_item_text(self) -> str:
+        """:returns: The active item from list."""
+        return self.get_active_item_text(self.locators.ITEMS_LIST_ACTIVE)
+
+    def get_active_grid_item_text(self) -> str:
+        """:returns: The active item from grid."""
+        return self.get_active_item_text(self.locators.ITEMS_GRID_ACTIVE)
