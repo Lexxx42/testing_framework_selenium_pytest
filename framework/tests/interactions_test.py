@@ -2,9 +2,10 @@
 
 Contains tabs:
 Sortable,
-Selectable
+Selectable,
+Resizable
 """
-from ..pages import SortablePage, SelectablePage
+from ..pages import SortablePage, SelectablePage, ResizablePage
 
 
 class TestInteractionsPage:
@@ -63,3 +64,78 @@ class TestInteractionsPage:
             assert len(activated_grid_item) > 0, \
                 'Expected text from activated grid item. ' \
                 f'Got: {activated_grid_item}'
+
+    class TestResizablePage:
+        """Class represents Resizable tab tests."""
+        resizable_page_link = 'https://demoqa.com/resizable'
+
+        def test_starting_size_of_resizable_box_is_200x200(self, driver):
+            """Test starting size of resizable box."""
+            resizable_page = ResizablePage(driver, self.resizable_page_link)
+            resizable_page.open()
+            current_height, current_width = resizable_page.get_size_resizable_box()
+            starting_height = 200
+            starting_width = 200
+            assert current_height == starting_height, \
+                f'Expected current height to be {starting_height}.' \
+                f'Got {current_height}'
+            assert current_width == starting_width, \
+                f'Expected current height to be {starting_width}.' \
+                f'Got {current_width}'
+
+        def test_min_size_of_resizable_box_is_150x150(self, driver):
+            """Test min size of resizable box."""
+            resizable_page = ResizablePage(driver, self.resizable_page_link)
+            resizable_page.open()
+            resizable_page.change_size_resizable_box_lower_than_min_size()
+            current_height, current_width = resizable_page.get_size_resizable_box()
+            min_height = 150
+            min_width = 150
+            assert current_height == min_height, \
+                f'Expected current height to be {min_height}.' \
+                f'Got {current_height}'
+            assert current_width == min_width, \
+                f'Expected current height to be {min_width}.' \
+                f'Got {current_width}'
+
+        def test_max_size_of_resizable_box_is_500x300(self, driver):
+            """Test max size of resizable box."""
+            resizable_page = ResizablePage(driver, self.resizable_page_link)
+            resizable_page.open()
+            resizable_page.change_size_resizable_box_greater_than_max_size()
+            current_height, current_width = resizable_page.get_size_resizable_box()
+            max_height = 300
+            max_width = 500
+            assert current_height == max_height, \
+                f'Expected current height to be {max_height}.' \
+                f'Got {current_height}'
+            assert current_width == max_width, \
+                f'Expected current height to be {max_width}.' \
+                f'Got {current_width}'
+
+        def test_min_size_of_resizable_is_20x20(self, driver):
+            """Test min size of resizable."""
+            resizable_page = ResizablePage(driver, self.resizable_page_link)
+            resizable_page.open()
+            resizable_page.change_size_resizable_lower_zero()
+            current_height, current_width = resizable_page.get_size_resizable()
+            min_height = 20
+            min_width = 20
+            assert current_height == min_height, \
+                f'Expected current height to be {min_height}.' \
+                f'Got {current_height}'
+            assert current_width == min_width, \
+                f'Expected current height to be {min_width}.' \
+                f'Got {current_width}'
+
+        def test_size_of_resizable_can_be_changed(self, driver):
+            """Test size of resizable can be changed."""
+            resizable_page = ResizablePage(driver, self.resizable_page_link)
+            resizable_page.open()
+            starting_height, starting_width = resizable_page.get_size_resizable()
+            resizable_page.change_size_resizable()
+            current_height, current_width = resizable_page.get_size_resizable()
+            assert starting_height != current_height, \
+                f'Expected {current_height=} to be different from {starting_height=}.'
+            assert starting_width != current_width, \
+                f'Expected {current_width=} to be different from {starting_width=}.'
