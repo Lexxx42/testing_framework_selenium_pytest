@@ -2,7 +2,8 @@
 
 Contains locators for following tabs:
 Sortable,
-Selectable
+Selectable,
+Resizable
 """
 from selenium.webdriver.common.by import By
 
@@ -23,3 +24,11 @@ class SelectablePageLocators:
     TAB_GRID = (By.CSS_SELECTOR, '#demo-tab-grid')
     ITEMS_GRID = (By.CSS_SELECTOR, '#gridContainer .list-group-item')
     ITEMS_GRID_ACTIVE = (By.CSS_SELECTOR, '#gridContainer .active')
+
+
+class ResizablePageLocators:
+    """Class for Selectable page locators."""
+    RESIZABLE_BOX = (By.CSS_SELECTOR, '#resizableBoxWithRestriction')
+    RESIZABLE_BOX_HANDLER = (By.CSS_SELECTOR, '#resizableBoxWithRestriction .react-resizable-handle')
+    RESIZABLE = (By.CSS_SELECTOR, '#resizable')
+    RESIZABLE_HANDLER = (By.CSS_SELECTOR, '#resizable .react-resizable-handle')
