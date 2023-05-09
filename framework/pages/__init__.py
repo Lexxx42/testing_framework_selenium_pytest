@@ -9,4 +9,5 @@ from .alerts_frame_windows_page import BrowserWindowsPage, \
 from .widgets_page import AccordianPage, AutoCompletePage, \
     DatePickerPage, SliderPage, ProgressBarPage, TabsPage, \
     ToolTipsPage, MenuPage
-from .interactions_page import SortablePage, SelectablePage
+from .interactions_page import SortablePage, SelectablePage, \
+    ResizablePage

@@ -9,4 +9,5 @@ from .alerts_frame_windows_locators import BrowserWindowsPageLocators, AlertsPag
 from .widgets_page_locators import AccordianPageLocators, AutoCompletePageLocators, \
     DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators, \
     TabsPageLocators, ToolTipsPageLocators, MenuPageLocators
-from .interactions_page_locators import SortablePageLocators, SelectablePageLocators
+from .interactions_page_locators import SortablePageLocators, SelectablePageLocators, \
+    ResizablePageLocators
