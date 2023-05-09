@@ -202,6 +202,16 @@ class BasePage:
         action.drag_and_drop_by_offset(element, x_coordinate, y_coordinate)
         action.perform()
 
+    def drag_and_drop_to_element(self, from_what, to_where) -> None:
+        """
+        Drags element to certain position of another element.
+        :param from_what: What element to drag.
+        :param to_where: Where to drag element.
+        """
+        action = ActionChains(self.driver)
+        action.drag_and_drop(from_what, to_where)
+        action.perform()
+
     def move_cursor_to_center_of_element(self, element) -> None:
         """Moves cursor to center of element."""
         action = ActionChains(self.driver)
