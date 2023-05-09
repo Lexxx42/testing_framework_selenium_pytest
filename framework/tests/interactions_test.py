@@ -1,9 +1,10 @@
 """Module contains tests for Interactions tab on the site.
 
 Contains tabs:
-Sortable
+Sortable,
+Selectable
 """
-from ..pages import SortablePage
+from ..pages import SortablePage, SelectablePage
 
 
 class TestInteractionsPage:
@@ -38,3 +39,27 @@ class TestInteractionsPage:
                 'Expected order of list to be different.' \
                 f'Order before: {order_of_grid_before}' \
                 f'Order after: {order_of_grid_after}'
+
+    class TestSelectablePage:
+        """Class represents Selectable tab tests."""
+        selectable_page_link = 'https://demoqa.com/selectable'
+
+        def test_list_item_can_be_activated(self, driver):
+            """Test list item can be activated."""
+            selectable_page = SelectablePage(driver, self.selectable_page_link)
+            selectable_page.open()
+            selectable_page.activate_list_item()
+            activated_list_item = selectable_page.get_active_list_item_text()
+            assert len(activated_list_item) > 0, \
+                'Expected text from activated list item. ' \
+                f'Got: {activated_list_item}'
+
+        def test_grid_item_can_be_activated(self, driver):
+            """Test grid item can be activated."""
+            selectable_page = SelectablePage(driver, self.selectable_page_link)
+            selectable_page.open()
+            selectable_page.activate_grid_item()
+            activated_grid_item = selectable_page.get_active_grid_item_text()
+            assert len(activated_grid_item) > 0, \
+                'Expected text from activated grid item. ' \
+                f'Got: {activated_grid_item}'
