@@ -2,11 +2,12 @@
 
 Contains tabs:
 Sortable,
-Selectable
+Selectable,
+Resizable
 """
-from random import sample
+from random import sample, randint
 from .base_page import BasePage
-from ..locators import SortablePageLocators, SelectablePageLocators
+from ..locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators
 
 
 class SortablePage(BasePage):
@@ -95,3 +96,67 @@ class SelectablePage(BasePage):
     def get_active_grid_item_text(self) -> str:
         """:returns: The active item from grid."""
         return self.get_active_item_text(self.locators.ITEMS_GRID_ACTIVE)
+
+
+class ResizablePage(BasePage):
+    """Resizable page object."""
+    locators = ResizablePageLocators()
+
+    def get_px_from_width_and_height(self, size) -> tuple[int, int]:
+        """
+        Get the width and height of element.
+        :returns: Height and width of element.
+        """
+        elements = size.split(';')
+        width = elements[0].split(':')[-1].strip(' px')
+        height = elements[1].split(':')[-1].strip(' px')
+        return int(height), int(width)
+
+    def get_width_and_height_of_element(self, element) -> str:
+        """
+        Get style attribute of element with height and width.
+        :returns: Size of element.
+        """
+        element_size_from = self.element_is_visible(element)
+        size = element_size_from.get_attribute('style')
+        return size
+
+    def change_size_of_element(self, element, width: int, height: int) -> None:
+        """
+        Changes size of element.
+        :param element: Element to change size of.
+        :param width: Width of element to change size to.
+        :param height: Height of element to change size to.
+        """
+        self.drag_and_drop_by_offset(self.element_is_present(element), width, height)
+
+    def change_size_resizable_box_greater_than_max_size(self) -> None:
+        """Changes size of resizable box greater than maximum size."""
+        self.change_size_of_element(self.locators.RESIZABLE_BOX_HANDLER, 600, 400)
+
+    def change_size_resizable_box_lower_than_min_size(self) -> None:
+        """Changes size of resizable box lower than minimum size."""
+        self.change_size_of_element(self.locators.RESIZABLE_BOX_HANDLER, -500, -300)
+
+    def change_size_resizable(self) -> None:
+        """Changes size of resizable."""
+        self.change_size_of_element(self.locators.RESIZABLE_HANDLER, randint(-50, 300), randint(-50, 300))
+
+    def change_size_resizable_lower_zero(self):
+        """Changes size of resizable lower than zero."""
+        self.change_size_of_element(self.locators.RESIZABLE_HANDLER, -201, -201)
+
+    def get_size_of_element(self, element) -> tuple[int, int]:
+        """Get height and width of element."""
+        size = self.get_px_from_width_and_height(self.get_width_and_height_of_element(element))
+        return size
+
+    def get_size_resizable_box(self) -> tuple[int, int]:
+        """Get height and width of resizable box."""
+        size_of_resizable_box = self.get_size_of_element(self.locators.RESIZABLE_BOX)
+        return size_of_resizable_box
+
+    def get_size_resizable(self) -> tuple[int, int]:
+        """Get height and width of resizable."""
+        size_of_resizable = self.get_size_of_element(self.locators.RESIZABLE)
+        return size_of_resizable
