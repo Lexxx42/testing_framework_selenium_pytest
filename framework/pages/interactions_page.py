@@ -3,11 +3,13 @@
 Contains tabs:
 Sortable,
 Selectable,
-Resizable
+Resizable,
+Droppable
 """
 from random import sample, randint
 from .base_page import BasePage
-from ..locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators
+from ..locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
+    DroppablePageLocators
 
 
 class SortablePage(BasePage):
@@ -48,7 +50,8 @@ class SortablePage(BasePage):
             Changes the order of the items in the elements. Within selected tab.
         """
         self.element_is_clickable(tab_to_activate).click()
-        items_selected_to_change_order = sample(self.elements_are_visible(elements_to_change_order), k=2)
+        items_selected_to_change_order = sample(
+            self.elements_are_visible(elements_to_change_order), k=2)
         item_which = items_selected_to_change_order[0]
         item_where = items_selected_to_change_order[-1]
         self.drag_and_drop_to_element(item_which, item_where)
@@ -140,7 +143,8 @@ class ResizablePage(BasePage):
 
     def change_size_resizable(self) -> None:
         """Changes size of resizable."""
-        self.change_size_of_element(self.locators.RESIZABLE_HANDLER, randint(-50, 300), randint(-50, 300))
+        self.change_size_of_element(
+            self.locators.RESIZABLE_HANDLER, randint(-50, 300), randint(-50, 300))
 
     def change_size_resizable_lower_zero(self):
         """Changes size of resizable lower than zero."""
@@ -160,3 +164,156 @@ class ResizablePage(BasePage):
         """Get height and width of resizable."""
         size_of_resizable = self.get_size_of_element(self.locators.RESIZABLE)
         return size_of_resizable
+
+
+class DroppablePage(BasePage):
+    """Droppable page object."""
+    locators = DroppablePageLocators()
+
+    def go_to_simple_tab(self) -> None:
+        """Go to simple tab."""
+        simple_tab = self.element_is_clickable(self.locators.SIMPLE_TAB)
+        simple_tab.click()
+
+    def go_to_accept_tab(self) -> None:
+        """Go to accept tab."""
+        accept_tab = self.element_is_clickable(self.locators.ACCEPT_TAB)
+        accept_tab.click()
+
+    def go_to_prevent_propogation_tab(self) -> None:
+        """Go to prevent propogation tab."""
+        prevent_propogation_tab = self.element_is_clickable(self.locators.PREVENT_TAB)
+        prevent_propogation_tab.click()
+
+    def go_to_revert_draggable_tab(self) -> None:
+        """Go to revert draggable tab."""
+        revert_draggable_tab = self.element_is_clickable(self.locators.REVERT_TAB)
+        revert_draggable_tab.click()
+
+    def drop_simple(self) -> None:
+        """Drops drag element into drop element."""
+        drag_me = self.element_is_visible(self.locators.DRAG_ME_SIMPLE)
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_SIMPLE)
+        self.drag_and_drop_to_element(drag_me, drop_here)
+
+    def drop_accept_acceptable(self) -> None:
+        """Drops drag Acceptable element into drop element."""
+        acceptable = self.element_is_visible(self.locators.ACCEPTABLE)
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_ACCEPT)
+        self.drag_and_drop_to_element(acceptable, drop_here)
+
+    def drop_accept_not_acceptable(self) -> None:
+        """Drops drag Not Acceptable element into drop element."""
+        not_acceptable = self.element_is_visible(self.locators.NOT_ACCEPTABLE)
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_ACCEPT)
+        self.drag_and_drop_to_element(not_acceptable, drop_here)
+
+    def drop_prevent_propogation_not_greedy_inner(self) -> None:
+        """Drops drag Drag Me element into not greedy inner."""
+        drag_me = self.element_is_visible(self.locators.DRAG_ME_PREVENT)
+        not_greedy_inner = self.element_is_visible(self.locators.INNER_DROPPABLE_NOT_GREEDY)
+        self.drag_and_drop_to_element(drag_me, not_greedy_inner)
+
+    def drop_prevent_propogation_greedy_inner(self) -> None:
+        """Drops drag Drag Me element into greedy inner."""
+        drag_me = self.element_is_visible(self.locators.DRAG_ME_PREVENT)
+        greedy_inner = self.element_is_visible(self.locators.INNER_DROPPABLE_GREEDY)
+        self.drag_and_drop_to_element(drag_me, greedy_inner)
+
+    def drop_revert_draggable_will_revert(self) -> None:
+        """Drops Will Revert element into Drop Here."""
+        will_revert = self.element_is_visible(self.locators.WILL_REVERT)
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_REVERT)
+        self.drag_and_drop_to_element(will_revert, drop_here)
+
+    def drop_revert_draggable_not_revert(self) -> None:
+        """Drops Not Revert element into Drop Here."""
+        not_revert = self.element_is_visible(self.locators.NOT_REVERT)
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_REVERT)
+        self.drag_and_drop_to_element(not_revert, drop_here)
+
+    def get_simple_drop_here_element_text(self) -> str:
+        """:returns: Drop here element text for Simple tab."""
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_SIMPLE)
+        return drop_here.text
+
+    def get_accept_drop_here_element_text(self) -> str:
+        """:returns: Drop here element text for Accept tab."""
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_ACCEPT)
+        return drop_here.text
+
+    def get_prevent_propogation_outer_droppable_not_greedy_text(self) -> str:
+        """:returns: Outer not greedy drappable text for Prevent Propogation tab."""
+        outer_droppable_not_greedy = self.element_is_visible(
+            self.locators.OUTER_DROPPABLE_NOT_GREEDY_TEXT)
+        return outer_droppable_not_greedy.text
+
+    def get_prevent_propogation_outer_droppable_greedy_text(self) -> str:
+        """:returns: Outer greedy drappable text for Prevent Propogation tab."""
+        outer_droppable_greedy = self.element_is_visible(self.locators.OUTER_DROPPABLE_GREEDY_TEXT)
+        return outer_droppable_greedy.text
+
+    def get_prevent_propogation_inner_droppable_not_greedy_text(self) -> str:
+        """:returns: Inner not greedy drappable text for Prevent Propogation tab."""
+        inner_droppable_not_greedy = self.element_is_visible(
+            self.locators.INNER_DROPPABLE_NOT_GREEDY_TEXT)
+        return inner_droppable_not_greedy.text
+
+    def get_prevent_propogation_inner_droppable_greedy_text(self) -> str:
+        """:returns: Inner greedy drappable text for Prevent Propogation tab."""
+        inner_droppable_greedy = self.element_is_visible(self.locators.INNER_DROPPABLE_GREEDY_TEXT)
+        return inner_droppable_greedy.text
+
+    def get_revert_draggable_drop_here_element_text(self) -> str:
+        """:returns: Drop here element text for Revert Draggable tab."""
+        drop_here = self.element_is_visible(self.locators.DROP_HERE_REVERT)
+        return drop_here.text
+
+    def __get_position_of_element(self, element) -> str:
+        """:returns: Position of element."""
+        return self.element_is_visible(element).get_attribute('style')
+
+    def get_position_of_will_revert(self) -> str:
+        """
+        Get position from style attribute of element.
+        :returns: Position of Will Revert.
+        """
+        return self.__get_position_of_element(self.locators.WILL_REVERT)
+
+    def get_position_of_not_revert(self) -> str:
+        """
+        Get position from style attribute of element.
+        :returns: Position of Not Revert.
+        """
+        return self.__get_position_of_element(self.locators.NOT_REVERT)
+
+    def __is_element_reverted_to_start_position(self, element_locator, start_position: str):
+        """
+        :param element_locator: Locator of element.
+        :param start_position: Style attribute of element.
+        :returns: True if will revert reverted to start position.
+        """
+        locator = element_locator
+        locator_positional = locator[1] + f'[style=\'{start_position}\']'
+        locator_to_wait_for = (locator[0], locator_positional)
+        return self.is_element_visible(locator_to_wait_for)
+
+    def change_position_of_will_revert(self) -> None:
+        """Change position of Will Revert."""
+        will_revert = self.element_is_visible(self.locators.WILL_REVERT)
+        self.drag_and_drop_by_offset(will_revert, 1, 1)
+
+    def change_position_of_not_revert(self) -> None:
+        """Change position of Not Revert."""
+        not_revert = self.element_is_visible(self.locators.NOT_REVERT)
+        self.drag_and_drop_by_offset(not_revert, x_coordinate=300, y_coordinate=300)
+
+    def is_will_revert_reverted_to_current_position(self, current_position) -> bool:
+        """:returns: True if element is visible with current_position style."""
+        return self.__is_element_reverted_to_start_position(
+            self.locators.WILL_REVERT, current_position)
+
+    def is_not_revert_reverted_to_current_position(self, current_position) -> bool:
+        """:returns: True if element is visible with current_position style."""
+        return self.__is_element_reverted_to_start_position(
+            self.locators.NOT_REVERT, current_position)
