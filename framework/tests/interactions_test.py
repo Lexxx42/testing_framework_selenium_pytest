@@ -3,9 +3,10 @@
 Contains tabs:
 Sortable,
 Selectable,
-Resizable
+Resizable,
+Droppable
 """
-from ..pages import SortablePage, SelectablePage, ResizablePage
+from ..pages import SortablePage, SelectablePage, ResizablePage, DroppablePage
 
 
 class TestInteractionsPage:
@@ -139,3 +140,133 @@ class TestInteractionsPage:
                 f'Expected {current_height=} to be different from {starting_height=}.'
             assert starting_width != current_width, \
                 f'Expected {current_width=} to be different from {starting_width=}.'
+
+    class TestDroppablePage:
+        """Class represents Droppable tab tests."""
+        droppable_page_link = 'https://demoqa.com/droppable'
+
+        def test_simple_droppable(self, driver):
+            """Test element changes text when element is dropped into it."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_simple_tab()
+            droppable_page.drop_simple()
+            drop_here_text = droppable_page.get_simple_drop_here_element_text()
+            expected_drop_here_text = 'Dropped!'
+            assert drop_here_text == expected_drop_here_text, \
+                f'Expected droppable text to be {expected_drop_here_text}. ' \
+                f'Got: {drop_here_text}'
+
+        def test_accept_droppable_acceptable_is_accepted(self, driver):
+            """Test acceptable element is accepted by droppable."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_accept_tab()
+            droppable_page.drop_accept_acceptable()
+            drop_here_text = droppable_page.get_accept_drop_here_element_text()
+            expected_drop_here_text = 'Dropped!'
+            assert drop_here_text == expected_drop_here_text, \
+                f'Expected droppable text to be {expected_drop_here_text}. ' \
+                f'Got: {drop_here_text}'
+
+        def test_accept_droppable_not_acceptable_is_not_accepted(self, driver):
+            """Test not acceptable element isn't accepted by droppable."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_accept_tab()
+            droppable_page.drop_accept_not_acceptable()
+            drop_here_text = droppable_page.get_accept_drop_here_element_text()
+            expected_drop_here_text = 'Drop here'
+            assert drop_here_text == expected_drop_here_text, \
+                f'Expected droppable text to be {expected_drop_here_text}. ' \
+                f'Got: {drop_here_text}'
+
+        def test_prevent_propogation_droppable_not_greedy(self, driver):
+            """Test drop element into not greedy inner changes both inner and outer elements."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_prevent_propogation_tab()
+            droppable_page.drop_prevent_propogation_not_greedy_inner()
+            outer_droppable_text = \
+                droppable_page.get_prevent_propogation_outer_droppable_not_greedy_text()
+            inner_droppable_text = \
+                droppable_page.get_prevent_propogation_inner_droppable_not_greedy_text()
+            expected_outer_droppable_text = 'Dropped!'
+            expected_inner_droppable_text = 'Dropped!'
+            assert outer_droppable_text == expected_outer_droppable_text, \
+                f'Expected outer droppable text to be {expected_outer_droppable_text}. ' \
+                f'Got: {outer_droppable_text}'
+            assert inner_droppable_text == expected_inner_droppable_text, \
+                f'Expected inner droppable text to be {expected_inner_droppable_text}. ' \
+                f'Got: {inner_droppable_text}'
+
+        def test_prevent_propogation_droppable_greedy(self, driver):
+            """Test drop element into greedy inner changes only inner element."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_prevent_propogation_tab()
+            droppable_page.drop_prevent_propogation_greedy_inner()
+            outer_droppable_text = \
+                droppable_page.get_prevent_propogation_outer_droppable_greedy_text()
+            inner_droppable_text = \
+                droppable_page.get_prevent_propogation_inner_droppable_greedy_text()
+            expected_outer_droppable_text = 'Outer droppable'
+            expected_inner_droppable_text = 'Dropped!'
+            assert outer_droppable_text == expected_outer_droppable_text, \
+                f'Expected outer droppable text to be {expected_outer_droppable_text}. ' \
+                f'Got: {outer_droppable_text}'
+            assert inner_droppable_text == expected_inner_droppable_text, \
+                f'Expected inner droppable text to be {expected_inner_droppable_text}. ' \
+                f'Got: {inner_droppable_text}'
+
+        def test_revert_draggable_droppable(self, driver):
+            """Test element Will Revert activates drop box."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_revert_draggable_tab()
+            droppable_page.drop_revert_draggable_will_revert()
+            drop_here_text = droppable_page.get_revert_draggable_drop_here_element_text()
+            expected_drop_here_text = 'Dropped!'
+            assert drop_here_text == expected_drop_here_text, \
+                f'Expected droppable text to be {expected_drop_here_text}. ' \
+                f'Got: {drop_here_text}'
+
+        def test_not_revert_draggable_droppable(self, driver):
+            """Test element Not Revert activates drop box."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_revert_draggable_tab()
+            droppable_page.drop_revert_draggable_not_revert()
+            drop_here_text = droppable_page.get_revert_draggable_drop_here_element_text()
+            expected_drop_here_text = 'Dropped!'
+            assert drop_here_text == expected_drop_here_text, \
+                f'Expected droppable text to be {expected_drop_here_text}. ' \
+                f'Got: {drop_here_text}'
+
+        def test_revertable_draggable_will_return_to_current_position_after_dragging(self, driver):
+            """Test Will Revert returns to start position after dragging."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_revert_draggable_tab()
+            droppable_page.change_position_of_will_revert()
+            revertable_start_position = droppable_page.get_position_of_will_revert()
+            droppable_page.drop_revert_draggable_will_revert()
+            is_reverted = droppable_page.is_will_revert_reverted_to_current_position(
+                revertable_start_position)
+            assert is_reverted is True, \
+                'Expected Will Revert to return to current position after dragging.' \
+                f'But got {is_reverted}'
+
+        def test_not_revertable_will_return_after_dragging_out_of_dropbox(self, driver):
+            """Test element Not Revert returns to dropbox."""
+            droppable_page = DroppablePage(driver, self.droppable_page_link)
+            droppable_page.open()
+            droppable_page.go_to_revert_draggable_tab()
+            droppable_page.drop_revert_draggable_not_revert()
+            not_revertable_start_position = droppable_page.get_position_of_not_revert()
+            droppable_page.change_position_of_not_revert()
+            is_reverted = droppable_page.is_not_revert_reverted_to_current_position(
+                not_revertable_start_position)
+            assert is_reverted is True, \
+                'Expected Not Revert to return to current position after dragging.' \
+                f'But got {is_reverted}'
