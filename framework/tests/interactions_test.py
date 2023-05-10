@@ -12,6 +12,9 @@ from ..pages import SortablePage, SelectablePage, ResizablePage, DroppablePage
 class TestInteractionsPage:
     """Class represents Widgets tab.
     Sortable
+    Selectable,
+    Resizable,
+    Droppable
     """
 
     class TestSortablePage:
