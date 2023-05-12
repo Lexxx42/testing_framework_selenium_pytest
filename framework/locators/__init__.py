@@ -10,4 +10,4 @@ from .widgets_page_locators import AccordianPageLocators, AutoCompletePageLocato
     DatePickerPageLocators, SliderPageLocators, ProgressBarPageLocators, \
     TabsPageLocators, ToolTipsPageLocators, MenuPageLocators
 from .interactions_page_locators import SortablePageLocators, SelectablePageLocators, \
-    ResizablePageLocators, DroppablePageLocators
+    ResizablePageLocators, DroppablePageLocators, DraggablePageLocators

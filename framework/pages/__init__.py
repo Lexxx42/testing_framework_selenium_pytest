@@ -10,4 +10,4 @@ from .widgets_page import AccordianPage, AutoCompletePage, \
     DatePickerPage, SliderPage, ProgressBarPage, TabsPage, \
     ToolTipsPage, MenuPage
 from .interactions_page import SortablePage, SelectablePage, \
-    ResizablePage, DroppablePage
+    ResizablePage, DroppablePage, DraggablePage
