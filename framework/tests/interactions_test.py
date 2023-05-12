@@ -4,9 +4,13 @@ Contains tabs:
 Sortable,
 Selectable,
 Resizable,
-Droppable
+Droppable,
+Draggable
 """
-from ..pages import SortablePage, SelectablePage, ResizablePage, DroppablePage
+import pytest
+
+from ..pages import SortablePage, SelectablePage, ResizablePage, DroppablePage, \
+    DraggablePage
 
 
 class TestInteractionsPage:
@@ -273,3 +277,161 @@ class TestInteractionsPage:
             assert is_reverted is True, \
                 'Expected Not Revert to return to current position after dragging.' \
                 f'But got {is_reverted}'
+
+    class TestDraggablePage:
+        """Class represents Draggable tab tests."""
+        draggable_page_link = 'https://demoqa.com/dragabble'
+
+        def test_simple_draggable(self, driver):
+            """Test element Drag me can be dragged."""
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_simple_tab()
+            draggable_page.drag_simple_drag_me()
+            left_coord_start, top_coord_start = \
+                draggable_page.get_simple_drag_me_coordinates()
+            draggable_page.drag_simple_drag_me()
+            left_coord_after_drag, top_coord_after_drag = \
+                draggable_page.get_simple_drag_me_coordinates()
+            assert (left_coord_start, top_coord_start) != \
+                   (left_coord_after_drag, top_coord_after_drag), \
+                'Expected coordinates to change after drag.' \
+                f'{left_coord_start=} {top_coord_start=}' \
+                f'{left_coord_after_drag=} {top_coord_after_drag=}'
+
+        def test_only_x_changes_coordinate_left_after_dragging_on_x_axis(self, driver):
+            """Test element Only X can be dragged on x-axis."""
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_axis_restricted_tab()
+            draggable_page.drag_only_x()
+            left_coord_start, top_coord_start = \
+                draggable_page.get_only_x_coordinates()
+            draggable_page.drag_only_x()
+            left_coord_after_drag, top_coord_after_drag = \
+                draggable_page.get_only_x_coordinates()
+            assert left_coord_start != left_coord_after_drag, \
+                'Expected coordinate left to change after drag.' \
+                f'{left_coord_start=} {top_coord_start=}' \
+                f'{left_coord_after_drag=} {top_coord_after_drag=}'
+
+        def test_only_x_not_changes_coordinate_top_after_dragging_on_y_axis(self, driver):
+            """Test element Only X can't be dragged on y-axis."""
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_axis_restricted_tab()
+            draggable_page.drag_only_x()
+            expected_top_coordinate = 0
+            left_coord_start, top_coord_start = \
+                draggable_page.get_only_x_coordinates()
+            draggable_page.drag_only_x()
+            left_coord_after_drag, top_coord_after_drag = \
+                draggable_page.get_only_x_coordinates()
+            assert top_coord_start == expected_top_coordinate, \
+                'Expected coordinate top to not change after drag.' \
+                f'And be {expected_top_coordinate=}' \
+                f'{left_coord_start=} {top_coord_start=}'
+            assert top_coord_after_drag == expected_top_coordinate, \
+                'Expected coordinate top to not change after drag.' \
+                f'And be {expected_top_coordinate=}' \
+                f'{left_coord_after_drag=} {top_coord_after_drag=}'
+
+        def test_only_y_not_changes_coordinate_left_after_dragging_on_x_axis(self, driver):
+            """Test element Only Y can't be dragged on x-axis."""
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_axis_restricted_tab()
+            draggable_page.drag_only_y()
+            expected_left_coordinate = 0
+            left_coord_start, top_coord_start = \
+                draggable_page.get_only_y_coordinates()
+            draggable_page.drag_only_y()
+            left_coord_after_drag, top_coord_after_drag = \
+                draggable_page.get_only_y_coordinates()
+            assert left_coord_start == expected_left_coordinate, \
+                'Expected coordinate top to not change after drag.' \
+                f'And be {expected_left_coordinate=}' \
+                f'{left_coord_start=} {top_coord_start=}'
+            assert left_coord_after_drag == expected_left_coordinate, \
+                'Expected coordinate top to not change after drag.' \
+                f'And be {expected_left_coordinate=}' \
+                f'{left_coord_after_drag=} {top_coord_after_drag=}'
+
+        def test_only_y_changes_coordinate_top_after_dragging_on_y_axis(self, driver):
+            """Test element Only Y can be dragged on y-axis."""
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_axis_restricted_tab()
+            draggable_page.drag_only_y()
+            left_coord_start, top_coord_start = \
+                draggable_page.get_only_y_coordinates()
+            draggable_page.drag_only_y()
+            left_coord_after_drag, top_coord_after_drag = \
+                draggable_page.get_only_y_coordinates()
+            assert top_coord_start != top_coord_after_drag, \
+                'Expected coordinate top to change after drag.' \
+                f'{left_coord_start=} {top_coord_start=}' \
+                f'{left_coord_after_drag=} {top_coord_after_drag=}'
+
+        def test_box_can_not_be_moved_upper_restricted_container(self, driver):
+            """
+            Test element 'I'm contained within the box'
+            can't be moved upper restricted container.
+            """
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_container_restricted_tab()
+            draggable_page.drag_box_upper_restricted_container()
+            top_upper_restriction = 0
+            left_coordinate, top_coordinate = \
+                draggable_page.get_contained_withing_box_coordinates()
+            assert top_coordinate == top_upper_restriction, \
+                f'Expected top coordinate to be ' \
+                f'container restricted and be {top_upper_restriction=}' \
+                f'Got: {left_coordinate=} {top_coordinate=}'
+
+        def test_box_can_not_be_moved_lower_restricted_container(self, driver):
+            """
+            Test element 'I'm contained within the box'
+            can't be moved lower restricted container.
+            """
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_container_restricted_tab()
+            draggable_page.drag_box_lower_restricted_container()
+            top_lower_restriction = 106
+            left_coordinate, top_coordinate = \
+                draggable_page.get_contained_withing_box_coordinates()
+            assert top_coordinate == top_lower_restriction, \
+                f'Expected top coordinate to be ' \
+                f'container restricted and be {top_lower_restriction=}' \
+                f'Got: {left_coordinate=} {top_coordinate=}'
+
+        def test_box_can_not_be_moved_lefter_restricted_container(self, driver):
+            """
+            Test element 'I'm contained within the box'
+            can't be moved lefter restricted container.
+            """
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_container_restricted_tab()
+            draggable_page.drag_box_lefter_restricted_container()
+            left_lefter_restriction = 0
+            left_coordinate, top_coordinate = \
+                draggable_page.get_contained_withing_box_coordinates()
+            assert left_coordinate == left_lefter_restriction, \
+                f'Expected top coordinate to be ' \
+                f'container restricted and be {left_lefter_restriction=}' \
+                f'Got: {left_coordinate=} {top_coordinate=}'
+
+        @pytest.mark.skip(reason='not implemented')
+        def test_box_can_not_be_moved_righter_restricted_container(self, driver):
+            """
+            Test element 'I'm contained within the box'
+            can't be moved righter restricted container.
+            """
+            draggable_page = DraggablePage(driver, self.draggable_page_link)
+            draggable_page.open()
+            draggable_page.go_to_container_restricted_tab()
+            draggable_page.drag_box_righter_restricted_container()
+            # TODO: how do i test it on adaptive interface?
