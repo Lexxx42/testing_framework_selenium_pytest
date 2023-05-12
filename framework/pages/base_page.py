@@ -217,3 +217,7 @@ class BasePage:
         action = ActionChains(self.driver)
         action.move_to_element(element)
         action.perform()
+
+    def get_position_of_element(self, element) -> str:
+        """:returns: Position of element."""
+        return self.element_is_visible(element).get_attribute('style')

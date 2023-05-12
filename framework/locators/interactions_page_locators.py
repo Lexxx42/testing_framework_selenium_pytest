@@ -4,7 +4,8 @@ Contains locators for following tabs:
 Sortable,
 Selectable,
 Resizable,
-Droppable
+Droppable,
+Draggable
 """
 from selenium.webdriver.common.by import By
 
@@ -66,3 +67,22 @@ class DroppablePageLocators:
     WILL_REVERT = (By.CSS_SELECTOR, '#revertable')
     NOT_REVERT = (By.CSS_SELECTOR, '#notRevertable')
     DROP_HERE_REVERT = (By.CSS_SELECTOR, '.revertable-drop-container #droppable')
+
+
+class DraggablePageLocators:
+    """Class for Draggable page locators."""
+    # Simple
+    SIMPLE_TAB = (By.CSS_SELECTOR, '#draggableExample-tab-simple')
+    DRAG_ME_SIMPLE = (By.CSS_SELECTOR, '#dragBox')
+
+    # Axis restricted
+    AXIS_RESTRICTED_TAB = (By.CSS_SELECTOR, '#draggableExample-tab-axisRestriction')
+    ONLY_X = (By.CSS_SELECTOR, '#restrictedX')
+    ONLY_Y = (By.CSS_SELECTOR, '#restrictedY')
+
+    # Container Restricted
+    CONTAINER_RESTRICTED_TAB = (By.CSS_SELECTOR, '#draggableExample-tab-containerRestriction')
+    BOX_CONTAINER = (By.CSS_SELECTOR, '#containmentWrapper')
+    BOX_CONTENT = (By.CSS_SELECTOR, '#containmentWrapper .draggable')
+    PARENT_CONTAINER = (By.CSS_SELECTOR, '#draggableExample-tabpane-containerRestriction .m-3')
+    PARENT_CONTENT = (By.CSS_SELECTOR, '#draggableExample-tabpane-containerRestriction .m-3 > span')

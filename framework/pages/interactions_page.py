@@ -4,12 +4,13 @@ Contains tabs:
 Sortable,
 Selectable,
 Resizable,
-Droppable
+Droppable,
+Draggable
 """
 from random import sample, randint
 from .base_page import BasePage
 from ..locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
-    DroppablePageLocators
+    DroppablePageLocators, DraggablePageLocators
 
 
 class SortablePage(BasePage):
@@ -269,29 +270,25 @@ class DroppablePage(BasePage):
         drop_here = self.element_is_visible(self.locators.DROP_HERE_REVERT)
         return drop_here.text
 
-    def __get_position_of_element(self, element) -> str:
-        """:returns: Position of element."""
-        return self.element_is_visible(element).get_attribute('style')
-
     def get_position_of_will_revert(self) -> str:
         """
         Get position from style attribute of element.
         :returns: Position of Will Revert.
         """
-        return self.__get_position_of_element(self.locators.WILL_REVERT)
+        return self.get_position_of_element(self.locators.WILL_REVERT)
 
     def get_position_of_not_revert(self) -> str:
         """
         Get position from style attribute of element.
         :returns: Position of Not Revert.
         """
-        return self.__get_position_of_element(self.locators.NOT_REVERT)
+        return self.get_position_of_element(self.locators.NOT_REVERT)
 
     def __is_element_reverted_to_start_position(self, element_locator, start_position: str):
         """
         :param element_locator: Locator of element.
         :param start_position: Style attribute of element.
-        :returns: True if will revert reverted to start position.
+        :returns: True, if Revert reverted to start position.
         """
         locator = element_locator
         locator_positional = locator[1] + f'[style=\'{start_position}\']'
@@ -317,3 +314,146 @@ class DroppablePage(BasePage):
         """:returns: True if element is visible with current_position style."""
         return self.__is_element_reverted_to_start_position(
             self.locators.NOT_REVERT, current_position)
+
+
+class DraggablePage(BasePage):
+    """Draggable page object."""
+    locators = DraggablePageLocators()
+
+    def go_to_simple_tab(self) -> None:
+        """Go to simple tab."""
+        simple_tab = self.element_is_clickable(self.locators.SIMPLE_TAB)
+        simple_tab.click()
+
+    def go_to_axis_restricted_tab(self) -> None:
+        """Go to axis restricted tab."""
+        axis_restricted_tab = self.element_is_clickable(self.locators.AXIS_RESTRICTED_TAB)
+        axis_restricted_tab.click()
+
+    def go_to_container_restricted_tab(self) -> None:
+        """Go to container restricted tab."""
+        container_restricted_tab = self.element_is_clickable(self.locators.CONTAINER_RESTRICTED_TAB)
+        container_restricted_tab.click()
+
+    def __drag_element_on_page(self, elements_locator):
+        """Drag element on page."""
+        element_to_drag = self.element_is_visible(elements_locator)
+        coordinate_x = randint(-100, 250)
+        coordinate_y = randint(-50, 250)
+        self.drag_and_drop_by_offset(element_to_drag, coordinate_x, coordinate_y)
+
+    def drag_simple_drag_me(self):
+        """Drag Drag me element."""
+        self.__drag_element_on_page(self.locators.DRAG_ME_SIMPLE)
+
+    def drag_only_x(self):
+        """Drag Only X element."""
+        self.__drag_element_on_page(self.locators.ONLY_X)
+
+    def drag_only_y(self):
+        """Drag Only Y element."""
+        self.__drag_element_on_page(self.locators.ONLY_Y)
+
+    def __drag_contained_element_to_coordinate(
+            self, elements_locator, coordinate_x=0, coordinate_y=0):
+        """Drag element on page ith specific coordinates."""
+        element_to_drag = self.element_is_visible(elements_locator)
+        self.drag_and_drop_by_offset(element_to_drag, coordinate_x, coordinate_y)
+
+    def drag_box_upper_restricted_container(self):
+        """Drag box upper from restricted container."""
+        self.__drag_contained_element_to_coordinate(
+            self.locators.BOX_CONTENT, coordinate_y=randint(-50, -1))
+
+    def drag_box_lower_restricted_container(self):
+        """Drag box lower from restricted container."""
+        self.__drag_contained_element_to_coordinate(
+            self.locators.BOX_CONTENT, coordinate_y=randint(110, 200))
+
+    def drag_box_lefter_restricted_container(self):
+        """Drag box lefter from restricted container."""
+        self.__drag_contained_element_to_coordinate(
+            self.locators.BOX_CONTENT, coordinate_x=randint(-50, -1))
+
+    def drag_box_righter_restricted_container(self):
+        """Drag box righter from restricted container."""
+        self.__drag_contained_element_to_coordinate(
+            self.locators.BOX_CONTENT, coordinate_x=1000)
+
+    def get_simple_drag_me_position(self) -> str:
+        """
+        Get position from style attribute of element.
+        :returns: Position of Drag me.
+        """
+        return self.get_position_of_element(self.locators.DRAG_ME_SIMPLE)
+
+    def get_only_x_position(self) -> str:
+        """
+        Get position from style attribute of element.
+        :returns: Position of Only X.
+        """
+        return self.get_position_of_element(self.locators.ONLY_X)
+
+    def get_only_y_position(self) -> str:
+        """
+        Get position from style attribute of element.
+        :returns: Position of Only Y.
+        """
+        return self.get_position_of_element(self.locators.ONLY_Y)
+
+    def get_contained_withing_box_position(self) -> str:
+        """
+        Get position from style attribute of element.
+        :returns: Position of I'm contained within the box.
+        """
+        return self.get_position_of_element(self.locators.BOX_CONTENT)
+
+    def get_coordinates_of_element_from_position(self, position_style_attribute) -> tuple[int, int]:
+        """
+        Get coordinates from position style attribute of element.
+        :returns: Left and top position.
+        """
+        elements = position_style_attribute.split(';')
+        left = elements[1].split(':')[-1].strip(' px')
+        top = elements[2].split(':')[-1].strip(' px')
+        return int(left), int(top)
+
+    def get_simple_drag_me_coordinates(self) -> tuple[int, int]:
+        """
+        Get coordinates from position style attribute of Drag me.
+        :returns: Left and top position.
+        """
+        get_me_position = self.get_simple_drag_me_position()
+        left_coordinate, top_coordinate = \
+            self.get_coordinates_of_element_from_position(get_me_position)
+        return left_coordinate, top_coordinate
+
+    def get_only_x_coordinates(self) -> tuple[int, int]:
+        """
+        Get coordinates from position style attribute of Only X.
+        :returns: Left and top position.
+        """
+        only_x_position = self.get_only_x_position()
+        left_coordinate, top_coordinate = \
+            self.get_coordinates_of_element_from_position(only_x_position)
+        return left_coordinate, top_coordinate
+
+    def get_only_y_coordinates(self) -> tuple[int, int]:
+        """
+        Get coordinates from position style attribute of Only Y.
+        :returns: Left and top position.
+        """
+        only_y_position = self.get_only_y_position()
+        left_coordinate, top_coordinate = \
+            self.get_coordinates_of_element_from_position(only_y_position)
+        return left_coordinate, top_coordinate
+
+    def get_contained_withing_box_coordinates(self) -> tuple[int, int]:
+        """
+        Get coordinates from position style attribute of I'm contained within the box.
+        :returns: Left and top position.
+        """
+        contained_withing_box_position = self.get_contained_withing_box_position()
+        left_coordinate, top_coordinate = \
+            self.get_coordinates_of_element_from_position(contained_withing_box_position)
+        return left_coordinate, top_coordinate
