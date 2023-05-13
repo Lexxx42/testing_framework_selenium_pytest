@@ -13,6 +13,7 @@ Dynamic Properties.
 """
 from random import randint, choice
 import allure
+import pytest
 from ..pages import TextBoxPage, CheckBoxPage, \
     RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
     BrokenLinksPage, UploadAndDownloadPage, DynamicPropertiesPage
@@ -80,15 +81,14 @@ class TestElements:
         """Class represents Radio Button tab tests."""
 
         @allure.title('Test user can select radio buttons.')
-        def test_radio_button(self, driver):
+        @pytest.mark.parametrize('action', ['yes', 'impressive', 'no'])
+        def test_radio_button(self, driver, action: str):
             """Test user can select radio buttons."""
             radio_button_page = RadioButtonPage(driver, 'https://demoqa.com/radio-button')
             radio_button_page.open()
-            actions = ['yes', 'impressive', 'no']
-            for action in actions:
-                radio_button_page.click_on_the_radio_button(action)
-                output = radio_button_page.get_radiobutton_output_result()
-                assert action.title() == output, f'Action {action} don\'t match the result {output}'
+            radio_button_page.click_on_the_radio_button(action)
+            output = radio_button_page.get_radiobutton_output_result()
+            assert action.title() == output, f'Action {action} don\'t match the result {output}'
 
     @allure.feature('Web Table')
     class TestWebTable:
