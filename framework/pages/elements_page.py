@@ -217,15 +217,15 @@ class WebTablePage(BasePage):
         :returns: Number of rows available for user to click to.
         """
         number_of_rows = [5, 10, 20, 25, 50, 100]
-        data = []
+        can_be_selected_numbers_of_row = []
         for number in number_of_rows:
             change_number_of_rows_button = \
-                self.element_is_visible(self.locators.SELECT_NUMBER_OF_ROWS)
+                self.element_is_clickable(self.locators.SELECT_NUMBER_OF_ROWS)
             self.go_to_element(change_number_of_rows_button)
             change_number_of_rows_button.click()
             self.element_is_visible((By.CSS_SELECTOR, f'option[value=\'{number}\']')).click()
-            data.append(self.check_number_of_rows())
-        return data
+            can_be_selected_numbers_of_row.append(self.check_number_of_rows())
+        return can_be_selected_numbers_of_row
 
     def check_number_of_rows(self) -> int:
         """
