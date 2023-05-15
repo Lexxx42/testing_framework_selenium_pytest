@@ -101,7 +101,7 @@ class TestElements:
             web_table_page = WebTablePage(driver, self.web_page_link)
             web_table_page.open()
             new_person = web_table_page.add_new_person_to_the_table(1)
-            table = web_table_page.check_current_persons_in_table()
+            table = web_table_page.get_current_persons_in_table()
             assert new_person in table, \
                 f'New person {new_person} should be in the table {table} but it isn\'t'
 
@@ -168,7 +168,7 @@ class TestElements:
             buttons_page = ButtonsPage(driver, self.buttons_page_link)
             buttons_page.open()
             buttons_page.perform_dynamic_click()
-            click_message = buttons_page.check_dynamic_click_message()
+            click_message = buttons_page.get_dynamic_click_message()
             expected_click_message = 'You have done a dynamic click'
             assert click_message == expected_click_message, \
                 f'Expected dynamic click message to be' \
@@ -180,7 +180,7 @@ class TestElements:
             buttons_page = ButtonsPage(driver, self.buttons_page_link)
             buttons_page.open()
             buttons_page.perform_double_click()
-            click_message = buttons_page.check_double_click_message()
+            click_message = buttons_page.get_double_click_message()
             expected_click_message = 'You have done a double click'
             assert click_message == expected_click_message, \
                 f'Expected double click message to be' \
@@ -192,7 +192,7 @@ class TestElements:
             buttons_page = ButtonsPage(driver, self.buttons_page_link)
             buttons_page.open()
             buttons_page.perform_right_click()
-            click_message = buttons_page.check_right_click_message()
+            click_message = buttons_page.get_right_click_message()
             expected_click_message = 'You have done a right click'
             assert click_message == expected_click_message, \
                 f'Expected right click message to be' \
