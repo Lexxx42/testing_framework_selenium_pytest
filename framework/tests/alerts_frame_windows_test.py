@@ -85,7 +85,7 @@ class TestAlertsFrameWindows:
             options = ['Ok', 'Cancel']
             selected_option = choice(options)
             alert_text = alert_page.check_see_alert('confirm', option=selected_option)
-            confirm_result = alert_page.check_confirm_result()
+            confirm_result = alert_page.get_confirm_result()
             expected_confirm_text = 'Do you confirm action?'
             expected_confirm_result = f'You selected {selected_option}'
             assert alert_text == expected_confirm_text, \
@@ -106,7 +106,7 @@ class TestAlertsFrameWindows:
             assert alert_text == expected_alert_text, \
                 f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
-            prompt_result = alert_page.check_prompt_result()
+            prompt_result = alert_page.get_prompt_result()
             assert prompt_result.split()[-1] == data_input, \
                 f'Confirm text should be {data_input}. ' \
                 f'Got: {prompt_result.split()[-1]}'
