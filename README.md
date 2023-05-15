@@ -1,4 +1,4 @@
-# testing_framework_selenium_pytest (work in progress)
+# testing_framework_selenium_pytest
 
 ## Used tools
 
