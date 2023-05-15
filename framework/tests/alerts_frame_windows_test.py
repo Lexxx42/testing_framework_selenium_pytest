@@ -8,10 +8,12 @@ Nested Frames,
 Modal Dialogs.
 """
 from random import choice
+import allure
 from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage, ModalDialogsPage
 from ..generator import generated_person
 
 
+@allure.suite('Alerts Frame Windows tab')
 class TestAlertsFrameWindows:
     """Class represents Alerts, Frame & Windows tab.
     Contains tabs:
@@ -23,10 +25,12 @@ class TestAlertsFrameWindows:
     """
     EXPECTED_TEXT = 'This is a sample page'
 
+    @allure.feature('Browser Windows')
     class TestBrowserWindows:
         """Class represents Browser Windows tab tests."""
         browser_windows_page_link = 'https://demoqa.com/browser-windows'
 
+        @allure.title('Test opening a new tab and getting the text from it.')
         def test_new_tab(self, driver):
             """Test opening a new tab and getting the text from it."""
             browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_page_link)
@@ -36,6 +40,7 @@ class TestAlertsFrameWindows:
                 f'New tab text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
                 f' but got {new_tab_text}'
 
+        @allure.title('Test opening a new window and getting the text from it.')
         def test_new_window(self, driver):
             """Test opening a new window and getting the text from it."""
             browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_page_link)
@@ -45,10 +50,12 @@ class TestAlertsFrameWindows:
                 f'New window text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
                 f' but got {new_window_text}'
 
+    @allure.feature('Alerts')
     class TestAlerts:
         """Class represents Alerts tab tests."""
         alerts_page_link = 'https://demoqa.com/alerts'
 
+        @allure.title('Test user can see alert and the text of it.')
         def test_see_alert(self, driver):
             """Test user can see alert and the text of it."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
@@ -59,6 +66,7 @@ class TestAlertsFrameWindows:
                 f'Alert text should be \'{expected_alert_text}\'. ' \
                 f'Got {alert_text}'
 
+        @allure.title('Test alert is opened after 5 seconds after a click.')
         def test_see_alert_after_five_seconds(self, driver):
             """Test alert is opened after 5 seconds after a click."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
@@ -69,6 +77,7 @@ class TestAlertsFrameWindows:
                 f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
 
+        @allure.title('Test user can interact with a confirm alert.')
         def test_confirm_alert(self, driver):
             """Test user can interact with a confirm alert."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
@@ -76,7 +85,7 @@ class TestAlertsFrameWindows:
             options = ['Ok', 'Cancel']
             selected_option = choice(options)
             alert_text = alert_page.check_see_alert('confirm', option=selected_option)
-            confirm_result = alert_page.check_confirm_result()
+            confirm_result = alert_page.get_confirm_result()
             expected_confirm_text = 'Do you confirm action?'
             expected_confirm_result = f'You selected {selected_option}'
             assert alert_text == expected_confirm_text, \
@@ -86,6 +95,7 @@ class TestAlertsFrameWindows:
                 f'Confirm text should be \'{expected_confirm_result}\'. ' \
                 f'Got: You selected {selected_option}'
 
+        @allure.title('Test user can interact with a prompt alert.')
         def test_prompt_alert(self, driver):
             """Test user can interact with a prompt alert."""
             alert_page = AlertsPage(driver, self.alerts_page_link)
@@ -96,15 +106,17 @@ class TestAlertsFrameWindows:
             assert alert_text == expected_alert_text, \
                 f'Alert text should be \'{expected_alert_text}\'.' \
                 f' Got {alert_text}'
-            prompt_result = alert_page.check_prompt_result()
+            prompt_result = alert_page.get_prompt_result()
             assert prompt_result.split()[-1] == data_input, \
                 f'Confirm text should be {data_input}. ' \
                 f'Got: {prompt_result.split()[-1]}'
 
+    @allure.feature('Frames')
     class TestFrames:
         """Class represents Frames tab tests."""
         frames_page_link = 'https://demoqa.com/frames'
 
+        @allure.title('Test user can see text in a frame. Frame has correct resolution.')
         def test_first_frame(self, driver):
             """Test user can see text in a frame. Frame has correct resolution."""
             frames_page = FramesPage(driver, self.frames_page_link)
@@ -120,6 +132,7 @@ class TestAlertsFrameWindows:
             assert height == expected_height, \
                 f'Frame width should be {expected_height}. Got {height}'
 
+        @allure.title('Test user can see text in a frame. Frame has correct resolution.')
         def test_second_frame(self, driver):
             """Test user can see text in a frame. Frame has correct resolution."""
             frames_page = FramesPage(driver, self.frames_page_link)
@@ -135,10 +148,12 @@ class TestAlertsFrameWindows:
             assert height == expected_height, \
                 f'Frame width should be {expected_height}. Got {height}'
 
+    @allure.feature('Nested Frames')
     class TestNestedFrames:
         """Class represents Nested Frames tab tests."""
         nested_frames_page_link = 'https://demoqa.com/nestedframes'
 
+        @allure.title('Test user can see text in a parent and child frames.')
         def test_nested_frames(self, driver):
             """Test user can see text in a parent and child frames."""
             nested_frames_page = NestedFramesPage(driver, self.nested_frames_page_link)
@@ -153,10 +168,12 @@ class TestAlertsFrameWindows:
                 f'Child frame should have a text \'{expected_child_text}\'.' \
                 f' Got {inner_frame_text}'
 
+    @allure.feature('Modal Dialogs')
     class TestModalDialogs:
         """Class represents Modal Dialogs tab tests."""
         modal_dialogs_page_link = 'https://demoqa.com/modal-dialogs'
 
+        @allure.title('Test user can open small modal.')
         def test_small_modal_open(self, driver):
             """Test user can open small modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -166,6 +183,7 @@ class TestAlertsFrameWindows:
             assert is_modal_visible is True, \
                 'Modal dialog should be visible. But it isn\'t.'
 
+        @allure.title('Test user can close small modal by X button.')
         def test_small_modal_close_by_x_button(self, driver):
             """Test user can close small modal by X button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -177,6 +195,7 @@ class TestAlertsFrameWindows:
                 'Modal dialog shouldn\'t be visible. ' \
                 'But it is. Closed by x button.'
 
+        @allure.title('Test user can close small modal by Close button.')
         def test_small_modal_close_by_close_button(self, driver):
             """Test user can close small modal by Close button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -188,6 +207,7 @@ class TestAlertsFrameWindows:
                 'Modal dialog shouldn\'t be visible after closing. ' \
                 'But it is. Closed by close button.'
 
+        @allure.title('Test user can read text in a small modal.')
         def test_small_modal_text(self, driver):
             """Test user can read text in a small modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -200,6 +220,7 @@ class TestAlertsFrameWindows:
                 f'Expected: \'{expected_modal_text}\'.' \
                 f'Got {modal_text}'
 
+        @allure.title('Test user can read title of a small modal.')
         def test_small_modal_title(self, driver):
             """Test user can read title of a small modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -210,6 +231,7 @@ class TestAlertsFrameWindows:
             assert modal_title == expected_title, \
                 f'Modal title expected: \'{expected_title}\'. Got: {modal_title}'
 
+        @allure.title('Test user can open large modal.')
         def test_large_modal_open(self, driver):
             """Test user can open large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -219,6 +241,7 @@ class TestAlertsFrameWindows:
             assert is_modal_visible is True, \
                 'Modal dialog should be visible. But it isn\'t.'
 
+        @allure.title('Test user can close large modal by X button.')
         def test_large_modal_close_by_x_button(self, driver):
             """Test user can close large modal by X button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -230,6 +253,7 @@ class TestAlertsFrameWindows:
                 'Modal dialog shouldn\'t be visible. ' \
                 'But it is. Closed by x button.'
 
+        @allure.title('Test user can close large modal by Close button.')
         def test_large_modal_close_by_close_button(self, driver):
             """Test user can close large modal by Close button."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -241,6 +265,7 @@ class TestAlertsFrameWindows:
                 'Modal dialog shouldn\'t be visible after closing. ' \
                 'But it is. Closed by close button.'
 
+        @allure.title('Test user can read text in a large modal.')
         def test_large_modal_text(self, driver):
             """Test user can read text in a large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)
@@ -264,6 +289,7 @@ class TestAlertsFrameWindows:
                 'Text in modal dialog don\'t match expected text. ' \
                 f'Got {modal_text}'
 
+        @allure.title('Test user can read title of a large modal.')
         def test_large_modal_title(self, driver):
             """Test user can read title of a large modal."""
             modal_dialog_page = ModalDialogsPage(driver, self.modal_dialogs_page_link)

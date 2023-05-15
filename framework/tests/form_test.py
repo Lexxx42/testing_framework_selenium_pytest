@@ -3,25 +3,29 @@
 Contains tabs:
 Practice Form.
 """
+import allure
 from ..pages import PracticeFormPage
 
 
+@allure.suite('Form tab')
 class TestForm:
     """Class represents Practice Form tab.
     Contains tabs:
     Practice Form.
     """
 
+    @allure.feature('Practice Form')
     class TestPracticeForm:
         """Class represents Practice Form tab tests."""
         practice_form_page_link = 'https://demoqa.com/automation-practice-form'
 
+        @allure.title('Test user can fill the form and sent it.')
         def test_form(self, driver):
             """Test user can fill the form and sent it."""
             form_page = PracticeFormPage(driver, self.practice_form_page_link)
             form_page.open()
             input_data, date_of_birth, subject = form_page.fill_form_fields()
-            output_data = form_page.check_form_results()
+            output_data = form_page.get_form_results()
             assert input_data.first_name + ' ' + input_data.last_name == output_data[0], \
                 f'Input data in form: {input_data.first_name}' \
                 f' {input_data.last_name} should match output result. Got {output_data[0]}'
