@@ -172,14 +172,16 @@ class WebTablePage(BasePage):
         Searches for a person with a key_word in a table.
         :param key_word: Keyword to search with.
         """
-        self.element_is_visible(self.locators.SEARCH_FIELD).send_keys(key_word)
+        search_field = self.element_is_visible(self.locators.SEARCH_FIELD)
+        search_field.click()
+        search_field.send_keys(key_word)
 
     def check_search_person(self) -> list[str]:
         """
         Check search result.
         :returns: List of search result.
         """
-        delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
+        delete_button = self.element_is_clickable(self.locators.DELETE_BUTTON)
         row = delete_button.find_element('xpath', self.locators.ROW_PARENT)
         return row.text.splitlines()
 
