@@ -7,7 +7,7 @@ import allure
 from ..pages import PracticeFormPage
 
 
-@allure.suite('Alerts Form tab')
+@allure.suite('Form tab')
 class TestForm:
     """Class represents Practice Form tab.
     Contains tabs:

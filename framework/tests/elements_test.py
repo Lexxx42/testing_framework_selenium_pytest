@@ -157,8 +157,8 @@ class TestElements:
                 f'Available rows count is {available_number_of_rows}' \
                 f' expected but got {number_of_rows}'
 
-    @allure.feature('Buttons Page')
-    class TestButtonsPage:
+    @allure.feature('Buttons')
+    class TestButtons:
         """Class represents Buttons tab tests."""
         buttons_page_link = 'https://demoqa.com/buttons'
 
@@ -198,8 +198,8 @@ class TestElements:
                 f'Expected right click message to be' \
                 f' \'{expected_click_message}\' but got {click_message}'
 
-    @allure.feature('Links Page')
-    class TestLinksPage:
+    @allure.feature('Links')
+    class TestLinks:
         """Class represents Links tab tests."""
         links_page_link = 'https://demoqa.com/links'
         links_page_broken_link = 'https://demoqa.com/bad-request'
@@ -321,8 +321,8 @@ class TestElements:
                 f' should be {expected_status_code} but got {response_code}' \
                 f'\nError: {error_message}'
 
-    @allure.feature('Broken Links Page')
-    class TestBrokenLinksPage:
+    @allure.feature('Broken Links')
+    class TestBrokenLinks:
         """Class represents Broken Links - Images tab tests."""
         broken_links_page_link = 'https://demoqa.com/broken'
 
@@ -373,8 +373,8 @@ class TestElements:
                 f'Status code from {current_url} should be 500 but got {response_code}' \
                 f'\nError: {error_message}'
 
-    @allure.feature('Upload And Download Page')
-    class TestUploadAndDownloadPage:
+    @allure.feature('Upload And Download')
+    class TestUploadAndDownload:
         """Class represents Upload and Download tab tests."""
         upload_and_download_page_link = 'https://demoqa.com/upload-download'
 
@@ -399,8 +399,8 @@ class TestElements:
                 f'Expected file to be downloaded (download is True) ' \
                 f'but got {is_file_downloaded} instead'
 
-    @allure.feature('Dynamic Properties Page')
-    class TestDynamicPropertiesPage:
+    @allure.feature('Dynamic Properties')
+    class TestDynamicProperties:
         """Class represents DynamicProperties tab tests."""
         dynamic_properties_page_link = 'https://demoqa.com/dynamic-properties'
 

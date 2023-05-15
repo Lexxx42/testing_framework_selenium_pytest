@@ -25,7 +25,7 @@ class TestAlertsFrameWindows:
     """
     EXPECTED_TEXT = 'This is a sample page'
 
-    @allure.feature('TBrowser Windows')
+    @allure.feature('Browser Windows')
     class TestBrowserWindows:
         """Class represents Browser Windows tab tests."""
         browser_windows_page_link = 'https://demoqa.com/browser-windows'
@@ -50,7 +50,7 @@ class TestAlertsFrameWindows:
                 f'New window text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
                 f' but got {new_window_text}'
 
-    @allure.feature('Text Alerts')
+    @allure.feature('Alerts')
     class TestAlerts:
         """Class represents Alerts tab tests."""
         alerts_page_link = 'https://demoqa.com/alerts'
@@ -111,7 +111,7 @@ class TestAlertsFrameWindows:
                 f'Confirm text should be {data_input}. ' \
                 f'Got: {prompt_result.split()[-1]}'
 
-    @allure.feature('Text Frames')
+    @allure.feature('Frames')
     class TestFrames:
         """Class represents Frames tab tests."""
         frames_page_link = 'https://demoqa.com/frames'
@@ -148,7 +148,7 @@ class TestAlertsFrameWindows:
             assert height == expected_height, \
                 f'Frame width should be {expected_height}. Got {height}'
 
-    @allure.feature('Text Nested Frames')
+    @allure.feature('Nested Frames')
     class TestNestedFrames:
         """Class represents Nested Frames tab tests."""
         nested_frames_page_link = 'https://demoqa.com/nestedframes'
@@ -168,7 +168,7 @@ class TestAlertsFrameWindows:
                 f'Child frame should have a text \'{expected_child_text}\'.' \
                 f' Got {inner_frame_text}'
 
-    @allure.feature('Text Nested Frames')
+    @allure.feature('Modal Dialogs')
     class TestModalDialogs:
         """Class represents Modal Dialogs tab tests."""
         modal_dialogs_page_link = 'https://demoqa.com/modal-dialogs'

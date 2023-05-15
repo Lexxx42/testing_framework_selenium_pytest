@@ -13,7 +13,7 @@ from ..pages import SortablePage, SelectablePage, ResizablePage, DroppablePage, 
     DraggablePage
 
 
-@allure.suite('Alerts Interactions tab')
+@allure.suite('Interactions tab')
 class TestInteractions:
     """Class represents Widgets tab.
     Sortable
