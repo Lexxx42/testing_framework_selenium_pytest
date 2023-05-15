@@ -46,3 +46,21 @@ pytest --alluredir=elements_report .\framework\tests\elements_test.py::TestEleme
 ```
 
 To run all tests with Allure report:
+
+```shell
+pytest --alluredir=allure_results .\framework\tests
+```
+
+You can check my last run of all tests from my framework:
+
+```shell
+allure serve allure_results
+```
+
+## Framework all tests run
+
+<img src="img/all_tests1.png" height="600" width="1200" alt="final report summary">
+
+### One of found defects with a screenshot
+
+<img src="img/all_tests2.png" height="600" width="1200" alt="final report defect with a screenshot">
