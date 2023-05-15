@@ -70,7 +70,7 @@ class TestWidgetsPage:
             autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             colors_selected = autocomplete_page.fill_multiple_input()
-            colors_in_multiple_input = autocomplete_page.check_colors_in_multiple_input()
+            colors_in_multiple_input = autocomplete_page.get_colors_from_multiple_input()
             assert colors_selected == colors_in_multiple_input, \
                 'Expected that entered colors match what multiple input shows. \n' \
                 f'Entered data: {colors_selected}. \n' \
@@ -81,9 +81,9 @@ class TestWidgetsPage:
             autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             autocomplete_page.fill_multiple_input()
-            colors_before_deletion = autocomplete_page.count_colors_in_multiple_input()
+            colors_before_deletion = autocomplete_page.get_number_of_colors_in_multiple_input()
             autocomplete_page.remove_single_color_from_multiple_input()
-            colors_after_deletion = autocomplete_page.count_colors_in_multiple_input()
+            colors_after_deletion = autocomplete_page.get_number_of_colors_in_multiple_input()
             assert colors_before_deletion == colors_after_deletion + 1, \
                 f'Expected that {colors_before_deletion} will be greater than ' \
                 f'{colors_after_deletion} by 1.\n After deletion single color from multiple input.'
@@ -93,9 +93,9 @@ class TestWidgetsPage:
             autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             autocomplete_page.fill_multiple_input()
-            colors_before_clearing = autocomplete_page.count_colors_in_multiple_input()
+            colors_before_clearing = autocomplete_page.get_number_of_colors_in_multiple_input()
             autocomplete_page.clear_multiple_input()
-            colors_after_clearing = autocomplete_page.count_colors_in_multiple_input()
+            colors_after_clearing = autocomplete_page.get_number_of_colors_in_multiple_input()
             assert colors_before_clearing > 0, \
                 'Expected that some colors was entered in multiple autocomplete input.' \
                 f'Got number of entered = {colors_before_clearing}'
@@ -108,7 +108,7 @@ class TestWidgetsPage:
             autocomplete_page = AutoCompletePage(driver, self.autocomplete_page_link)
             autocomplete_page.open()
             color_selected = autocomplete_page.fill_single_input()
-            color_in_single_input = autocomplete_page.check_single_input()
+            color_in_single_input = autocomplete_page.get_color_text_from__single_input()
             assert color_selected == color_in_single_input, \
                 'Expected that entered color match what single input shows. ' \
                 f'Entered data: {color_selected}. Shows: {color_in_single_input}'
