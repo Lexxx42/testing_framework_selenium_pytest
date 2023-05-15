@@ -8,9 +8,10 @@ Slider,
 Progress Bar,
 Tabs,
 Tool Tips,
-Menu
+Menu.
 """
 from random import sample, randint, choice
+import allure
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from .base_page import BasePage
@@ -24,6 +25,7 @@ class AccordianPage(BasePage):
     """Accordian page object."""
     locators = AccordianPageLocators()
 
+    @allure.step('Receive accordian order.')
     def check_accordian(self, accordian_order: str) -> tuple[str, str]:
         """
         Receive accordian order: 'first', 'second', 'third'.
@@ -44,13 +46,18 @@ class AccordianPage(BasePage):
                 'content': self.locators.THIRD_SECTION_TEXT
             }
         }
-        section_title = self.element_is_clickable(accordian[accordian_order]['title'])
-        section_title.click()
-        try:
-            section_content = self.element_is_visible(accordian[accordian_order]['content']).text
-        except TimeoutException:
+        with allure.step('Click on section title'):
+            section_title = self.element_is_clickable(accordian[accordian_order]['title'])
             section_title.click()
-            section_content = self.element_is_visible(accordian[accordian_order]['content']).text
+        try:
+            with allure.step('Get section content'):
+                section_content = \
+                    self.element_is_visible(accordian[accordian_order]['content']).text
+        except TimeoutException as error:
+            with allure.step(f'Get section content with {error}'):
+                section_title.click()
+                section_content = \
+                    self.element_is_visible(accordian[accordian_order]['content']).text
         return section_title.text, section_content
 
 
@@ -58,30 +65,36 @@ class AutoCompletePage(BasePage):
     """Auto Complete page object."""
     locators = AutoCompletePageLocators()
 
+    @allure.step('Fill multiple input with random from 2 to 5 available colors.')
     def fill_multiple_input(self) -> list[str]:
         """
         Fill multiple input with random from 2 to 5 available colors.
         :returns: Colors generated object.
         """
-        colors = sample(next(generated_color()).color_name, k=randint(2, 5))
+        with allure.step('Get two generated colors'):
+            colors = sample(next(generated_color()).color_name, k=randint(2, 5))
         for color in colors:
-            multiple_input = self.element_is_clickable(self.locators.MULTIPLE_INPUT)
-            multiple_input.send_keys(color)
-            multiple_input.send_keys(Keys.ENTER)
+            with allure.step(f'Check {color=} in input'):
+                multiple_input = self.element_is_clickable(self.locators.MULTIPLE_INPUT)
+                multiple_input.send_keys(color)
+                multiple_input.send_keys(Keys.ENTER)
         return colors
 
+    @allure.step('Removes 1 color from selected colors in multiple input.')
     def remove_single_color_from_multiple_input(self) -> None:
         """
         Removes 1 color from selected colors in multiple input.
         """
         remove_buttons = self.elements_are_present(self.locators.MULTIPLE_INPUT_ITEM_DELETE)
         for remove_button in remove_buttons:
-            remove_button.click()
+            with allure.step('Click on remove button'):
+                remove_button.click()
             break
 
-    def count_colors_in_multiple_input(self) -> int:
+    @allure.step('Get the number of colors in input.')
+    def get_number_of_colors_in_multiple_input(self) -> int:
         """
-        Removes all colors.
+        Get the number of colors in input.
         :returns: Quantity of colors in multiple input.
         """
         try:
@@ -89,6 +102,7 @@ class AutoCompletePage(BasePage):
         except TimeoutException:
             return 0
 
+    @allure.step('')
     def clear_multiple_input(self) -> None:
         """
         Removes all colors from multiple input.
