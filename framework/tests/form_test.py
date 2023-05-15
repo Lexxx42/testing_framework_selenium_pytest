@@ -3,19 +3,23 @@
 Contains tabs:
 Practice Form.
 """
+import allure
 from ..pages import PracticeFormPage
 
 
+@allure.suite('Alerts Form tab')
 class TestForm:
     """Class represents Practice Form tab.
     Contains tabs:
     Practice Form.
     """
 
+    @allure.feature('Practice Form')
     class TestPracticeForm:
         """Class represents Practice Form tab tests."""
         practice_form_page_link = 'https://demoqa.com/automation-practice-form'
 
+        @allure.title('Test user can fill the form and sent it.')
         def test_form(self, driver):
             """Test user can fill the form and sent it."""
             form_page = PracticeFormPage(driver, self.practice_form_page_link)
