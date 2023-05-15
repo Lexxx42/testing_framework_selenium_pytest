@@ -157,7 +157,7 @@ class TestElements:
                 f'Available rows count is {available_number_of_rows}' \
                 f' expected but got {number_of_rows}'
 
-    @allure.feature('Buttons Pagee')
+    @allure.feature('Buttons Page')
     class TestButtonsPage:
         """Class represents Buttons tab tests."""
         buttons_page_link = 'https://demoqa.com/buttons'
