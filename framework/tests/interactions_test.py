@@ -5,26 +5,30 @@ Sortable,
 Selectable,
 Resizable,
 Droppable,
-Draggable
+Draggable.
 """
 import pytest
-
+import allure
 from ..pages import SortablePage, SelectablePage, ResizablePage, DroppablePage, \
     DraggablePage
 
 
-class TestInteractionsPage:
+@allure.suite('Alerts Interactions tab')
+class TestInteractions:
     """Class represents Widgets tab.
     Sortable
     Selectable,
     Resizable,
     Droppable
     """
+    text_dropped = 'Dropped!'
 
-    class TestSortablePage:
+    @allure.feature('Sortable')
+    class TestSortable:
         """Class represents Sortable tab tests."""
         sortable_page_link = 'https://demoqa.com/sortable'
 
+        @allure.title('Test order of list can be changed.')
         def test_order_of_list_can_be_changed(self, driver):
             """Test order of list can be changed."""
             sortable_page = SortablePage(driver, self.sortable_page_link)
@@ -37,6 +41,7 @@ class TestInteractionsPage:
                 f'Order before: {order_of_list_before}' \
                 f'Order after: {order_of_list_after}'
 
+        @allure.title('Test order of grid can be changed.')
         def test_order_of_grid_can_be_changed(self, driver):
             """Test order of grid can be changed."""
             sortable_page = SortablePage(driver, self.sortable_page_link)
@@ -49,10 +54,12 @@ class TestInteractionsPage:
                 f'Order before: {order_of_grid_before}' \
                 f'Order after: {order_of_grid_after}'
 
-    class TestSelectablePage:
+    @allure.feature('Selectable')
+    class TestSelectable:
         """Class represents Selectable tab tests."""
         selectable_page_link = 'https://demoqa.com/selectable'
 
+        @allure.title('Test list item can be activated.')
         def test_list_item_can_be_activated(self, driver):
             """Test list item can be activated."""
             selectable_page = SelectablePage(driver, self.selectable_page_link)
@@ -63,6 +70,7 @@ class TestInteractionsPage:
                 'Expected text from activated list item. ' \
                 f'Got: {activated_list_item}'
 
+        @allure.title('Test grid item can be activated.')
         def test_grid_item_can_be_activated(self, driver):
             """Test grid item can be activated."""
             selectable_page = SelectablePage(driver, self.selectable_page_link)
@@ -73,10 +81,12 @@ class TestInteractionsPage:
                 'Expected text from activated grid item. ' \
                 f'Got: {activated_grid_item}'
 
-    class TestResizablePage:
+    @allure.feature('Resizable')
+    class TestResizable:
         """Class represents Resizable tab tests."""
         resizable_page_link = 'https://demoqa.com/resizable'
 
+        @allure.title('Test starting size of resizable box.')
         def test_starting_size_of_resizable_box_is_200x200(self, driver):
             """Test starting size of resizable box."""
             resizable_page = ResizablePage(driver, self.resizable_page_link)
@@ -91,6 +101,7 @@ class TestInteractionsPage:
                 f'Expected current height to be {starting_width}.' \
                 f'Got {current_width}'
 
+        @allure.title('Test min size of resizable box.')
         def test_min_size_of_resizable_box_is_150x150(self, driver):
             """Test min size of resizable box."""
             resizable_page = ResizablePage(driver, self.resizable_page_link)
@@ -106,6 +117,7 @@ class TestInteractionsPage:
                 f'Expected current height to be {min_width}.' \
                 f'Got {current_width}'
 
+        @allure.title('Test max size of resizable box.')
         def test_max_size_of_resizable_box_is_500x300(self, driver):
             """Test max size of resizable box."""
             resizable_page = ResizablePage(driver, self.resizable_page_link)
@@ -121,6 +133,7 @@ class TestInteractionsPage:
                 f'Expected current height to be {max_width}.' \
                 f'Got {current_width}'
 
+        @allure.title('Test min size of resizable.')
         def test_min_size_of_resizable_is_20x20(self, driver):
             """Test min size of resizable."""
             resizable_page = ResizablePage(driver, self.resizable_page_link)
@@ -136,6 +149,7 @@ class TestInteractionsPage:
                 f'Expected current height to be {min_width}.' \
                 f'Got {current_width}'
 
+        @allure.title('Test size of resizable can be changed.')
         def test_size_of_resizable_can_be_changed(self, driver):
             """Test size of resizable can be changed."""
             resizable_page = ResizablePage(driver, self.resizable_page_link)
@@ -148,10 +162,12 @@ class TestInteractionsPage:
             assert starting_width != current_width, \
                 f'Expected {current_width=} to be different from {starting_width=}.'
 
-    class TestDroppablePage:
+    @allure.feature('Droppable')
+    class TestDroppable:
         """Class represents Droppable tab tests."""
         droppable_page_link = 'https://demoqa.com/droppable'
 
+        @allure.title('Test element changes text when element is dropped into it.')
         def test_simple_droppable(self, driver):
             """Test element changes text when element is dropped into it."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -159,11 +175,12 @@ class TestInteractionsPage:
             droppable_page.go_to_simple_tab()
             droppable_page.drop_simple()
             drop_here_text = droppable_page.get_simple_drop_here_element_text()
-            expected_drop_here_text = 'Dropped!'
+            expected_drop_here_text = TestInteractions.text_dropped
             assert drop_here_text == expected_drop_here_text, \
                 f'Expected droppable text to be {expected_drop_here_text}. ' \
                 f'Got: {drop_here_text}'
 
+        @allure.title('Test acceptable element is accepted by droppable.')
         def test_accept_droppable_acceptable_is_accepted(self, driver):
             """Test acceptable element is accepted by droppable."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -171,11 +188,12 @@ class TestInteractionsPage:
             droppable_page.go_to_accept_tab()
             droppable_page.drop_accept_acceptable()
             drop_here_text = droppable_page.get_accept_drop_here_element_text()
-            expected_drop_here_text = 'Dropped!'
+            expected_drop_here_text = TestInteractions.text_dropped
             assert drop_here_text == expected_drop_here_text, \
                 f'Expected droppable text to be {expected_drop_here_text}. ' \
                 f'Got: {drop_here_text}'
 
+        @allure.title('Test not acceptable element isn\'t accepted by droppable.')
         def test_accept_droppable_not_acceptable_is_not_accepted(self, driver):
             """Test not acceptable element isn't accepted by droppable."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -188,6 +206,8 @@ class TestInteractionsPage:
                 f'Expected droppable text to be {expected_drop_here_text}. ' \
                 f'Got: {drop_here_text}'
 
+        @allure.title('Test drop element into not greedy inner '
+                      'changes both inner and outer elements.')
         def test_prevent_propogation_droppable_not_greedy(self, driver):
             """Test drop element into not greedy inner changes both inner and outer elements."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -198,8 +218,8 @@ class TestInteractionsPage:
                 droppable_page.get_prevent_propogation_outer_droppable_not_greedy_text()
             inner_droppable_text = \
                 droppable_page.get_prevent_propogation_inner_droppable_not_greedy_text()
-            expected_outer_droppable_text = 'Dropped!'
-            expected_inner_droppable_text = 'Dropped!'
+            expected_outer_droppable_text = TestInteractions.text_dropped
+            expected_inner_droppable_text = TestInteractions.text_dropped
             assert outer_droppable_text == expected_outer_droppable_text, \
                 f'Expected outer droppable text to be {expected_outer_droppable_text}. ' \
                 f'Got: {outer_droppable_text}'
@@ -207,6 +227,7 @@ class TestInteractionsPage:
                 f'Expected inner droppable text to be {expected_inner_droppable_text}. ' \
                 f'Got: {inner_droppable_text}'
 
+        @allure.title('Test drop element into greedy inner changes only inner element.')
         def test_prevent_propogation_droppable_greedy(self, driver):
             """Test drop element into greedy inner changes only inner element."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -218,7 +239,7 @@ class TestInteractionsPage:
             inner_droppable_text = \
                 droppable_page.get_prevent_propogation_inner_droppable_greedy_text()
             expected_outer_droppable_text = 'Outer droppable'
-            expected_inner_droppable_text = 'Dropped!'
+            expected_inner_droppable_text = TestInteractions.text_dropped
             assert outer_droppable_text == expected_outer_droppable_text, \
                 f'Expected outer droppable text to be {expected_outer_droppable_text}. ' \
                 f'Got: {outer_droppable_text}'
@@ -226,6 +247,7 @@ class TestInteractionsPage:
                 f'Expected inner droppable text to be {expected_inner_droppable_text}. ' \
                 f'Got: {inner_droppable_text}'
 
+        @allure.title('Test element Will Revert activates drop box.')
         def test_revert_draggable_droppable(self, driver):
             """Test element Will Revert activates drop box."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -233,11 +255,12 @@ class TestInteractionsPage:
             droppable_page.go_to_revert_draggable_tab()
             droppable_page.drop_revert_draggable_will_revert()
             drop_here_text = droppable_page.get_revert_draggable_drop_here_element_text()
-            expected_drop_here_text = 'Dropped!'
+            expected_drop_here_text = TestInteractions.text_dropped
             assert drop_here_text == expected_drop_here_text, \
                 f'Expected droppable text to be {expected_drop_here_text}. ' \
                 f'Got: {drop_here_text}'
 
+        @allure.title('Test element Not Revert activates drop box.')
         def test_not_revert_draggable_droppable(self, driver):
             """Test element Not Revert activates drop box."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -245,11 +268,12 @@ class TestInteractionsPage:
             droppable_page.go_to_revert_draggable_tab()
             droppable_page.drop_revert_draggable_not_revert()
             drop_here_text = droppable_page.get_revert_draggable_drop_here_element_text()
-            expected_drop_here_text = 'Dropped!'
+            expected_drop_here_text = TestInteractions.text_dropped
             assert drop_here_text == expected_drop_here_text, \
                 f'Expected droppable text to be {expected_drop_here_text}. ' \
                 f'Got: {drop_here_text}'
 
+        @allure.title('Test Will Revert returns to start position after dragging.')
         def test_revertable_draggable_will_return_to_current_position_after_dragging(self, driver):
             """Test Will Revert returns to start position after dragging."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -264,6 +288,7 @@ class TestInteractionsPage:
                 'Expected Will Revert to return to current position after dragging.' \
                 f'But got {is_reverted}'
 
+        @allure.title('Test element Not Revert returns to dropbox.')
         def test_not_revertable_will_return_after_dragging_out_of_dropbox(self, driver):
             """Test element Not Revert returns to dropbox."""
             droppable_page = DroppablePage(driver, self.droppable_page_link)
@@ -278,10 +303,12 @@ class TestInteractionsPage:
                 'Expected Not Revert to return to current position after dragging.' \
                 f'But got {is_reverted}'
 
-    class TestDraggablePage:
+    @allure.feature('Draggable')
+    class TestDraggable:
         """Class represents Draggable tab tests."""
         draggable_page_link = 'https://demoqa.com/dragabble'
 
+        @allure.title('Test element Drag me can be dragged.')
         def test_simple_draggable(self, driver):
             """Test element Drag me can be dragged."""
             draggable_page = DraggablePage(driver, self.draggable_page_link)
@@ -299,6 +326,7 @@ class TestInteractionsPage:
                 f'{left_coord_start=} {top_coord_start=}' \
                 f'{left_coord_after_drag=} {top_coord_after_drag=}'
 
+        @allure.title('Test element Only X can be dragged on x-axis.')
         def test_only_x_changes_coordinate_left_after_dragging_on_x_axis(self, driver):
             """Test element Only X can be dragged on x-axis."""
             draggable_page = DraggablePage(driver, self.draggable_page_link)
@@ -315,6 +343,7 @@ class TestInteractionsPage:
                 f'{left_coord_start=} {top_coord_start=}' \
                 f'{left_coord_after_drag=} {top_coord_after_drag=}'
 
+        @allure.title('Test element Only X can\'t be dragged on y-axis.')
         def test_only_x_not_changes_coordinate_top_after_dragging_on_y_axis(self, driver):
             """Test element Only X can't be dragged on y-axis."""
             draggable_page = DraggablePage(driver, self.draggable_page_link)
@@ -336,6 +365,7 @@ class TestInteractionsPage:
                 f'And be {expected_top_coordinate=}' \
                 f'{left_coord_after_drag=} {top_coord_after_drag=}'
 
+        @allure.title('Test element Only Y can\'t be dragged on x-axis.')
         def test_only_y_not_changes_coordinate_left_after_dragging_on_x_axis(self, driver):
             """Test element Only Y can't be dragged on x-axis."""
             draggable_page = DraggablePage(driver, self.draggable_page_link)
@@ -357,6 +387,7 @@ class TestInteractionsPage:
                 f'And be {expected_left_coordinate=}' \
                 f'{left_coord_after_drag=} {top_coord_after_drag=}'
 
+        @allure.title('Test element Only Y can be dragged on y-axis.')
         def test_only_y_changes_coordinate_top_after_dragging_on_y_axis(self, driver):
             """Test element Only Y can be dragged on y-axis."""
             draggable_page = DraggablePage(driver, self.draggable_page_link)
@@ -373,6 +404,8 @@ class TestInteractionsPage:
                 f'{left_coord_start=} {top_coord_start=}' \
                 f'{left_coord_after_drag=} {top_coord_after_drag=}'
 
+        @allure.title('Test element \'I\'m contained within the box\''
+                      'can\'t be moved upper restricted container.')
         def test_box_can_not_be_moved_upper_restricted_container(self, driver):
             """
             Test element 'I'm contained within the box'
@@ -390,6 +423,8 @@ class TestInteractionsPage:
                 f'container restricted and be {top_upper_restriction=}' \
                 f'Got: {left_coordinate=} {top_coordinate=}'
 
+        @allure.title('Test element \'I\'m contained within the box\''
+                      'can\'t be moved lower restricted container.')
         def test_box_can_not_be_moved_lower_restricted_container(self, driver):
             """
             Test element 'I'm contained within the box'
@@ -407,6 +442,8 @@ class TestInteractionsPage:
                 f'container restricted and be {top_lower_restriction=}' \
                 f'Got: {left_coordinate=} {top_coordinate=}'
 
+        @allure.title('Test element \'I\'m contained within the box\''
+                      'can\'t be moved lefter restricted container.')
         def test_box_can_not_be_moved_lefter_restricted_container(self, driver):
             """
             Test element 'I'm contained within the box'
@@ -424,6 +461,8 @@ class TestInteractionsPage:
                 f'container restricted and be {left_lefter_restriction=}' \
                 f'Got: {left_coordinate=} {top_coordinate=}'
 
+        @allure.title('Test element \'I\'m contained within the box\''
+                      'can\'t be moved righter restricted container.')
         @pytest.mark.skip(reason='not implemented')
         def test_box_can_not_be_moved_righter_restricted_container(self, driver):
             """
