@@ -25,7 +25,7 @@ class TestAlertsFrameWindows:
     """
     EXPECTED_TEXT = 'This is a sample page'
 
-    @allure.feature('Text Browser Windows')
+    @allure.feature('TBrowser Windows')
     class TestBrowserWindows:
         """Class represents Browser Windows tab tests."""
         browser_windows_page_link = 'https://demoqa.com/browser-windows'
