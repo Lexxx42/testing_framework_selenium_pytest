@@ -31,11 +31,11 @@ class TestAlertsFrameWindows:
         browser_windows_page_link = 'https://demoqa.com/browser-windows'
 
         @allure.title('Test opening a new tab and getting the text from it.')
-        def test_new_tab(self, driver):
+        def test_new_tab(self, driver: WebDriver):
             """Test opening a new tab and getting the text from it."""
-            browser_windows_page = BrowserWindowsPage(driver, self.browser_windows_page_link)
+            browser_windows_page = BrowserWindowsPage(driver=driver, url=self.browser_windows_page_link)
             browser_windows_page.open()
-            new_tab_text = browser_windows_page.check_opened('tab')
+            new_tab_text = browser_windows_page.check_opened(what_to_open='tab')
             assert new_tab_text == TestAlertsFrameWindows.EXPECTED_TEXT, \
                 f'New tab text should be \'{TestAlertsFrameWindows.EXPECTED_TEXT}\'' \
                 f' but got {new_tab_text}'
