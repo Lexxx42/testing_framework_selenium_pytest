@@ -14,6 +14,9 @@ def driver():
     driver.maximize_window()
     yield driver
     screenshot = driver.get_screenshot_as_png()
-    allure.attach(screenshot, name=f'Screenshot {datetime.today()}',
-                  attachment_type=allure.attachment_type.PNG)
+    allure.attach(
+        body=screenshot,
+        name=f'Screenshot {datetime.today()}',
+        attachment_type=allure.attachment_type.PNG
+    )
     driver.quit()

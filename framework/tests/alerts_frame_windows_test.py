@@ -9,6 +9,7 @@ Modal Dialogs.
 """
 from random import choice
 import allure
+from selenium.webdriver.chrome.webdriver import WebDriver
 from ..pages import BrowserWindowsPage, AlertsPage, FramesPage, NestedFramesPage, ModalDialogsPage
 from ..generator import generated_person
 
