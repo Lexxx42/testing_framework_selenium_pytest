@@ -18,9 +18,12 @@ class BrowserWindowsPage(BasePage):
     locators = BrowserWindowsPageLocators()
 
     @allure.step('Check if new tab of window is opened.')
-    def check_opened(self, what_to_open) -> str:
+    def check_opened(self, what_to_open: str) -> str:
         """
         Check if new tab of window is opened.
+        :param what_to_open: Element to open.
+            tab -> open the tab.
+            window -> open the window.
         :returns: title of new tab or window.
         """
         available_cases = {
@@ -28,11 +31,11 @@ class BrowserWindowsPage(BasePage):
             'window': self.locators.NEW_WINDOW_BUTTON
         }
         with allure.step(f'Click on {what_to_open}'):
-            self.element_is_clickable(available_cases[what_to_open]).click()
+            self.element_is_clickable(locator=available_cases[what_to_open]).click()
         with allure.step('Switch to new tab'):
             self.switch_to_new_tab()
         with allure.step('Get title text'):
-            text_title = self.element_is_present(self.locators.SAMPLE_TEXT).text
+            text_title = self.element_is_present(locator=self.locators.SAMPLE_TEXT).text
         return text_title
 
 
